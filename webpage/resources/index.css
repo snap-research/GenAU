@@ -1,0 +1,506 @@
+body {
+  /* font-family: 'Noto Sans', sans-serif;
+  color: #1f1e1d;
+  background-color: #f5ece5; */
+  /* font-family: 'GT Ultra', sans-serif !important; */
+  font-family: 'GT Ultra', sans-serif !important;
+  font-weight: 300;
+  font-size: 18px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  color: #1f1e1d;
+  /* background-color: #f5ece5; */
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+  width: 1000px;
+}
+
+.teaser {
+  font-family: 'GT Ultra', sans-serif;
+}
+
+.inversion{
+  margin: 0px auto;
+  padding-top: 0;
+  padding-bottom: 3rem;
+  width:1000px;
+}
+
+
+
+.publication-title {
+  font-family: 'GT Ultra', sans-serif;
+  font-size: 48pt;
+  padding-top: 150px;
+  font-weight: bold;
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+
+.publication-authors {
+  font-family: 'GT Ultra', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: rgba(0, 85, 150) !important;
+   font-size: 24px;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+
+
+
+.cit {
+  background-color: rgba(26, 25, 31, 0.05);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: inline-block;
+  margin: 0 auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Code', monospace;
+}
+
+.cit_cont {
+  display: flex;
+}
+
+/* Style changes */
+.collabs {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  justify-content: center; /* Center-align items horizontally within the .collabs div */
+  width: fit-content; /* Adjust the width of .collabs to fit its content */
+  margin: 0 auto; /* Center-align the .collabs div within its parent */
+}
+.collabs img {
+  width: auto;  /* Set a standard width for images */
+  height: 70px;  /* Maintain aspect ratio */
+}
+.collabs img[src$="rice.svg"] {
+  height: 50px; /* Smaller width for the Rice icon */
+}
+
+.snap {
+  display: flex;  
+  align-items: center;  /* Center-align items vertically */
+}
+
+.snap span {
+  margin-left: 10px;  /* Space between the image and the text */
+  font-size: 25px;  /* Text size */
+  font-weight: bold;  /* Bold text */
+}
+
+.container {
+  width: 80% !important; /* Forces the container to always be 100% of its parent width */
+  max-width: none !important; /* Removes any maximum width constraints */
+}
+
+.models {
+  max-width: 2000px; /* Limit the maximum width */
+  /* margin: auto; Center the container */
+  /* padding: 20px; */
+}
+.models-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.model img {
+  width: 100%; /* Responsive image width, you can adjust this to a fixed percent as per design needs */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Space between the image and the text */
+}
+
+
+.model img {
+  width: 100%; /* Maintain full width within the column */
+  /* max-height: 500px; Set a maximum height for all images */
+  object-fit: cover; /* This will cover the area of the box without distorting aspect ratios */
+}
+
+.model {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space between and at the start/end of the container's cross axis */
+  align-items: center;
+  flex: 1;
+  min-width: 300px;
+  max-width: 50%;
+  /* padding: 20px; */
+}
+
+.lead {
+  text-align: justify;
+  font-size: 26px;
+  /* line-height: 1.6; */
+  width: 100%;
+  align-self: flex-end; /* Aligns the paragraph at the bottom of the flex container */
+}
+
+
+#circlecnv{
+  z-index: -1;
+  padding: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+}
+.topBar{
+  position: relative;
+  padding: 0;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+  color: white;
+}
+#topcnv{
+  z-index: -1;
+  position: absolute;
+  z-index: -1;
+  padding: 0;
+  display: block;
+  top: 0;
+  left: 0;
+  margin:auto;
+  opacity: .65;
+}
+.visualizer{
+  width: 2048px;
+  height: 350px;
+  padding: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin:auto;
+}
+
+
+.resources {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.resource-item {
+display: inline-block;
+margin: 0 20px;
+/* width: 60px; */
+}
+.resource-icon {
+/* width: 50px; Set this to the desired width */
+margin-bottom: 6px; /* Adjust gap between icon and text */
+opacity: 0.8; /* Adjust the opacity as needed */
+}
+.resource-icon:hover {
+opacity: 1; /* Full opacity on hover */
+}
+.resource-text {
+/* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+/* color: #333; */
+font-size: 32px; /* Adjust font size as needed */
+}
+
+
+/* Styles for the abstract and method section */
+.abstract-method-section {
+  background-color: #f8f8f8; /* Light grey background to distinguish the section */
+  border-left: 5px solid #0b2f9c; /* Blue left border for highlighting */
+  padding: 10px; /* Padding inside the section */
+  margin-top: 50px; /* Space after the section */
+  margin-bottom: 50px; /* Space after the section */
+}
+
+.abstract-method-section h2 {
+  font-size: 160%; /* Larger font size for the section header */
+  color: #333333; /* Dark grey color for the header */
+  /* margin-bottom: 20px; Space after the header */
+  margin-top: 20px; /* Space after the header */
+}
+
+.abstract-method-section p {
+  font-size: 28px; /* Standard text size */
+  text-align: justify; /* Align text to both left and right margins */
+  margin-bottom: 0px; /* Space after each paragraph */
+  margin-top: 0px; 
+}
+
+.paper-btn {
+  position: relative;
+  text-align: center;
+ 
+  display: inline-block;
+  /* margin: 2px; */
+  padding: 8px 16px;
+ 
+  border-width: 0;
+  outline: none;
+  border-radius: 10px;
+  
+  background-color: #4e4e50;
+  color: white !important;
+  /* font-size: 16px; */
+  /* width: 180px; */
+  font-weight: 350;
+ }
+ .paper-btn-parent {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0px;
+ }
+ .paper-btn:hover {
+    opacity: 0.80;
+ }
+
+
+
+ body {
+  background-color: white; /* Light grey background for contrast */
+  color: #333;
+  /* font-family: Arial, sans-serif; */
+  font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.video-item {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.video-item video {
+  width: 100%;
+  display: block;
+}
+
+.video-caption {
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(50, 50, 50, 0.7), rgba(25, 25, 25, 0.9)); /* Gradient background */
+  color: #fff;
+  font-size: 20px; /* Increased font size for readability */
+  font-weight: 500;
+  padding: 10px 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Text shadow for better visibility */
+  opacity: 0.7;
+  transition: opacity 0.3s ease; /* Smooth transition for opacity changes */
+}
+
+.video-item:hover .video-caption {
+  opacity: 1; /* Increase opacity on hover for emphasis */
+}
+
+
+
+#fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FFFC00; /* Black background */
+  color: #000000; /* White text */
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+  z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.left-content, .right-content {
+  display: flex;
+  align-items: center;
+}
+
+.left-content {
+  flex-grow: 1;
+}
+
+.right-content {
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.nav-link a {
+  color: #000000; /* White text for the links */
+  text-decoration: none;
+  padding: 8px 16px;
+  font-size: 28px;
+  font-weight:600;
+}
+
+.nav-link a:hover {
+  background-color: #bdba0e; /* Black background */
+  border-radius: 4px; /* Rounded corners for hover effect */
+}
+
+:target-nav {
+  padding-top: 70px; /* Add padding equal to or greater than the nav bar height */
+  margin-top: -70px; /* Optional, use if needed to adjust the layout */
+}
+
+html {
+  scroll-padding-top: 70px; /* Height of the fixed nav bar */
+}
+
+
+.notification-box {
+  margin: 10px 20px;
+  padding: 10px;
+  border: 1px solid #FFD700; /* Soft gold border */
+  background-color: #FFFFE0; /* Light yellow background */
+  color: #333; /* Dark text for readability */
+  text-align: center;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  width:fit-content;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.notification-box img {
+  margin-right: 10px; /* Space between the icon and text */
+}

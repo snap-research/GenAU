@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link href="resources/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./resources/bulma.min.css">
+	<link rel="stylesheet" href="./resources/bulma-carousel.min.css">
+	<link rel="stylesheet" href="./resources/bulma-slider.min.css">
+	<link rel="stylesheet" href="./resources/fontawesome.all.min.css">
+	<link rel="stylesheet" href="./resources/index.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script defer src="./resources/fontawesome.all.min.js"></script>
+	<script src="./resources/bulma-carousel.min.js"></script>
+	<script src="./resources/bulma-slider.min.js"></script>
+	<script src="./resources/index.js"></script>
+
+	<title>Taming Data and Transformers for Audio Generation</title>
+
+	<style>
+		/* Hiding the default video controls */
+		#myVideo {
+			outline: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<section class="jumbotron text-center">
+		<h1 class="publication-title">Taming Data and Transformers for Audio Generation</h1>
+
+		<!-- <br/>
+			<div class="conference">
+				<p>Arxiv 2024</p>
+			</div> -->
+
+		<br />
+		<div class="is-size-5 publication-authors">
+			<span class="author-block">
+				<p class="author">
+					<span class="author"><a target="_blank" href="https://moayedha.com/">Moayed
+							Haji-Ali,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=https://www.willimenapace.com>Willi
+							Menapace,</a>&nbsp;</span>
+					<span class="author"><a target="_blank"
+							href=https://aliaksandrsiarohin.github.io/aliaksandr-siarohin-website />Aliaksandr
+						Siarohin,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=https://www.guhabalakrishnan.com>Guha
+							Balakrishnan,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=http://www.stulyakov.com>Sergey
+							Tulyakov,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href="https://vislang.ai/">Vicente Ordonez</a>&nbsp;</span>
+				</p>
+				<span class="author-block">
+		</div>
+
+		<div class="collabs" , align-items="center">
+			<img class="rice-icon" src="./assets/logos/rice.svg" alt="Rice University Logo" , height="10px">
+			<div class="snap">
+				<img src="./assets/logos/snap.png" alt="Snap Research Logo">
+				<span>Snap Research</span>
+			</div>
+		</div>
+
+
+		<div id="fixed-nav">
+			<!-- Left-aligned content -->
+			<div class="left-content">
+				<div class="nav-link" style="padding-right:0%">
+					<a href="./">
+						<img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
+						GenAU
+					</a>
+				</div>
+			</div>
+		  
+			<!-- Right-aligned content -->
+			<div class="right-content">
+				<div class="nav-link">
+					<a href="assets/paper/taming_data_transformers.pdf">Paper</a>
+				</div>
+
+				<div class="nav-link">
+					<a href="#">Demo</a>
+				</div>
+
+				<div class="nav-link">
+					<a href="#">Code</a>
+				</div>
+				<div class="nav-link">
+					<a href="#samples">Samples</a>
+				</div>
+				<div class="nav-link">
+					<a href="comparisons.html">Comparisions </a>
+				</div>
+				
+			</div>
+		</div>
+
+
+		<div class="resources", style="padding-top: 2%;">
+			<div class="resource-item">
+			  <a  class="paper-btn resource-text" href="assets/paper/taming_data_transformers.pdf">
+			  <!-- <img src="./assets/icons/arxiv-logo.png" alt="Paper" class="resource-icon"> -->
+			  Paper 
+			  </a>
+			</div>
+			<div class="resource-item">
+			  <a  class="paper-btn  resource-text" href="#">
+			  <!-- <img src="./assets/icons/github-mark.png" alt="Code" class="resource-icon"> -->
+			  Code (Coming soon!)
+			  </a>
+			</div>
+			
+			<div class="resource-item  resource-text">
+				<a  class="paper-btn" href="#">Demo (Coming soon!)</a>
+			  </div>
+			
+			  <!-- <div class="resource-item  resource-text">
+				<a  class="paper-btn" href="./samples.html">View more samples</a>
+			  </div> -->
+
+			  
+			<!-- <div class="resource-item  resource-text">
+				<a  class="paper-btn" href="./samples.html">Ours Samples</a>
+			  </div>
+			
+			<div class="resource-item  resource-text">
+				<a  class="paper-btn" href=".">Comparisons</a>
+			  </div> -->
+  
+		  </div>
+
+	
+	
+	</section>
+	<!-- Abstract. -->
+
+	<div class="container pt-5" id="samples">
+		<div class="content has-text-justified">
+			<div class="generator-samples">
+				<!-- <h2>Audio Generatior with GenAU</h2> -->
+			<div class="notification-box">
+				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> <!-- Ensure you have an appropriate icon image -->
+				<span>Click anywhere on the page, then hover over the wavs to listen to the generated sound through our audio generator <b style="color: #141fee;">GenAU </b>.</span>
+			</div>
+			<div class="video-grid target-nav" >
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y_z6pymOet7g.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A man speaks followed by a toilet flush</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y-R69Fa-mCaY.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A chainsaw cutting as wood is cracking</div>
+				</div>
+				
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y2ymiXjImwGs.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A crowd murmurs as a siren blares and then stops at a distance</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y2UNuMbxz9ds.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A vehicle engine revving then accelerating at a high rate as a metal surface is whipped followed by tires skidding</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y2KR0C5ysO8o.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A mid-size motor vehicle engine accelerates and is accompanied by hissing and spinning tires, then it decelerates and an adult male begins to speak</div>
+				</div>
+
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y3kBlVLkN0zo.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A muffled man talking as a goat baas before and after two goats baaing in the distance while wind blows into a microphone</div>
+				</div>
+				
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/Y3ejndVEAcmQ.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A cat meows and hisses</div>
+				</div>
+
+
+				
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YcK2kSVR1d2o.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Fireworks pop and explode</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YENTi8Sn4vdM.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A small child and woman speak with splashing water</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YJZloTOdIY_c.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Horses growl and clop hooves</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YPO8Nu3F8mkA.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A gunshot firing in the distance followed by steam hissing and fire crackling</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YW4GEwnXc9tQ.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A woman speaks with chirping frogs and distant music playing</div>
+				</div>
+
+				<!-- <div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YxUWSHYoslPQ.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A man speaks with a high frequency hum with some banging and clanking</div>
+				</div> -->
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YwOFBldBFRNk.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Large church bells ring as rain falls on a hard surface and wind blows lightly into a microphone</div>
+				</div>
+
+				
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YD2Xc_jZllDY.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A dog barking as a man is talking while wind blows into a microphone as birds chirp in the distance</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/genau_qualitative_comparisions/Ours/mp4_wav_cropped/YYk274Wr5iIE.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A vehicle driving by while splashing water as a stream of water trickles and flows followed by a thunder roaring in the distance while wind blows into a microphone</div>
+				</div>
+				
+			</div>
+		</div>
+		
+
+		<div class="generator-samples" style="padding-top: 40px;">
+			<div class="notification-box">
+				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> <!-- Ensure you have an appropriate icon image -->
+				<span>Click anywhere on the page, then hover over the wavs to listen to audio and examine the captions generated through our audio captioner <b style="color: #141fee;">AutoCap </b>.</span>
+			</div>
+			<div class="video-grid target-nav" >
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/BXxlqaDvdaA.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A man speaks as wind blows and water
+						splashes</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/27HIamF8pKo.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">	A train moves getting closer and a horn is triggered</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/4IeDBwyQ9ZQ.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Dishes are being moved and a woman laughs and speaks</div>
+				</div>
+
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/Efk5kdn9lR8.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A child speaks followed by a loud crash and a scream</div>
+				</div>
+				
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/oNHCc_izsDE.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A baby laughs and splashes, and an adult female speaks</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/ptIksg9KEac.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Birds chirp in the distance, and then a dog barks nearby	</div>
+				</div>
+
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/u8bQf0SnCVI.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Some light rustling followed by a clank then water pouring</div>
+				</div>
+
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/AUJPx81qKtY.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">Birds chirp in the distance, followed by a man speaking nearby, after which insects buzz nearby</div>
+				</div>
+				
+				<div class="video-item">
+					<video id="video1"  class="video-player" width="1000"  autoplay loop muted>
+						<source src="data/audio-samples/mp4_wavs_cropped/Jfaj4P3us9M.mp4"  type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+					<div class="video-caption">A telephone dialing followed by a series of plastic clicking then plastic clanking before plastic thumps on a surface</div>
+				</div>
+				
+				
+			</div>
+		</div>
+
+		<div class="abstract-method-section">
+			<div class="teaser">
+				<h2 class="title" >Abstract</h2>
+			</div>
+
+			<p class="lead">
+
+				Generating ambient sounds and effects is a challenging problem due to data scarcity
+				and often insufficient caption quality, making it difficult to employ large-scale generative models for the task. In this work, we tackle the problem by introducing two
+				new models. First, we propose AutoCap, a high-quality and efficient automatic
+				audio captioning model. We show that by leveraging metadata available with the
+				audio modality, we can substantially improve the quality of captions. AutoCap
+				reaches CIDEr score of 83.2, marking a 3.2% improvement from the best available
+				captioning model at four times faster inference speed. We then use AutoCap to caption clips from existing datasets, obtaining 761, 000 audio clips with high-quality
+				captions, forming the largest available audio-text dataset. Second, we propose
+				GenAu, a scalable transformer-based audio generation architecture that we scale
+				up to 1.25B parameters and train with our new dataset. When compared to stateof-the-art audio generators, GenAu obtains significant improvements of 15.7%
+				in FAD score, 22.7% in IS, and 13.5% in CLAP score, indicating significantly
+				improved quality of generated audio compared to previous works. This shows that
+				the quality of data is often as important as its quantity. Besides, since AutoCap is
+				fully automatic, new audio samples can be added to the training dataset, unlocking
+				the training of even larger generative models for audio synthesis.
+			</p>
+
+		</div>
+
+			<div class="models">
+				<h2 class="title">Our Models</h2>
+				<div class="models-container">
+					<div class="model">
+						<img style="width:90%" src="./assets/figures/autocap.png" alt="AutoCap Model Diagram" />
+						<!-- <p class="lead">
+						<strong>AutoCap:</strong> An overview of the proposed architecture for our AutoCap model. Frozen CLAP and HTSAT audio encoders produce the audio representation.
+						To reduce the large number of tokens produced by the HTSAT encoder, we use a Q-Former, reducing the amount of input tokens by a factor of 4.
+						A pretrained BART encoder-decoder aggregates the tokens, producing the output caption.
+					</p> -->
+					</div>
+					<div class="model" style="padding-top: 50px">
+						<img style="width:100%" src="./assets/figures/genau.png" alt="GenAu Model Diagram" />
+						<!-- <p class="lead">
+						<strong>GenAu:</strong> Overview of our GenAu model based on an FIT-based latent audio generator. A frozen 1D-VAE produces the latent audio representation.
+						Input patches are divided into groups and processed by 'local' attention layers. 'read' and 'write' operations implemented as cross attention layers transfer information between patches and latents.
+						Finally, 'global' attention layers process latent tokens with attention spanning over all groups, enabling global communication.
+					</p> -->
+					</div>
+				</div>
+
+
+				<div class="models-container">
+					<div class="model" style="padding-right: 20px">
+						<p class="lead">
+							<strong>AutoCap:</strong> We employ frozen CLAP and HTSAT audio encoders to produce the
+							audio representation. We then compact this representation into <b>4x</b> less tokens using a
+							<b style="color: #e67a59;">Q-Former</b> module. This enhances the efficieny
+							of the captioning model and aligning the audio representation with the language
+							representation of a pretrained BART encoder-decoder model that aggregates these tokens along
+							with tokens extected from useful metadata to produce the output caption.
+						</p>
+					</div>
+					<div class="model" style="padding-left: 20px">
+						<p class="lead">
+							<strong>GenAu:</strong> We use a frozen audio 1D-VAE to produce a sequence of latents from a
+							Mel-Spectrogram representation. Based on the FIT architecture, these latents are patchified
+							and divided into groups which processed by <b style="color: #de67d0;">local</b> attention
+							layers. The <b style="color: #e67a59;">read</b> and <b style="color: #141fee;">write</b>
+							operations are implemented as cross attention layers that transfer information between input
+							latents and learnable latent tokens.
+							Finally, <b style="color: #99e292;">global</b> attention layers process latent tokens with
+							attention spanning over all groups of latent tokens, enabling global communication.
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+<div >
+	<h2  class="title">Improvements</h2>
+	<img src="assets/figures/improvements.png">
+</div>
+<div>
+	<p class="section" id="paper"><h2 class="title">Paper</h2></p>
+          <table width="940" border="0">
+            <tbody>
+              <tr>
+                <td height="100"><a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer"><img src="./assets/icons/paper_cover.jpg" alt="" width="140" height="167"></a></td>
+                <td width="750"><p><b>Taming Data and Transformers for Audio Generation (514 KB)
+                </b><br>
+				Moayed Haji-Ali,  Willi Menapace,  Aliaksandr Siarohin,  Guha Balakrishnan,  Sergey Tulyakov, and Vicente Ordonez <br />
+                                   <br>
+                  <em>Preprint</em><br><br>
+                   [<a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer">paper</a>]</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+</div>
+<!-- <p class="section">&nbsp;</p> -->
+<!-- <p class="section" id="bibtex"><b>Citation</b></p>
+<p>If you find this paper useful in your research, please consider citing our work:</p>
+
+         <table border="0">
+            <tbody>
+               <pre style=" display: block;
+                  background: #eee;
+                  white-space: pre;
+                  -webkit-overflow-scrolling: touch;
+                  max-width: 100%;
+                  border-radius: 20px;
+                  padding: 0;;">
+<p style="margin-bottom: -12px;">
+  @misc{hajiali2023elasticdiffusion,
+    title={ElasticDiffusion: Training-free Arbitrary Size Image Generation}, 
+    author={Moayed Haji-Ali and Guha Balakrishnan and Vicente Ordonez},
+    year={2023},
+    eprint={2311.18822},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}}
+</p>
+			  </pre>
+            </tbody>
+         </table> -->
+
+
+		</div>
+
+		<br />
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const videoItems = document.querySelectorAll('.video-item');  // Get all video item elements
+			let userInteracted = false;
+	
+			document.body.addEventListener('click', function() {
+				userInteracted = true;  // Set to true on any click on the page
+			});
+	
+			videoItems.forEach(function(item) {
+				const video = item.querySelector('.video-player');
+				const caption = item.querySelector('.video-caption');
+	
+				item.addEventListener('mouseenter', function() {
+					if (userInteracted) {  // Only apply effects if the user has interacted with the page
+						if (video.muted) {
+							video.muted = false;
+							video.currentTime = 0; 
+						}
+						caption.style.opacity = '1';
+					}
+				});
+				item.addEventListener('mouseleave', function() {
+					if (!video.muted) {
+						video.muted = true;
+					}
+					caption.style.opacity = '0.5';
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

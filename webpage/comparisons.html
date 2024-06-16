@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link href="resources/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./resources/bulma.min.css">
+	<link rel="stylesheet" href="./resources/bulma-carousel.min.css">
+	<link rel="stylesheet" href="./resources/bulma-slider.min.css">
+	<link rel="stylesheet" href="./resources/fontawesome.all.min.css">
+	<link rel="stylesheet" href="./resources/index.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script defer src="./resources/fontawesome.all.min.js"></script>
+	<script src="./resources/bulma-carousel.min.js"></script>
+	<script src="./resources/bulma-slider.min.js"></script>
+	<script src="./resources/index.js"></script>
+
+	<title>Taming Data and Transformers for Audio Generation</title>
+
+	<style>
+		/* Hiding the default video controls */
+		#myVideo {
+			outline: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<section class="jumbotron text-center">
+		<h1 class="publication-title">Taming Data and Transformers for Audio Generation</h1>
+
+		<!-- <br/>
+			<div class="conference">
+				<p>Arxiv 2024</p>
+			</div> -->
+
+		<br />
+		<div class="is-size-5 publication-authors">
+			<span class="author-block">
+				<p class="author">
+					<span class="author"><a target="_blank" href="https://moayedha.com/">Moayed
+							Haji-Ali,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=https://www.willimenapace.com>Willi
+							Menapace,</a>&nbsp;</span>
+					<span class="author"><a target="_blank"
+							href=https://aliaksandrsiarohin.github.io/aliaksandr-siarohin-website />Aliaksandr
+						Siarohin,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=https://www.guhabalakrishnan.com>Guha
+							Balakrishnan,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href=http://www.stulyakov.com>Sergey
+							Tulyakov,</a>&nbsp;</span>
+					<span class="author"><a target="_blank" href="https://vislang.ai/">Vicente Ordonez</a>&nbsp;</span>
+				</p>
+				<span class="author-block">
+		</div>
+
+		<div class="collabs" , align-items="center">
+			<img class="rice-icon" src="./assets/logos/rice.svg" alt="Rice University Logo" , height="10px">
+			<div class="snap">
+				<img src="./assets/logos/snap.png" alt="Snap Research Logo">
+				<span>Snap Research</span>
+			</div>
+		</div>
+
+
+		<div id="fixed-nav">
+			<!-- Left-aligned content -->
+			<div class="left-content">
+				<div class="nav-link" style="padding-right:0%">
+					<a href="./index.html">
+						<img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
+						GenAU
+					</a>
+				</div>
+			</div>
+		  
+			<!-- Right-aligned content -->
+			<div class="right-content">
+				<div class="nav-link">
+					<a href="assets/paper/taming_data_transformers.pdf">Paper</a>
+				</div>
+
+				<div class="nav-link">
+					<a href="#">Demo</a>
+				</div>
+
+				<div class="nav-link">
+					<a href="#">Code</a>
+				</div>
+				<div class="nav-link">
+					<a href="./index.html/#sample">Samples</a>
+				</div>
+				<div class="nav-link">
+					<a href="comparisons.html">Comparisions </a>
+				</div>
+				
+			</div>
+		</div>
+
+
+		<div class="resources", style="padding-top: 2%;">
+			<div class="resource-item">
+			  <a  class="paper-btn resource-text" href="assets/paper/taming_data_transformers.pdf">
+			  <!-- <img src="./assets/icons/arxiv-logo.png" alt="Paper" class="resource-icon"> -->
+			  Paper 
+			  </a>
+			</div>
+			<div class="resource-item">
+			  <a  class="paper-btn  resource-text" href="#">
+			  <!-- <img src="./assets/icons/github-mark.png" alt="Code" class="resource-icon"> -->
+			  Code (Coming soon!)
+			  </a>
+			</div>
+			
+			<div class="resource-item  resource-text">
+				<a  class="paper-btn" href="#">Demo (Coming soon!)</a>
+			  </div>
+
+			  
+			<!-- <div class="resource-item  resource-text">
+				<a  class="paper-btn" href="./samples.html">Ours Samples</a>
+			  </div>
+			
+			<div class="resource-item  resource-text">
+				<a  class="paper-btn" href=".">Comparisons</a>
+			  </div> -->
+  
+		  </div>
+
+	
+	
+	</section>
+
+	<!-- Abstract. -->
+	<div class="container pt-5">
+		<div class="content has-text-justified">
+			<h2 class="title is-3">Comparison of AutoCap with state-of-the-art audio captioning methods:</h2>
+		</div>
+	</div>
+	<div class="container shadow p-5 mb-5 bg-white rounded">
+
+		<p class="mb-0">
+			We evaluate our captioning approach by comparing it with ENCLAP and CoNeTTE using the AudioCaps test split. To facilitate a clearer analysis, we highlight sections of the caption that the baseline methods either miss or describe inaccurately.
+		</p>
+		<div class="pt-3 table-responsive" style="padding: 5%;">
+
+
+			<table class="table table-hover" id="supervision-efficiency-table">
+				<thead>
+					<tr>
+
+						<th style="text-align: center">Input</th>
+
+
+						<th style="text-align: center">Groundtruth Caption</th>
+
+
+						<th style="text-align: center">AutoCap</th>
+
+
+						<th style="text-align: center">ENCLAP</th>
+
+
+						<th style="text-align: center">CoNeTTE</th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/BXxlqaDvdaA.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							A man talking as ocean waves trickle and splash while wind blows into a
+								microphone
+						</td>
+						<td>
+							 A man speaks as wind blows and <b style="color: rgb(12, 44, 174);">water
+									splashes</b>  
+						</td>
+						<td>
+							 A man is speaking and wind is blowing 
+						</td>
+						<td>
+							 A man is speaking and wind is blowing 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/AUJPx81qKtY.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 An adult male speaks, birds chirp in the background, and many insects are
+								buzzing 
+						</td>
+						<td>
+							 Birds chirp in the distance, followed by a man speaking nearby, after which
+								<b style="color: rgb(12, 44, 174);">insects buzz</b> nearby 
+						</td>
+						<td>
+							 Birds are chirping and a man speaks 
+						</td>
+						<td>
+							 A man speaking with birds chirping in the background. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/Jfaj4P3us9M.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 A telephone dialing tone followed by a plastic switch flipping on and off
+							 
+						</td>
+						<td>
+							 A telephone dialing followed by a series of plastic clicking then plastic
+								clanking before <b style="color: rgb(12, 44, 174);">plastic thumps on a surface</b>
+							 
+						</td>
+						<td>
+							 A telephone dialing followed by a series of electronic beeps 
+						</td>
+						<td>
+							 A telephone ringing followed by a beep. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/27HIamF8pKo.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 A running train and then a train whistle 
+						</td>
+						<td>
+							 A train moves <b style="color: rgb(12, 44, 174);">getting closer</b> and a
+								horn is triggered 
+						</td>
+						<td>
+							 A train running on railroad tracks followed by a train horn blowing as wind
+								blows into a microphone 
+						</td>
+						<td>
+							 A train horn blows and a steam whistle is blowing 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/4IeDBwyQ9ZQ.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 A female speaking with some rustling followed by another female speaking
+							 
+						</td>
+						<td>
+							 <b style="color: rgb(12, 44, 174);">Dishes</b> are being moved and a woman
+								laughs and speaks 
+						</td>
+						<td>
+							 A woman speaking followed by clanking 
+						</td>
+						<td>
+							 A woman is speaking and a child is laughing. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/Efk5kdn9lR8.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 A child is speaking followed by a door moving 
+						</td>
+						<td>
+							 A child speaks followed by a <b style="color: rgb(12, 44, 174);">loud crash
+									and a scream</b>  
+						</td>
+						<td>
+							 A young girl speaks followed by a loud bang 
+						</td>
+						<td>
+							 A woman speaking followed by a door opening and closing. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/oNHCc_izsDE.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 Water splashing as a baby is laughing and birds chirp in the background
+							 
+						</td>
+						<td>
+							 A <b style="color: rgb(12, 44, 174);">baby laughs and splashes</b>, and an
+								adult female speaks 
+						</td>
+						<td>
+							 A baby laughs and splashes in water 
+						</td>
+						<td>
+							 A baby is laughing and people are talking. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/ptIksg9KEac.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 Leaves rustling in the wind with dogs barking and birds chirping 
+						</td>
+						<td>
+							 Birds <b style="color: rgb(12, 44, 174);">chirp in the distance</b>, and
+								then a dog barks nearby 
+						</td>
+						<td>
+							 Birds chirp and a dog barks 
+						</td>
+						<td>
+							 A dog is barking and a person is walking. 
+						</td>
+					</tr>
+
+
+					<tr height="100px">
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/audio-samples/u8bQf0SnCVI.wav" type="audio/wav">Your browser does
+									not support the audio element.
+								</audio></td>
+						</div>
+						<td>
+							 Tapping followed by water spraying and more tapping 
+						</td>
+						<td>
+							 Some light rustling <b style="color: rgb(12, 44, 174);">followed by a
+									clank</b> then water pouring 
+						</td>
+						<td>
+							 A faucet is turned on and runs 
+						</td>
+						<td>
+							 A toilet is flushed and water is running. 
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+
+	<div class="container pt-5">
+		<div class="content has-text-justified">
+			<h2 class="title is-3">Comparison of GenAu with state-of-the-art text-to-audio methods:</h2>
+		</div>
+	</div>
+
+	<div class="container shadow p-5 mb-5 bg-white rounded">
+		<p class="mb-0">
+			We compare out method against Make-an-audio 1&2, AudioLDM 1&2, Tango 1&2, and StableAudio. Please scroll right to acess the rest of the methods.
+		</p>
+		<div class="pt-3 table-responsive"  style="padding: 5%;">
+
+
+			<table class="table table-hover" id="supervision-efficiency-table">
+				<thead>
+					<tr>
+
+						<th style="text-align: center">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Input&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</th>
+
+
+						<th style="text-align: center">Ours</th>
+
+
+						<th style="text-align: center">Make-an-audio</th>
+						<th style="text-align: center">Make-an-audio-2</th>
+						<th style="text-align: center">AudioLDM</th>
+						<th style="text-align: center">AudioLDM2</th>
+						<th style="text-align: center">Tango</th>
+						<th style="text-align: center">Tango2</th>
+						<th style="text-align: center">Stable Audio</th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr height="100px">
+						<td>
+							 A muffled man talking as a goat baas before and after two goats baaing in
+								the distance while wind blows into a microphone 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/Y3kBlVLkN0zo.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/Y3kBlVLkN0zo.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/Y3kBlVLkN0zo.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/Y3kBlVLkN0zo.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/Y3kBlVLkN0zo.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/Y3kBlVLkN0zo.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/Y3kBlVLkN0zo.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/Y3kBlVLkN0zo.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 A small child and woman speak with splashing water 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YENTi8Sn4vdM.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YENTi8Sn4vdM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YENTi8Sn4vdM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YENTi8Sn4vdM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YENTi8Sn4vdM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YENTi8Sn4vdM.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YENTi8Sn4vdM.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YENTi8Sn4vdM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 Horses growl and clop hooves. 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YJZloTOdIY_c.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YJZloTOdIY_c.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YJZloTOdIY_c.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YJZloTOdIY_c.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YJZloTOdIY_c.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YJZloTOdIY_c.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YJZloTOdIY_c.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YJZloTOdIY_c.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 A woman speaks with chirping frogs and distant music playing 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YW4GEwnXc9tQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YW4GEwnXc9tQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YW4GEwnXc9tQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YW4GEwnXc9tQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YW4GEwnXc9tQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YW4GEwnXc9tQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YW4GEwnXc9tQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YW4GEwnXc9tQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 A vehicle driving by while splashing water as a stream of water trickles and
+								flows followed by a thunder roaring in the distance while wind blows into a microphone
+							 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YYk274Wr5iIE.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YYk274Wr5iIE.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YYk274Wr5iIE.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YYk274Wr5iIE.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YYk274Wr5iIE.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YYk274Wr5iIE.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YYk274Wr5iIE.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YYk274Wr5iIE.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 Large church bells ring as rain falls on a hard surface and wind blows
+								lightly into a microphone 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YwOFBldBFRNk.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YwOFBldBFRNk.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YwOFBldBFRNk.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YwOFBldBFRNk.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YwOFBldBFRNk.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YwOFBldBFRNk.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YwOFBldBFRNk.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YwOFBldBFRNk.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="100px">
+						<td>
+							 A man speaks with a high frequency hum with some banging and clanking 
+						</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Ours/YxUWSHYoslPQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio/YxUWSHYoslPQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Make-an-audio2/YxUWSHYoslPQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM/YxUWSHYoslPQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/AudioLDM2/YxUWSHYoslPQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango/YxUWSHYoslPQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/Tango2/YxUWSHYoslPQ.wav" type="audio/wav">
+									Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/genau_qualitative_comparisions/stable_audio/YxUWSHYoslPQ.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+				</tbody>
+			</table>
+
+
+
+		</div>
+	</div>
+
+
+	<!-- <div class="container pt-5">
+		<div class="content has-text-justified">
+			<h2 class="title is-3">GenAu ablation study:</h2>
+		</div>
+	</div>
+	<div class="container shadow p-5 mb-5 bg-white rounded">
+		<p class="mb-0">
+			We compare different variants of our method. At the top row we show different captions used for
+			generation. In the second row we show a U-Net baseline.
+			The next 3 rows is our small model trained on AudioCaps, on full dataset without recaption and our full
+			recaptioned dataset. The final two rows show our large model trained on AudioCaps and full recaptioned
+			dataset.
+		</p>
+		<div class="pt-3 table-responsive"  style="padding: 5%;">
+
+			<table class="table table-hover" id="supervision-efficiency-table">
+				<thead>
+					<tr>
+
+						<th style="text-align: center"></th>
+
+
+						<th style="text-align: center">
+							 A person briefly talks followed quickly by toilet flushing and another voice
+								from another person 
+						</th>
+
+
+						<th style="text-align: center">
+							 A gun cocking then firing as metal clanks on a hard surface followed by a
+								man talking during an electronic laser effect as gunshots and explosions go off in the
+								distance 
+						</th>
+
+
+						<th style="text-align: center">
+							 Motorcycle starting and taking off 
+						</th>
+
+
+						<th style="text-align: center">
+							 A female laughs, snoring occurs, and an adult male speaks in the background
+							 
+						</th>
+
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr height="75px" style="border-bottom: 3px solid black;">
+						<td style="text-align: center; vertical-align: middle;">U-Net</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/U-Net/Y_z6pymOet7g.wav" type="audio/wav">Your browser
+									does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/U-Net/Y-NrFeH-kBSM.wav" type="audio/wav">Your browser
+									does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/U-Net/Y0rSETXszQM0.wav" type="audio/wav">Your browser
+									does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/U-Net/Y4YodC6RnplI.wav" type="audio/wav">Your browser
+									does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="75px">
+						<td style="text-align: center; vertical-align: middle;">Small AudioCaps</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small AudioCaps/Y_z6pymOet7g.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small AudioCaps/Y-NrFeH-kBSM.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small AudioCaps/Y0rSETXszQM0.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small AudioCaps/Y4YodC6RnplI.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="75px">
+						<td style="text-align: center; vertical-align: middle;">Small without Recaptioning</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small without Recaptioning/Y_z6pymOet7g.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small without Recaptioning/Y-NrFeH-kBSM.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small without Recaptioning/Y0rSETXszQM0.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small without Recaptioning/Y4YodC6RnplI.wav"
+										type="audio/wav">Your browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="75px" style="border-bottom: 3px solid black;">
+						<td style="text-align: center; vertical-align: middle;">Small Full</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small Full/Y_z6pymOet7g.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small Full/Y-NrFeH-kBSM.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small Full/Y0rSETXszQM0.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Small Full/Y4YodC6RnplI.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="75px">
+						<td style="text-align: center; vertical-align: middle;">Large AudioCaps</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large AudioCaps/Y_z6pymOet7g.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large AudioCaps/Y-NrFeH-kBSM.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large AudioCaps/Y0rSETXszQM0.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large AudioCaps/Y4YodC6RnplI.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+
+					<tr height="75px">
+						<td style="text-align: center; vertical-align: middle;">Large Full</td>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large Full/Y_z6pymOet7g.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large Full/Y-NrFeH-kBSM.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large Full/Y0rSETXszQM0.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+						<div class="audio-container">
+							<td><audio controls="" controlslist="nodownload" class="px-1">
+									<source src="data/ablations/Large Full/Y4YodC6RnplI.wav" type="audio/wav">Your
+									browser does not support the audio element.
+								</audio></td>
+						</div>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div> -->
+
+	
+</body>
+
+</html>
