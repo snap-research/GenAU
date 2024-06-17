@@ -481,9 +481,37 @@ font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
+}
+
+/* Medium devices (tablets, large phones) */
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1600px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
 }
 /* .video-grid {
   display: grid;
