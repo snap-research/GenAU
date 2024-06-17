@@ -487,32 +487,6 @@ font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Medium devices (tablets, large phones) */
-@media (min-width: 768px) {
-  .video-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-}
-
-/* Large devices (desktops) */
-@media (min-width: 992px) {
-  .video-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-}
-
-/* Extra large devices (large desktops) */
-@media (min-width: 1200px) {
-  .video-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-}
-
-/* Very large screens */
-@media (min-width: 1600px) {
-  .video-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  }
-}
 /* .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10vw, 400px));
@@ -532,13 +506,15 @@ font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   display: block;
 }
 
+
 .video-caption {
   text-align: center;
   background: linear-gradient(to bottom, rgba(50, 50, 50, 0.7), rgba(25, 25, 25, 0.9)); /* Gradient background */
   color: #fff;
-  font-size: 20px; /* Increased font size for readability */
+  font-size: 14px;
   font-weight: 500;
   padding: 10px 16px;
+
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Text shadow for better visibility */
@@ -830,5 +806,34 @@ body {
   }
   .resource-text {
     font-size: calc(12px + 2vw); /* Larger base font size for better readability */
+  }
+}
+
+
+@media (min-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+  .video-caption {font-size: 18px;}
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1600px) {
+  .video-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   }
 }
