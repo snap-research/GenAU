@@ -91,8 +91,22 @@ body {
 }
 
 .publication-authors a {
-   color: rgba(0, 85, 150) !important;
+  color: rgba(0, 85, 150) !important;
+  font-size: 16px; /* Default size for small devices */
+}
+
+/* Medium devices (tablets, large phones, 768px and up) */
+@media (min-width: 768px) {
+ .publication-authors a {
+   font-size: 20px;
+ }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+ .publication-authors a {
    font-size: 24px;
+ }
 }
 
 .publication-authors a:hover {
@@ -221,6 +235,76 @@ body {
   max-width: none !important; /* Removes any maximum width constraints */
 }
 
+
+/* Style changes */
+.collabs {
+  display: flex;
+  align-items: center;
+  gap:1fr;  /* Reduced initial gap for better responsiveness */
+  justify-content: center; /* Center-align items horizontally within the .collabs div */
+  width: fit-content; /* Adjust the width of .collabs to fit its content */
+  margin: 0 auto; /* Center-align the .collabs div within its parent */
+}
+
+.collabs img {
+  width: auto; /* Auto width to maintain aspect ratio */
+  height: 5vw;  /* Starting point uses viewport width to scale icons */
+}
+
+.collabs img[src$="rice.svg"] {
+  height: 3.5vw; /* Smaller size for specific icon using viewport width */
+}
+
+/* Reduce icon size on smaller screens */
+@media (max-width: 768px) {
+  .collabs img {
+    height: 7vw; /* Slightly larger due to smaller viewport width */
+  }
+
+  .collabs img[src$="rice.svg"] {
+    height: 5vw;
+  }
+}
+
+/* Further reduce size for very small screens */
+@media (max-width: 480px) {
+  .collabs img {
+    height: 10vw; /* Adjust size to maintain usability and visibility */
+  }
+
+  .collabs img[src$="rice.svg"] {
+    height: 8vw;
+  }
+}
+
+.snap {
+  display: flex;
+  align-items: center;  /* Center-align items vertically */
+}
+
+.snap span {
+  margin-left: 10px;  /* Space between the image and the text */
+  /* font-size: 18px;  Reduce font size on smaller screens */
+  font-size: 25px;  
+}
+
+.container {
+  width: 100%; /* Adjusted to be 100% for better responsiveness */
+  max-width: none; /* Removes any maximum width constraints */
+}
+
+/* Adjusting the container and text size in smaller devices */
+@media (max-width: 768px) {
+  .snap span {
+    font-size: 16px;  /* Smaller font size for smaller screens */
+  }
+
+  .container {
+    width: 100%; /* Ensures container takes full width on small screens */
+  }
+}
+
+
 .models {
   max-width: 2000px; /* Limit the maximum width */
   /* margin: auto; Center the container */
@@ -332,7 +416,6 @@ opacity: 1; /* Full opacity on hover */
 /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 /* color: #333; */
-font-size: 32px; /* Adjust font size as needed */
 }
 
 
@@ -398,10 +481,16 @@ font-size: 32px; /* Adjust font size as needed */
 
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 20px;
   padding: 20px;
 }
+/* .video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10vw, 400px));
+  gap: 20px;
+  padding: 20px;
+} */
 
 .video-item {
   background-color: #fff;
@@ -482,7 +571,7 @@ font-size: 32px; /* Adjust font size as needed */
 }
 
 html {
-  scroll-padding-top: 70px; /* Height of the fixed nav bar */
+  scroll-padding-top: --nav-height; /* Height of the fixed nav bar */
 }
 
 
@@ -503,4 +592,215 @@ html {
 
 .notification-box img {
   margin-right: 10px; /* Space between the icon and text */
+}
+
+
+body {
+  font-family: 'GT Ultra', sans-serif;
+  font-weight: 300;
+  font-size: calc(16px + 0.5vw); /* Scales with the viewport */
+  overflow-x: hidden;
+  box-sizing: border-box;
+  color: #1f1e1d;
+  background-color: white;
+}
+
+.footer .icon-link {
+  font-size: 25px; /* Consider reducing on smaller screens */
+  color: #000;
+}
+
+.link-block a {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser, .publication-title, .publication-authors {
+  font-family: 'GT Ultra', sans-serif;
+}
+
+.publication-title {
+  font-size: 10vw; /* Responsive font size */
+  padding-top: 3rem;
+  font-weight: bold;
+}
+
+.inversion, .teaser {
+  margin: 0 auto;
+  padding: 0;
+  padding-bottom: 3rem;
+  width: 90%; /* More flexible width */
+  max-width: 1000px;
+}
+
+.publication-banner video, .publication-video iframe {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.models, .model img {
+  max-width: 100%;
+}
+
+.model {
+  min-width: 50%; /* Ensures two columns in large screens */
+  max-width: 100%; /* Full width on smaller screens */
+}
+
+.abstract-method-section p {
+  font-size: calc(16px + 0.5vw); /* Responsive font size */
+}
+
+@media (max-width: 768px) {
+  .footer .icon-link, .publication-title {
+    font-size: 20px; /* Smaller font size on mobile */
+  }
+
+  .teaser .hero-body, .inversion {
+    padding-bottom: 1.5rem;
+  }
+
+  .model {
+    min-width: 100%; /* Full width on small screens */
+  }
+
+  .video-item video {
+    height: auto;
+  }
+
+  .nav-link a {
+    font-size: 20px; /* Smaller font size for nav items */
+  }
+
+  .notification-box {
+    flex-direction: column; /* Stack icon and text vertically */
+  }
+}
+
+/* Additional styles for high-density displays and orientation */
+@media (min-resolution: 192dpi) and (orientation: portrait) {
+  /* Increase text sizes for better readability on high-resolution portrait screens */
+  body, .abstract-method-section p {
+    font-size: calc(18px + 0.5vw);
+  }
+}
+
+
+
+:root {
+  --nav-height: 50px; /* Default nav height */
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 60px; /* Increased nav height for smaller screens */
+  }
+}
+
+body {
+  padding-top: var(--nav-height);
+}
+
+
+
+
+.publication-title {
+  font-size: 28px; /* Default font size for small devices */
+  padding-top: 3rem;
+  font-weight: bold;
+}
+
+/* Medium devices (tablets, large phones) */
+@media (min-width: 768px) {
+  .publication-title {
+    font-size: 32px;
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .publication-title {
+    font-size: 32px;
+  }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+  .publication-title {
+    font-size: 40px;
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1600px) {
+  .publication-title {
+    font-size: 48px;
+  }
+}
+
+
+.resources {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.resource-item {
+  display: inline-block;
+  margin: 0 10px; /* Reduced margin for smaller screens */
+}
+
+.resource-icon {
+  width: 5vw; /* Dynamic width based on viewport width */
+  max-width: 50px; /* Ensures icons don't become too large on bigger screens */
+  min-width: 30px; /* Minimum size to maintain visibility */
+  margin-bottom: 6px; /* Adjust gap between icon and text */
+  opacity: 0.8; /* Adjust the opacity as needed */
+}
+
+.resource-icon:hover {
+  opacity: 1; /* Full opacity on hover */
+}
+
+.resource-text {
+  font-family: 'GT Ultra', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: calc(12px + 0.5vw); /* Responsive font size */
+}
+
+/* Media Queries for further adjustments */
+@media (max-width: 768px) {
+  .resource-item {
+    margin: 0 5px; /* Smaller margins for compact spaces */
+  }
+  .resource-icon {
+    width: 8vw; /* Slightly larger to maintain usability on small devices */
+  }
+  .resource-text {
+    font-size: calc(10px + 1vw); /* Increase base font size slightly for readability */
+  }
+}
+
+@media (max-width: 480px) {
+  .resources {
+    margin-top: 10px; /* Reduce margin at the top for small devices */
+  }
+  .resource-item {
+    display: block; /* Stack items vertically to avoid clutter */
+    margin: 10px auto; /* Center and space out vertically */
+  }
+  .resource-icon {
+    width: 10vw; /* Further adjust icon size for very small screens */
+  }
+  .resource-text {
+    font-size: calc(12px + 2vw); /* Larger base font size for better readability */
+  }
 }
