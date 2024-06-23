@@ -538,11 +538,11 @@
 		<br />
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			const videoItems = document.querySelectorAll('.video-item');  // Get all video item elements
+			const videoItems = document.querySelectorAll('.video-item');  
 			let userInteracted = false;
 	
 			document.body.addEventListener('click', function() {
-				userInteracted = true;  // Set to true on any click on the page
+				userInteracted = true;  
 			});
 	
 			videoItems.forEach(function(item) {
@@ -550,7 +550,7 @@
 				const caption = item.querySelector('.video-caption');
 	
 				item.addEventListener('mouseenter', function() {
-					if (userInteracted) {  // Only apply effects if the user has interacted with the page
+					if (userInteracted) {  
 						if (video.muted) {
 							video.muted = false;
 							video.currentTime = 0; 
@@ -565,7 +565,44 @@
 					caption.style.opacity = '0.5';
 				});
 			});
-		});
+		}); 
+
+
+		document.addEventListener('DOMContentLoaded', function () {
+			const videoItems = document.querySelectorAll('.video-item');  // Get all video item elements
+			let userInteracted = false;
+		  
+			function isMobileDevice() {
+			  return /Mobi|Android/i.test(navigator.userAgent);
+			}
+		  
+			document.body.addEventListener('click', function() {
+			  userInteracted = true;  // Set to true on any click on the page
+			});
+		  
+			videoItems.forEach(function(item) {
+			  const video = item.querySelector('.video-player');
+			  const caption = item.querySelector('.video-caption');
+		  
+			  item.addEventListener('mouseenter', function() {
+				if (userInteracted && !isMobileDevice()) {  // Only apply effects if the user has interacted with the page and is not on mobile
+				  if (video.muted) {
+					video.muted = false;
+					video.currentTime = 0;
+				  }
+				  caption.style.opacity = '1';
+				}
+			  });
+		  
+			  item.addEventListener('mouseleave', function() {
+				if (!isMobileDevice() && !video.muted) {
+				  video.muted = true;
+				}
+				caption.style.opacity = '0.5';
+			  });
+			});
+		  });
+		  
 
 		document.getElementById('menu-button').addEventListener('click', function() {
 			const navLinks = document.getElementById('nav-links');
