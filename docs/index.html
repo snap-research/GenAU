@@ -571,7 +571,7 @@
 			  });
 			}
 		  
-			// Apply only if not on mobile
+			// Apply hover functionality only if not on mobile
 			if (!isMobileDevice()) {
 			  videoItems.forEach(function(item) {
 				const video = item.querySelector('.video-player');
@@ -579,16 +579,18 @@
 				handleVideoHover(item, video, caption);
 			  });
 			} else {
-			  // For mobile, ensure videos are muted and do not autoplay
+			  // For mobile, ensure videos are muted and paused
 			  videoItems.forEach(function(item) {
 				const video = item.querySelector('.video-player');
 				if (video) {
 				  video.muted = true;
 				  video.pause(); // Ensure video is paused
+				  video.setAttribute('controls', false); // Disable controls to prevent user interaction
+				  video.removeAttribute('autoplay'); // Ensure autoplay is disabled
 				}
 			  });
 			}
-		  });
+		  });		  
 		  
 		document.getElementById('menu-button').addEventListener('click', function() {
 			const navLinks = document.getElementById('nav-links');
