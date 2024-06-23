@@ -71,18 +71,16 @@
 		</div>
 
 
-		<div id="fixed-nav">
-			<!-- Left-aligned content -->
+		<!-- <div id="fixed-nav">
 			<div class="left-content">
 				<div class="nav-link" style="padding-right:0%">
 					<a href="./">
-						<img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
+						<img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> 
 						GenAU
 					</a>
 				</div>
 			</div>
 		  
-			<!-- Right-aligned content -->
 			<div class="right-content">
 				<div class="nav-link">
 					<a href="assets/paper/taming_data_transformers.pdf">Paper</a>
@@ -103,7 +101,31 @@
 				</div>
 				
 			</div>
-		</div>
+		</div> -->
+
+		<div id="fixed-nav">
+			<!-- Left-aligned content -->
+			<div class="left-content">
+			  <div class="nav-link" style="padding-right:0%">
+				<a href="./">
+				  <img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
+				  GenAU
+				</a>
+			  </div>
+			</div>
+		  
+			<!-- Right-aligned content -->
+			<div class="right-content">
+			  <div id="menu-button" class="nav-link" style="cursor: pointer;">&#9776;</div> <!-- Menu icon -->
+			  <div id="nav-links" class="nav-links">
+				<div class="nav-link"><a href="assets/paper/taming_data_transformers.pdf">Paper</a></div>
+				<div class="nav-link"><a href="#">Demo</a></div>
+				<div class="nav-link"><a href="#">Code</a></div>
+				<div class="nav-link"><a href="#samples">Samples</a></div>
+				<div class="nav-link"><a href="comparisons.html">Comparisons</a></div>
+			  </div>
+			</div>
+		  </div>
 
 
 		<div class="resources", style="padding-top: 2%;">
@@ -120,8 +142,8 @@
 			  </a>
 			</div>
 			
-			<div class="resource-item  resource-text">
-				<a  class="paper-btn" href="#">Demo (Coming soon!)</a>
+			<div class="resource-item ">
+				<a  class="paper-btn resource-text" href="#">Demo (Coming soon!)</a>
 			  </div>
 			
 			  <!-- <div class="resource-item  resource-text">
@@ -150,7 +172,7 @@
 				<!-- <h2>Audio Generatior with GenAU</h2> -->
 			<div class="notification-box">
 				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> <!-- Ensure you have an appropriate icon image -->
-				<span>Click anywhere on the page, then hover over the wavs to listen to the generated sound through our audio generator <b style="color: #141fee;">GenAU </b>.</span>
+				<span>Click anywhere on the page, then hover over (or click) the waveforms to listen to the generated sound through our audio generator <b style="color: #141fee;">GenAU </b>.</span>
 			</div>
 			<div class="video-grid target-nav" >
 				<div class="video-item">
@@ -293,7 +315,7 @@
 		<div class="generator-samples" style="padding-top: 40px;">
 			<div class="notification-box">
 				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> <!-- Ensure you have an appropriate icon image -->
-				<span>Click anywhere on the page, then hover over the wavs to listen to audio and examine the captions generated through our audio captioner <b style="color: #141fee;">AutoCap </b>.</span>
+				<span>Click anywhere on the page, then hover over (or click) the waveforms to listen to audio and examine the captions generated through our audio captioner <b style="color: #141fee;">AutoCap </b>.</span>
 			</div>
 			<div class="video-grid target-nav" >
 				<div class="video-item">
@@ -405,28 +427,36 @@
 			<div class="models">
 				<h2 class="title">Our Models</h2>
 				<div class="models-container">
-					<div class="model">
+					<div class="model left-model">
 						<img style="width:90%" src="./assets/figures/autocap.png" alt="AutoCap Model Diagram" />
-						<!-- <p class="lead">
-						<strong>AutoCap:</strong> An overview of the proposed architecture for our AutoCap model. Frozen CLAP and HTSAT audio encoders produce the audio representation.
-						To reduce the large number of tokens produced by the HTSAT encoder, we use a Q-Former, reducing the amount of input tokens by a factor of 4.
-						A pretrained BART encoder-decoder aggregates the tokens, producing the output caption.
-					</p> -->
+						<p >
+						<strong>AutoCap:</strong> We employ frozen CLAP and HTSAT audio encoders to produce the
+						audio representation. We then compact this representation into <b>4x</b> less tokens using a
+						<b style="color: #e67a59;">Q-Former</b> module. This enhances the efficieny
+						of the captioning model and aligning the audio representation with the language
+						representation of a pretrained BART encoder-decoder model that aggregates these tokens along
+						with tokens extected from useful metadata to produce the output caption.
+						</p>
 					</div>
-					<div class="model" style="padding-top: 50px">
+					<div class="model right-model">
 						<img style="width:100%" src="./assets/figures/genau.png" alt="GenAu Model Diagram" />
-						<!-- <p class="lead">
-						<strong>GenAu:</strong> Overview of our GenAu model based on an FIT-based latent audio generator. A frozen 1D-VAE produces the latent audio representation.
-						Input patches are divided into groups and processed by 'local' attention layers. 'read' and 'write' operations implemented as cross attention layers transfer information between patches and latents.
-						Finally, 'global' attention layers process latent tokens with attention spanning over all groups, enabling global communication.
-					</p> -->
+					<p>
+						<strong>GenAu:</strong> We use a frozen audio 1D-VAE to produce a sequence of latents from a
+						Mel-Spectrogram representation. Based on the FIT architecture, these latents are patchified
+						and divided into groups which processed by <b style="color: #de67d0;">local</b> attention
+						layers. The <b style="color: #e67a59;">read</b> and <b style="color: #141fee;">write</b>
+						operations are implemented as cross attention layers that transfer information between input
+						latents and learnable latent tokens.
+						Finally, <b style="color: #99e292;">global</b> attention layers process latent tokens with
+						attention spanning over all groups of latent tokens, enabling global communication.
+					</p>
 					</div>
 				</div>
 
 
-				<div class="models-container">
+				<!-- <div class="models-container">
 					<div class="model" style="padding-right: 20px">
-						<p class="lead">
+						<p>
 							<strong>AutoCap:</strong> We employ frozen CLAP and HTSAT audio encoders to produce the
 							audio representation. We then compact this representation into <b>4x</b> less tokens using a
 							<b style="color: #e67a59;">Q-Former</b> module. This enhances the efficieny
@@ -436,7 +466,7 @@
 						</p>
 					</div>
 					<div class="model" style="padding-left: 20px">
-						<p class="lead">
+						<p>
 							<strong>GenAu:</strong> We use a frozen audio 1D-VAE to produce a sequence of latents from a
 							Mel-Spectrogram representation. Based on the FIT architecture, these latents are patchified
 							and divided into groups which processed by <b style="color: #de67d0;">local</b> attention
@@ -447,28 +477,29 @@
 							attention spanning over all groups of latent tokens, enabling global communication.
 						</p>
 					</div>
-				</div>
+				</div> -->
 
 			</div>
 
 
 		</div>
 
-<div >
+<div class="improvements">
 	<h2  class="title">Improvements</h2>
 	<img src="assets/figures/improvements.png">
 </div>
-<div>
-	<p class="section" id="paper"><h2 class="title">Paper</h2></p>
-          <table width="940" border="0">
+<div class="paper">
+	<p><h2 class="title">Paper</h2></p>
+          <table border="0">
             <tbody>
               <tr>
-                <td height="100"><a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer"><img src="./assets/icons/paper_cover.jpg" alt="" width="140" height="167"></a></td>
-                <td width="750"><p><b>Taming Data and Transformers for Audio Generation (514 KB)
+                <td><a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer"><img src="./assets/icons/paper_cover.jpg" alt=""></a></td>
+                <td><p><b>Taming Data and Transformers for Audio Generation (514 KB)
                 </b><br>
-				Moayed Haji-Ali,  Willi Menapace,  Aliaksandr Siarohin,  Guha Balakrishnan,  Sergey Tulyakov, and Vicente Ordonez <br />
-                                   <br>
-                  <em>Preprint</em><br><br>
+				<p class="paper-authors"> Moayed Haji-Ali,  Willi Menapace,  Aliaksandr Siarohin,  Guha Balakrishnan,  Sergey Tulyakov, and Vicente Ordonez <br />
+				</p>
+				<br>
+                  <p><em>Preprint</em> </p>
                    [<a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer">paper</a>]</p>
                 </td>
               </tr>
@@ -535,6 +566,16 @@
 				});
 			});
 		});
+
+		document.getElementById('menu-button').addEventListener('click', function() {
+			const navLinks = document.getElementById('nav-links');
+			if (navLinks.style.display === 'flex') {
+			  navLinks.style.display = 'none';
+			} else {
+			  navLinks.style.display = 'flex';
+			}
+		  });
+		  
 	</script>
 </body>
 
