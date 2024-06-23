@@ -538,72 +538,58 @@
 		<br />
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			const videoItems = document.querySelectorAll('.video-item');  
-			let userInteracted = false;
-	
-			document.body.addEventListener('click', function() {
-				userInteracted = true;  
-			});
-	
-			videoItems.forEach(function(item) {
-				const video = item.querySelector('.video-player');
-				const caption = item.querySelector('.video-caption');
-	
-				item.addEventListener('mouseenter', function() {
-					if (userInteracted) {  
-						if (video.muted) {
-							video.muted = false;
-							video.currentTime = 0; 
-						}
-						caption.style.opacity = '1';
-					}
-				});
-				item.addEventListener('mouseleave', function() {
-					if (!video.muted) {
-						video.muted = true;
-					}
-					caption.style.opacity = '0.5';
-				});
-			});
-		}); 
-
-
-		document.addEventListener('DOMContentLoaded', function () {
 			const videoItems = document.querySelectorAll('.video-item');  // Get all video item elements
 			let userInteracted = false;
 		  
+			// Function to detect mobile devices
 			function isMobileDevice() {
-			  return /Mobi|Android/i.test(navigator.userAgent);
+			  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 			}
 		  
+			// Detect user interaction
 			document.body.addEventListener('click', function() {
 			  userInteracted = true;  // Set to true on any click on the page
 			});
 		  
-			videoItems.forEach(function(item) {
-			  const video = item.querySelector('.video-player');
-			  const caption = item.querySelector('.video-caption');
-		  
+			// Function to handle hover and interaction
+			function handleVideoHover(item, video, caption) {
 			  item.addEventListener('mouseenter', function() {
-				if (userInteracted && !isMobileDevice()) {  // Only apply effects if the user has interacted with the page and is not on mobile
+				if (userInteracted) {  // Only apply effects if the user has interacted with the page
 				  if (video.muted) {
 					video.muted = false;
-					video.currentTime = 0;
+					video.currentTime = 0;  // Reset video to the beginning
 				  }
 				  caption.style.opacity = '1';
 				}
 			  });
 		  
 			  item.addEventListener('mouseleave', function() {
-				if (!isMobileDevice() && !video.muted) {
+				if (!video.muted) {
 				  video.muted = true;
 				}
 				caption.style.opacity = '0.5';
 			  });
-			});
+			}
+		  
+			// Apply only if not on mobile
+			if (!isMobileDevice()) {
+			  videoItems.forEach(function(item) {
+				const video = item.querySelector('.video-player');
+				const caption = item.querySelector('.video-caption');
+				handleVideoHover(item, video, caption);
+			  });
+			} else {
+			  // For mobile, ensure videos are muted and do not autoplay
+			  videoItems.forEach(function(item) {
+				const video = item.querySelector('.video-player');
+				if (video) {
+				  video.muted = true;
+				  video.pause(); // Ensure video is paused
+				}
+			  });
+			}
 		  });
 		  
-
 		document.getElementById('menu-button').addEventListener('click', function() {
 			const navLinks = document.getElementById('nav-links');
 			if (navLinks.style.display === 'flex') {
