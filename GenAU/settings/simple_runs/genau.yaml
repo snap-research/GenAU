@@ -1,0 +1,308 @@
+variables:
+  num_workers: &num_workers 12
+  sampling_rate: &sampling_rate 16000 
+  mel_bins: &mel_bins 64
+  latent_embed_dim: &latent_embed_dim 64
+  latent_t_size: &latent_t_size 256 # TODO might need to change
+  latent_f_size: &latent_f_size 1
+  in_channels: &unet_in_channels 256
+  optimize_ddpm_parameter: &optimize_ddpm_parameter true
+  warmup_steps: &warmup_steps 5000
+  lr: &lr 5.0e-3
+  mx_steps: &mx_steps 80000000
+  batch_size: &bs 4 
+  
+training:
+  resume_training: False # if true, the most recent checkpoint will be found in the log folder and used to initalize the training
+  precision: "high"
+  nodes_count: -1 # if -1, train on the whole world size. For multinode training, please lunch the module with torch.distributed.run 
+
+logging: 
+  project_name: "genau"
+  wandb_key: YOUR_WANDB_KEY (check wandb.ai/authorize)
+  log_directory: "./run_logs/genau/train"
+
+  # (optional) if s3 path is speicified, checkpoints be saved at S3_FOLDED/log_directory and deleted from the local folder (except the last checkpoint). Otherwise, checkpointwill be save locally indefinitely
+  # S3_BUCKET: "YOUR_S3_BUCKET" 
+  # S3_FOLDER: 'YOUR_S3_FOLDER'
+
+  save_checkpoint_every_n_steps: 1500
+  save_top_k: -1
+
+
+data: 
+  metadata_root: "../dataset_preperation/data/metadata/dataset_root.json"
+  train: ['test']
+  val: "autocap"
+  test: "autocap"
+  class_label_indices: "audioset_eval_subset"
+  dataloader_add_ons: [] 
+  augment_p : 0.0
+  num_workers: *num_workers
+  consistent_start_time: True # always sample the same start time
+
+  keys_synonyms: # as various datasets might have different fields as the groundtruth captions
+    gt_audio_caption:
+      - audiocaps_gt_captions
+      - gt_caption
+      - gt_captions
+      - caption
+      - gt_audio_caption
+      - autocap_caption
+      - wavcaps_caption
+    tags:
+      - keywords
+      - tags
+
+step:
+  validation_every_n_epochs: 3
+  limit_val_batches: 1 # enable for test
+  limit_train_batches: 128 # enable for test
+  max_steps: *mx_steps
+
+preprocessing:
+  video:
+      fps : 1
+      height: 224
+      width: 224
+  audio:
+    sampling_rate: *sampling_rate
+    max_wav_value: 32768.0
+    duration: 10.24
+  stft:
+    filter_length: 1024
+    hop_length: 160
+    win_length: 1024
+  mel:
+    n_mel_channels: *mel_bins
+    mel_fmin: 0
+    mel_fmax: 8000 
+
+
+model:
+  target: src.models.genau_ddpm.GenAu
+  params: 
+    # EMA
+    use_ema: False # in our experiments, EMA diverged mid training for some reason
+    # logging 
+    validate_uncond: False
+    validate_wo_ema: True
+    num_val_sampled_timestamps: 10 # used to understand the performance at different timestamps ranges, normally set it to 1
+    
+    # evaluation 
+    evaluator:
+      target: audioldm_eval.EvaluationHelper
+      params: 
+        sampling_rate: *sampling_rate
+        device: 'cuda'
+
+    # Optimizer
+    optimizer_config:
+      target: !module src.modules.optimizers.lamb.Lamb
+      lr: *lr
+      weight_decay: 0.01
+      betas: [0.9,0.99]
+      # eps parameter for Adam
+      eps: 0.00000001      
+
+    base_learning_rate: *lr # only used for deafult adam optimizer if the optimizer_config is not specified
+    final_lr: 0.0015  # Use cosine lr scheduling but do not reach 0 as performance degrade with very small lr
+    warmup_steps: *warmup_steps
+
+    # Number of steps between each lr update
+    lr_update_each_steps: 10
+    max_steps: *mx_steps 
+
+    # Autoencoder
+    first_stage_config:
+      base_learning_rate: 8.0e-06
+      target: src.modules.latent_encoder.autoencoder_1d.AutoencoderKL1D
+      params: 
+        # "log/vae_checkpoints/vae_64hd_checkpoint-564999.ckpt" TODO: upload 564999 vae for future training
+        reload_from_ckpt: 1dvae_64ch_16k_64bins 
+        sampling_rate: *sampling_rate
+        batchsize: *bs 
+        monitor: val/rec_loss
+        image_key: fbank
+        subband: 1
+        embed_dim: *latent_embed_dim
+        time_shuffle: 1
+        lossconfig:
+          target: src.losses.LPIPSWithDiscriminator
+          params:
+            disc_start: 50001
+            kl_weight: 1000.0
+            disc_weight: 0.5
+            disc_in_channels: 1
+        ddconfig: 
+          double_z: true
+          mel_bins: *mel_bins # The frequency bins of mel spectrogram
+          z_channels: *unet_in_channels
+          resolution: 256
+          downsample_time: false
+          in_channels: 64
+          out_ch: 64 # in and out channels must stay as 64 as we use 64 freq bins for the spectrogram represenation
+          ch: 512 
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          num_res_blocks: 3
+          attn_resolutions: []
+          dropout: 0.0
+      
+    # Other parameters
+    clip_grad: 0.5
+    optimize_ddpm_parameter: *optimize_ddpm_parameter
+    sampling_rate: *sampling_rate
+    batchsize: *bs
+    linear_start: 0.0015 
+    linear_end: 0.0195
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    # probability of dropping the condition during training
+    unconditional_prob_cfg: 0.1
+
+    parameterization: eps # [eps, x0, v] # INFO: inital expeirments with v parameterization with the UNet backbone lead to worse results
+    first_stage_key: fbank
+    latent_t_size: *latent_t_size 
+    latent_f_size: *latent_f_size
+    channels: *latent_embed_dim 
+    monitor: val/loss_simple_ema
+    
+    scale_by_std: True # Might lead to inaccurate estimation of the std. Please use the provided script to calculate the std of the vae features.
+    # scale_factor: 1.0144787 # TODO: precompute the std
+    
+    backbone_type : fit
+    unet_config:
+      target: src.modules.fit.fit_audio.FIT
+
+      params:
+        weight_initializer:
+          target: !module src.modules.initializers.initializers.RINWeightScalerInitializer
+          scale: 0.57735026919 # 1/sqrt(3) from Yuwei's findings
+
+        fit_block_module: !module src.modules.fit.layers.fit_layers.FITBlockV5
+        context_channels: 1024
+        summary_text_embeddings_channels: 1536 # text embedding (e.g CLAP + FLANT5) size
+
+        # If True inserts the conditioning information in the context
+        conditioning_in_context: True
+
+        # The type of positional encodings to use for the time input
+        time_pe_type: learned
+        # Uses a label that specifies the id of the dataset from which the current input comes
+        use_dataset_id_conditioning: True
+        # Uses a label that specifies the resolution of the current input
+        use_resolution_conditioning: False
+
+        # Size of the input in pixels
+        input_size: [1, *latent_t_size, *latent_f_size]  # (frames_count, height, widht)
+        # The size in pixels of each patch
+        patch_size: [1, 2, 1]
+        # The number of patches in each group
+        group_size: [1, 16, 1]
+        input_channels: *latent_embed_dim
+        # The number of channels in the patch embeddings
+        patch_channels: 512
+        # The number of fit blocks
+        fit_blocks_count: 2
+        # The number of local layers in each fit block
+        local_layers_per_block: 2
+        # The number of global layers in each fit block
+        global_layers_per_block: 4
+        # The number of latent tokens
+        latent_count: 64
+        # The number of channels in the latent tokens
+        latent_channels: 512
+
+        self_conditioning_ff_config: {}
+        fit_block_config:
+          attention_class: !module src.modules.fit.layers.rin_layers.Attention
+          ff_class: !module src.modules.fit.layers.rin_layers.FeedForward
+          
+          # Dropout parameters
+          drop_units: 0.1
+          drop_path: 0.0
+
+          # Whether to use feedforward layers after corss attention
+          use_cross_attention_feedforward: True
+          
+          # Configuration for attention layers
+          default_attention_config:
+            heads: 8
+            dim_head: 64
+          read_attention_config:
+            # Ensure heads * dim_head = min(input_channels, patch_channels)
+            heads: 8
+            dim_head: 64
+          read_context_attention_config:
+            # Ensure heads * dim_head = min(latent_channels, context_channels)
+            heads: 8
+            dim_head: 64
+          read_latent_conditioning_attention_config:
+            # Ensure heads * dim_head = latent_channels
+            heads: 8
+            dim_head: 64
+          write_attention_config:
+            # Ensure heads * dim_head = min(input_channels, patch_channels)
+            heads: 8
+            dim_head: 64
+          local_attention_config:
+            # Ensure heads * dim_head = patch_channels
+            heads: 8
+            dim_head: 64
+          global_attention_config:
+            # Ensure heads * dim_head = latent_channels
+            heads: 8
+            dim_head: 64
+          ff_config: {}
+    
+    cond_stage_config:
+      film_clap_cond1:
+        cond_stage_key: text
+        conditioning_key: film
+        target: src.modules.conditional.conditional_models.CLAPAudioEmbeddingClassifierFreev2
+        params:
+          pretrained_path: clap_htsat_tiny
+          sampling_rate: *sampling_rate
+          embed_mode: text 
+          amodel: HTSAT-tiny
+      film_flan_t5_cond2:
+        cond_stage_key: text
+        conditioning_key: film
+        target: src.modules.conditional.conditional_models.FlanT5HiddenState
+        params:
+          text_encoder_name: google/flan-t5-large 
+          freeze_text_encoder: True
+          return_embeds: True
+          pool_tokens: True
+        
+      noncond_dataset_ids: # for none_fit backbone, please use film_dataset_ids and enable encode_dataset_ids
+        cond_stage_key: all
+        conditioning_key: ignore
+        target: src.modules.conditional.conditional_models.DatasetIDs
+        params:
+          encode_dataset_ids: False
+          dataset2id:
+            audiocaps: 0
+            clotho: 1
+            vggsounds: 2
+            wavcaps_audioset_strong: 3
+            wavcaps_bbcsound: 4
+            wavcaps_freesound: 5
+            wavcaps_soundbible: 6
+            fsd50k: 7
+            caption_audioset: 8
+            autocap: 9
+            unconditional: 0 # TODO: give a unique id for the uncondtional generation for future experiments
+
+
+    evaluation_params:
+      unconditional_guidance_scale: 3.5
+      ddim_sampling_steps: 200
+      n_candidates_per_samples: 1
+
+
+

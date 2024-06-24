@@ -108,12 +108,12 @@ def download_yt_video(entry,
                     file_meta['channel_url'] = info.get('channel_url')
                     file_meta['channel_name'] = info.get('uploader')
 
-                    print("save meta data for", os.path.join(outpath, jsonname))
+                    print("[INFO] save meta data for", os.path.join(outpath, jsonname))
                     json.dump(file_meta, open(os.path.join(outpath, jsonname),'w'))
                 os.system(f'rm -rf /temps/id_{video_id}_{file_idx:03d}')
             except Exception as e:
                 os.system(f'rm -rf /temps/id_{video_id}_{file_idx:03d}')
-                print(f"Error downloading {os.path.join(outpath, f'{video_id}_{file_idx:03d}.json')}:", e)
+                print(f"[ERROR] downloading {os.path.join(outpath, f'{video_id}_{file_idx:03d}.json')}:", e)
                 return f'{url} - ytdl : {log_stream.getvalue()}, system : {str(e)}'
     return None
 
@@ -216,7 +216,7 @@ if __name__ == "__main__":
     parser.add_argument("--save_dir", 
                         type=str,
                         required=False,
-                        default='data/autocap/videos',
+                        default='data/datasets/autocap/videos',
                         help="where to save the downloaded files")
     
     parser.add_argument("--audio_only", 

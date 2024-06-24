@@ -1,0 +1,110 @@
+variables:
+  num_workers: &num_workers 12
+  sampling_rate: &sampling_rate 16000 
+  mel_bins: &mel_bins 64
+  latent_embed_dim: &latent_embed_dim 64 # output shape will be T / 4 x 64 => (i.e 256 x 64 for a melspectrogram of size 1024 x 64)
+  in_channels: &unet_in_channels 256 # channels per token
+  batch_size: &bs 4 
+
+logging: 
+  project_name: "genau_1dvae"
+  wandb_key: YOUR_WANDB_KEY (check wandb.ai/authorize)
+  log_directory: "./run_logs/genau/train"
+
+  # (optional) if s3 path is speicified, checkpoints be saved at S3_FOLDED/log_directory and deleted from the local folder (except the last checkpoint). Otherwise, checkpointwill be save locally indefinitely
+  # S3_BUCKET: "YOUR_S3_BUCKET" 
+  # S3_FOLDER: 'YOUR_S3_FOLDER'
+
+  save_checkpoint_every_n_steps: 50
+  save_top_k: -1
+
+training:
+  resume_training: False
+  precision: "high"
+  nodes_count: -1 # if -1, train on the whole world size. For multinode training, please lunch the module with torch.distributed.run 
+
+data:
+  metadata_root: "../dataset_preperation/data/metadata/dataset_root.json"
+  train: ["autocap"]
+  val: "audioset"
+  test: "audioset"
+  class_label_indices: "audioset_eval_subset"
+  augment_p : 0.0
+  num_workers: *num_workers
+
+  keys_synonyms:
+    gt_audio_caption:
+      - audiocaps_gt_captions
+      - gt_caption
+      - gt_captions
+      - caption
+      - best_model_w_meta_pred_caption
+      - gt_audio_caption
+      - autocap_caption
+      - wavcaps_caption
+    tags:
+      - keywords
+      - tags
+
+
+step:
+  validation_every_n_epochs: 5
+  max_steps: 1200000
+  max_epochs: 1500
+
+
+preprocessing:
+  video:
+      fps : 1
+      height: 224
+      width: 224
+  audio:
+    sampling_rate: *sampling_rate
+    max_wav_value: 32768.0
+    duration: 10.24
+  stft:
+    filter_length: 1024
+    hop_length: 160
+    win_length: 1024
+  mel:
+    n_mel_channels: *mel_bins
+    mel_fmin: 0
+    mel_fmax: 8000 
+
+
+model:
+    base_learning_rate: 8.0e-06
+    target: src.modules.latent_encoder.autoencoder_1d.AutoencoderKL1D
+    params: 
+      # reload_from_ckpt: # leave empty during first stage training and specify it in the second stage training
+      sampling_rate: *sampling_rate
+      batchsize: *bs
+      monitor: val/rec_loss
+      image_key: fbank
+      subband: 1
+      embed_dim: *latent_embed_dim
+      time_shuffle: 1
+      lossconfig:
+        target: src.losses.LPIPSWithDiscriminator
+        params:
+          disc_start: 20001
+          kl_weight: 1000.0
+          disc_weight: 0.5
+          disc_in_channels: 1
+      ddconfig: 
+        double_z: true
+        mel_bins: *mel_bins # The frequency bins of mel spectrogram
+        z_channels: *unet_in_channels
+        resolution: 256
+        downsample_time: false
+        in_channels: *mel_bins
+        out_ch: *mel_bins # in and out channels must stay as the number of mel bins
+        ch: 512 
+        ch_mult:
+        - 1
+        - 2
+        - 4
+        num_res_blocks: 3
+        attn_resolutions: []
+        dropout: 0.0
+    

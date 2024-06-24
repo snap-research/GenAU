@@ -84,6 +84,11 @@ if __name__ == "__main__":
                         default='train',
                         help="split of the dataset")
     
+    parser.add_argument("--overwrite", 
+                        default=False,
+                        action="store_true"
+                        help="Overwrite dataset metadata")
+    
     args = parser.parse_args()
     
     # initialize all paths
@@ -102,7 +107,7 @@ if __name__ == "__main__":
     for idx, file_path in enumerate(all_json_files):
         current_datafile.write(f"{os.path.relpath(file_path, args.save_dir)}\n")
         
-        if (idx + 1) % args.files_per_subset == 0 and (idx+1) < len(all_json_files):
+        if args.files_per_subset > 0 and (idx + 1) % args.files_per_subset == 0 and (idx+1) < len(all_json_files):
             current_subset += 1
             current_dataset_name = f"{args.dataset_name}_subset_{current_subset}" 
             
@@ -119,11 +124,14 @@ if __name__ == "__main__":
         dataset_root = load_json(args.dataset_meta_file)
     else:
         dataset_root = {"metadata":{"path":{}}}
-        
+    
     # add all datasets
     for split, dataset_name, datafile_path in all_datafiles_path:
+        if not args.overwrite and dataset_name in dataset_root:
+            raise ValueError("ERROR: {dataset_name} already exists in {args.dataset_meta_file}, please use a different dataset_name or pass --overwrite")
+        
         dataset_root[dataset_name] = os.path.abspath(args.save_dir)
-        dataset_root['metadata']['path'][dataset_name] = {}
+        dataset_root['metadata']['path'][dataset_name] = dataset_root['metadata']['path'].get(dataset_name, {})
         dataset_root['metadata']['path'][dataset_name][split] = os.path.abspath(datafile_path)
         for split_check in ['train', 'test', 'val']:
             dataset_root['metadata']['path'][dataset_name][split_check] = dataset_root['metadata']['path'][dataset_name].get(split_check, "")

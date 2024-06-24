@@ -1,2 +1,8 @@
+__pycache__
+**/__pycache__
+**/data
+**/pretrained_models
+**/*.ckpt
+**/*.pt
 .DS_Store
 **/.DS_Store
