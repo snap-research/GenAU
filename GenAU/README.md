@@ -1,9 +1,10 @@
-[![arXiv](ARXIV ICON)](ARXIV LINK)
+<!-- [![arXiv](ARXIV ICON)](ARXIV LINK) -->
 
 # GenAU inference, training and evaluation
+- [Introduction](#introduction)
+- [Environemnt setup](#environment-initalization)
 - [Inference](#inference)
-    * [Audio to text script](#text-to-audio)
-    * [Gradio demo](#gradio-demo)
+    * [Audio to text script](#text-to-audio)<!-- * [Gradio demo](#gradio-demo) -->
     * [Inference a list of promots](#inference-a-list-of-prompts)
 - [Training](#training)
     * [GenAU](#genau)
@@ -12,6 +13,16 @@
 - [Evaluation](#evaluation)
 - [Cite this work](#cite-this-work)
 - [Acknowledgements](#acknowledgements)
+
+# Introduction 
+We introduce GenAU, a transformer-based audio latent diffusion model leveraging the FIT architecture. Our model compresses mel-spectrogram data into a 1D representation and utilizes layered attention processes to achieve state-of-the-art audio generation results among open-source models.
+<br/>
+
+<div align="center">
+<img src="../assets/genau.png" width="900" />
+</div>
+
+<br/>
 
 # Environment initalization
 For initializing your environment, please refer to the [general README](../README.md).
@@ -28,11 +39,11 @@ python scripts/text_to_audio.py --prompt "Horses growl and clop hooves." --model
 - These models are trained to generate ambient sounds and is incapable of generating speech or music.
 - Outputs will be saved by default at `samples/model_output` using the provided prompt as the file name.
 
-## Gradio Demo
+<!-- ## Gradio Demo
 Run a local interactive demo with Gradio:
 ```shell
 python app_text2audio.py
-```
+``` -->
 
 ## Inference a list of prompts
 Optionally, you may prepare a `.txt` file with your target prompts and run
