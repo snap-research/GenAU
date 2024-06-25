@@ -37,7 +37,7 @@ python organize_dataset.py --save_dir <path-to-dataset>
 python organize_dataset.py --save_dir data/datasets/autocap --dataset_name autocap --split train
 ```
 - **Important**: Use different dataset_names for different splits.
-- If `--files_per_subset` is specified to be more than one, the dataset keys will be named as dataset_name_subset_1, dataset_name_subset_2, etc.
+- If `--files_per_subset` is specified to be more than one, the dataset keys will be named dataset_name_subset_1, dataset_name_subset_2, etc.
 - The datasets details can be found at `data/metadata/dataset_root.json`.
 - Add the dataset keys under the `data` attribute in your config file for the audio generation and captioning experiments.
 
@@ -45,30 +45,30 @@ python organize_dataset.py --save_dir data/datasets/autocap --dataset_name autoc
 You need to arrange your audio files in one folder using the following structure:
 ```
 - Folder
-    - 000000
-        - Id_1.wav
-        - Id_1.json
-        - Id_2.wav
-        - Id_2.json
-    - 000001
-        - Id_3.wav
-        - Id_3.json
-        .
-        .
+ - 000000
+ - Id_1.wav
+ - Id_1.json
+ - Id_2.wav
+ - Id_2.json
+ - 000001
+ - Id_3.wav
+ - Id_3.json
+ .
+ .
 ```
 - In the JSON files, add the metadata such as title, description, video_caption, and gt_audio_caption.
 - Organizing your dataset following the instructions in [Dataset Organization](#dataset-organization).
 
 ## Download External Dataset
-We provide a script for downloading audiocaps, wavcaps and clotho datasets. Run the following scripts to download and organize each of these datasets:
+We provide a script for downloading audiocaps, wavcaps, and clotho datasets. Run the following scripts to download and organize each of these datasets:
 
 ```shell
 python download_external_datasets --save_root <path-to-save-root> \
-                                  --dataset_nanmes "dataset_key_1" "dataset_key_2" ...
+ --dataset_nanmes "dataset_key_1" "dataset_key_2" ...
 
 # Organize each downloaded dataset
 python organize_dataset.py --save_dir <path-to-downloaded-dataset> \
-                           --dataset_name <key-to-store-dataset> 
+ --dataset_name <key-to-store-dataset> 
 ```
-- Available datatasets are: **wavcaps_soundbible, wavcaps_bbc, wavcaps_audioset, wavcaps_freesound**
-- **Audiocaps and Cloths**: Please refer to the [Audiocaps](https://github.com/cdjkim/audiocaps) and [Clotho](https://zenodo.org/records/3490684) official repositories for instructions on downloading these dataset. We are unable to disrtibute a copy of the dataset due to copyrights.
+- Available datasets are: **wavcaps_soundbible, wavcaps_bbc, wavcaps_audioset, wavcaps_freesound**
+- **Audiocaps and Cloths**: Please refer to the [Audiocaps](https://github.com/cdjkim/audiocaps) and [Clotho](https://zenodo.org/records/3490684) official repositories for instructions on downloading these dataset. We are unable to distribute a copy of the dataset due to copyrights.

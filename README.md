@@ -1,7 +1,7 @@
-<h1 align="center">
+<h2 align="center">
   <img src="assets/logo.png" width="50" style="vertical-align: middle;"/>
  Taming Data and Transformers for Audio Generation
-</h1>
+</h2>
 
 This is the official GitHub repository of the paper Taming Data and Transformers for Audio Generation.
 
