@@ -99,7 +99,7 @@ if __name__ == "__main__":
         type=str,
         default='genau-full-l',
         required=False,
-        help="path to config .yaml file",
+        help="Model name",
     )
     
     parser.add_argument(

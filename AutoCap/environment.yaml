@@ -1,0 +1,280 @@
+name: conette
+channels:
+- pkgs/main
+dependencies:
+- _libgcc_mutex=0.1
+- _openmp_mutex=5.1
+- bzip2=1.0.8
+- ca-certificates=2023.08.22
+- ld_impl_linux-64=2.38
+- libffi=3.4.4
+- libgcc-ng=11.2.0
+- libgomp=11.2.0
+- libstdcxx-ng=11.2.0
+- libuuid=1.41.5
+- ncurses=6.4
+- openssl=3.0.12
+- pip=23.3.1
+- python=3.10.13
+- readline=8.2
+- setuptools=68.0.0
+- sqlite=3.41.2
+- tk=8.6.12
+- tzdata=2023c
+- wheel=0.41.2
+- xz=5.4.5
+- zlib=1.2.13
+- pip:
+  - aac-datasets==0.4.1
+  - aac-metrics==0.5.0
+  - absl-py==2.0.0
+  - aiohttp==3.9.1
+  - aiosignal==1.3.1
+  - alembic==1.13.0
+  - antlr4-python3-runtime==4.9.3
+  - anyio==4.1.0
+  - argon2-cffi==23.1.0
+  - argon2-cffi-bindings==21.2.0
+  - arrow==1.3.0
+  - asttokens==2.4.1
+  - async-lru==2.0.4
+  - async-timeout==4.0.3
+  - attrs==23.1.0
+  - audiomentations==0.34.1
+  - audioread==3.0.1
+  - autopage==0.5.2
+  - Babel==2.13.1
+  - beautifulsoup4==4.12.2
+  - bert-score==0.3.13
+  - black==23.12.0
+  - bleach==6.1.0
+  - blis==0.7.11
+  - bokeh==3.3.2
+  - Brotli==1.1.0
+  - cachetools==5.3.2
+  - catalogue==2.0.10
+  - certifi==2023.11.17
+  - cffi==1.16.0
+  - charset-normalizer==3.3.2
+  - click==8.1.7
+  - cliff==4.4.0
+  - cloudpathlib==0.16.0
+  - cmaes==0.10.0
+  - cmd2==2.4.3
+  - colorlog==6.8.0
+  - comm==0.2.0
+  - confection==0.1.4
+  - contourpy==1.2.0
+  - cycler==0.12.1
+  - cymem==2.0.8
+  - daal==2024.0.1
+  - daal4py==2024.0.1
+  - debugpy==1.8.0
+  - decorator==5.1.1
+  - deepspeed==0.9.5
+  - defusedxml==0.7.1
+  - exceptiongroup==1.2.0
+  - executing==2.0.1
+  - fastjsonschema==2.19.0
+  - filelock==3.13.1
+  - flake8==6.1.0
+  - fonttools==4.46.0
+  - fqdn==1.5.1
+  - frozenlist==1.4.0
+  - fsspec==2023.12.2
+  - gensim==4.3.2
+  - google-auth==2.25.2
+  - google-auth-oauthlib==1.1.0
+  - greenlet==3.0.2
+  - grpcio==1.60.0
+  - h5py==3.10.0
+  - hjson==3.1.0
+  - huggingface-hub==0.19.4
+  - hydra-colorlog==1.2.0
+  - hydra-core==1.3.2
+  - hydra-optuna-sweeper==1.2.0
+  - idna==3.6
+  - imageio==2.33.1
+  - importlib-metadata==7.0.0
+  - inflate64==1.0.0
+  - iniconfig==2.0.0
+  - intel-extension-for-pytorch==2.1.0
+  - ipykernel==6.27.1
+  - ipython==8.18.1
+  - ipywidgets==8.1.1
+  - isoduration==20.11.0
+  - jedi==0.19.1
+  - Jinja2==3.1.2
+  - joblib==1.3.2
+  - json5==0.9.14
+  - jsonpointer==2.4
+  - jsonschema==4.20.0
+  - jsonschema-specifications==2023.11.2
+  - julius==0.2.7
+  - jupyter==1.0.0
+  - jupyter-console==6.6.3
+  - jupyter-events==0.9.0
+  - jupyter-lsp==2.2.1
+  - jupyter_client==8.6.0
+  - jupyter_core==5.5.0
+  - jupyter_server==2.12.1
+  - jupyter_server_terminals==0.5.0
+  - jupyterlab==4.0.9
+  - jupyterlab-widgets==3.0.9
+  - jupyterlab_pygments==0.3.0
+  - jupyterlab_server==2.25.2
+  - kiwisolver==1.4.5
+  - langcodes==3.3.0
+  - language-tool-python==2.7.1
+  - lazy_loader==0.3
+  - librosa==0.10.1
+  - lightning-utilities==0.10.0
+  - llvmlite==0.41.1
+  - Mako==1.3.0
+  - Markdown==3.5.1
+  - MarkupSafe==2.1.3
+  - matplotlib==3.8.2
+  - matplotlib-inline==0.1.6
+  - mccabe==0.7.0
+  - mistune==3.0.2
+  - msgpack==1.0.7
+  - multidict==6.0.4
+  - multivolumefile==0.2.3
+  - murmurhash==1.0.10
+  - mypy-extensions==1.0.0
+  - nbclient==0.9.0
+  - nbconvert==7.12.0
+  - nbformat==5.9.2
+  - nest-asyncio==1.5.8
+  - networkx==3.2.1
+  - ninja==1.11.1.1
+  - nltk==3.8.1
+  - nnAudio==0.3.2
+  - notebook==7.0.6
+  - notebook_shim==0.2.3
+  - numba==0.58.1
+  - numpy==1.26.2
+  - nvidia-cublas-cu11==11.10.3.66
+  - nvidia-cuda-nvrtc-cu11==11.7.99
+  - nvidia-cuda-runtime-cu11==11.7.99
+  - nvidia-cudnn-cu11==8.5.0.96
+  - oauthlib==3.2.2
+  - omegaconf==2.3.0
+  - optuna==2.10.1
+  - overrides==7.4.0
+  - packaging==23.2
+  - pandas==2.1.4
+  - pandocfilters==1.5.0
+  - parso==0.8.3
+  - pathspec==0.12.1
+  - pbr==6.0.0
+  - pexpect==4.9.0
+  - Pillow==10.1.0
+  - platformdirs==4.1.0
+  - pluggy==1.3.0
+  - pooch==1.8.0
+  - preshed==3.0.9
+  - prettytable==3.9.0
+  - prometheus-client==0.19.0
+  - prompt-toolkit==3.0.41
+  - protobuf==4.23.4
+  - psutil==5.9.6
+  - ptyprocess==0.7.0
+  - pure-eval==0.2.2
+  - py-cpuinfo==9.0.0
+  - py7zr==0.20.8
+  - pyasn1==0.5.1
+  - pyasn1-modules==0.3.0
+  - pybcj==1.0.2
+  - pycodestyle==2.11.1
+  - pycparser==2.21
+  - pycryptodomex==3.19.0
+  - pydantic==1.10.13
+  - pyemd==1.0.0
+  - pyflakes==3.1.0
+  - Pygments==2.17.2
+  - pyparsing==3.1.1
+  - pyperclip==1.8.2
+  - pyppmd==1.1.0
+  - pytest==7.4.3
+  - python-dateutil==2.8.2
+  - python-json-logger==2.0.7
+  - pytorch-lightning==1.9.5
+  - pytorch-ranger==0.1.1
+  - pytz==2023.3.post1
+  - PyYAML==6.0.1
+  - pyzmq==25.1.2
+  - pyzstd==0.15.9
+  - qtconsole==5.5.1
+  - QtPy==2.4.1
+  - referencing==0.32.0
+  - regex==2023.10.3
+  - requests==2.31.0
+  - requests-oauthlib==1.3.1
+  - resampy==0.2.2
+  - rfc3339-validator==0.1.4
+  - rfc3986-validator==0.1.1
+  - rpds-py==0.13.2
+  - rsa==4.9
+  - safetensors==0.4.1
+  - scikit-image==0.22.0
+  - scikit-learn==1.3.2
+  - scikit-learn-intelex==2024.0.1
+  - scipy==1.11.4
+  - Send2Trash==1.8.2
+  - sentence-transformers==2.2.2
+  - sentencepiece==0.1.99
+  - six==1.16.0
+  - smart-open==6.4.0
+  - sniffio==1.3.0
+  - soundfile==0.12.1
+  - soupsieve==2.5
+  - soxr==0.3.7
+  - spacy==3.7.2
+  - spacy-legacy==3.0.12
+  - spacy-loggers==1.0.5
+  - SQLAlchemy==2.0.23
+  - srsly==2.4.8
+  - stack-data==0.6.3
+  - stevedore==5.1.0
+  - tbb==2021.11.0
+  - tensorboard==2.15.1
+  - tensorboard-data-server==0.7.2
+  - terminado==0.18.0
+  - texttable==1.7.0
+  - thinc==8.2.1
+  - threadpoolctl==3.2.0
+  - tifffile==2023.12.9
+  - timm==0.9.12
+  - tinycss2==1.2.1
+  - tokenizers==0.13.3
+  - tomli==2.0.1
+  - torch==1.13.1
+  - torch-optimizer==0.3.0
+  - torchaudio==0.13.1
+  - torchlibrosa==0.1.0
+  - torchmetrics==1.2.1
+  - torchopenl3==1.0.1
+  - torchtext==0.14.1
+  - torchvision==0.14.1
+  - tornado==6.4
+  - tqdm==4.66.1
+  - traitlets==5.14.0
+  - transformers==4.30.2
+  - typer==0.9.0
+  - types-python-dateutil==2.8.19.14
+  - typing_extensions==4.9.0
+  - tzdata==2023.3
+  - uri-template==1.3.0
+  - urllib3==2.1.0
+  - wasabi==1.1.2
+  - wcwidth==0.2.12
+  - weasel==0.3.4
+  - webcolors==1.13
+  - webencodings==0.5.1
+  - websocket-client==1.7.0
+  - Werkzeug==3.0.1
+  - widgetsnbextension==4.0.9
+  - xyzservices==2023.10.1
+  - yarl==1.9.4
+  - zipp==3.17.0

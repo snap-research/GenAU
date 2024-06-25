@@ -1,0 +1,15 @@
+__pycache__
+*/__pycache__
+logs
+outputs
+pretrained_models
+nohup.out
+wandb
+tmp/
+run_logs/
+data
+lightning_logs/
+core*
+get_captions_from_dataloader.py
+.vscode
+tmp

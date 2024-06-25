@@ -57,7 +57,7 @@ if __name__ == "__main__":
         "--prompt",
         type=str,
         required=True,
-        help="path to config .yaml file",
+        help="model name",
     )
     parser.add_argument(
         "-m",

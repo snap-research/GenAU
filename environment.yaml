@@ -47,8 +47,11 @@ dependencies:
       - einops==0.7.0
       - regex==2024.5.15
       - ftfy==6.2.0
-      - laion-clap==1.1.4
       - xformers==0.0.23
       - yt-dlp
       - huggingface_hub
       - taming-transformers-rom1504==0.0.6
+      - warmup_scheduler==0.3
+      - ruamel.yaml==0.18.6
+      - git+https://github.com/LAION-AI/CLAP.git
+      # - sentence_transformers==2.7.0
