@@ -1,8 +1,8 @@
-<h2 align="center">
-  <img src="assets/logo.png" width="50" style="vertical-align: middle;"/>
- Taming Data and Transformers for Audio Generation
-</h2>
-
+<div style="text-align: center;">
+  <img src="assets/logo.png" alt="Logo" style="width: 50px; vertical-align: middle;">
+  <span style="font-size: 28px; vertical-align: middle;">Taming Data and Transformers for Audio Generation</span>
+</div>
+</br>
 This is the official GitHub repository of the paper Taming Data and Transformers for Audio Generation.
 
 **[Taming Data and Transformers for Audio Generation](https://snap-research.github.io/GenAU)**
