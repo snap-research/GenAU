@@ -32,7 +32,7 @@ from src.tools.training_utils import (
     copy_test_subset_data,
 )
 from src.utilities.model.model_util import instantiate_from_config
-from src.utilities.data.videoaudio_dataset import VideoAudioDataset
+from src.utilities.data.videoaudio_dataset import VideoAudioDataset, custom_collate_fn
 from src.tools.download_manager import get_checkpoint_path
 logging.basicConfig(level=logging.WARNING)
 
@@ -69,6 +69,7 @@ def main(configs, config_yaml_path, exp_group_name, exp_name, debug=False):
         num_workers=configs['data'].get('num_workers', 32),
         pin_memory=True,
         shuffle=True,
+        collate_fn=custom_collate_fn
     )
 
     print(
@@ -82,6 +83,7 @@ def main(configs, config_yaml_path, exp_group_name, exp_name, debug=False):
         val_dataset,
         num_workers=configs['data'].get('num_workers', 32),
         batch_size=max(1, batch_size // configs['model']['params']['evaluation_params']['n_candidates_per_samples']),
+        collate_fn=custom_collate_fn
     )
 
     # Copy test data
@@ -96,7 +98,8 @@ def main(configs, config_yaml_path, exp_group_name, exp_name, debug=False):
     config_reload_from_ckpt = configs.get("reload_from_ckpt", None)
     limit_val_batches = configs["step"].get("limit_val_batches", None)
     limit_train_batches = configs["step"].get("limit_train_batches", None)
-    validation_every_n_epochs = configs["step"]["validation_every_n_epochs"]
+    validation_every_n_epochs = configs["step"].get("validation_every_n_epochs", None)
+    val_check_interval = configs["step"].get("val_check_interval", None)
     max_steps = configs["step"]["max_steps"]
     save_top_k = configs["logging"]["save_top_k"]
     save_checkpoint_every_n_steps = configs["logging"]["save_checkpoint_every_n_steps"]
@@ -173,6 +176,7 @@ def main(configs, config_yaml_path, exp_group_name, exp_name, debug=False):
         limit_val_batches=limit_val_batches,
         limit_train_batches=limit_train_batches,
         check_val_every_n_epoch=validation_every_n_epochs,
+        val_check_interval=val_check_interval,
         strategy=DDPStrategy(find_unused_parameters=True),
         callbacks=[checkpoint_callback],
         gradient_clip_val=configs["model"]["params"].get("clip_grad", None)

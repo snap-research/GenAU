@@ -57,7 +57,6 @@ class SpecialTokensEmbeddings(nn.Module):
         token_ids = torch.where(special_tokens_mask, self.base_tokenizer.pad_token_id, token_ids)
         embeddings = self.model.encoder.embed_tokens(token_ids)
 
-        
         embeddings.view(-1, embeddings.shape[-1])[special_tokens_mask.view(-1)] = special_tokens_embeds
         return embeddings
 
@@ -198,7 +197,7 @@ class AutoCap(pl.LightningModule):
             self.decoder = BartForConditionalGeneration.from_pretrained(decoder_name)
         else:
             bart_config = BartConfig.from_pretrained(decoder_name)
-            self.decoder = BartForConditionalGeneration.from_config(bart_config)
+            self.decoder = BartForConditionalGeneration(config=bart_config)
 
         self.set_decoder_requires_grad(freeze=freeze_decoder, freeze_embed_layer=freeze_embed_layer)
 
@@ -381,7 +380,9 @@ class AutoCap(pl.LightningModule):
             else:
                 text_max_tokens = self.num_text_query_token
         
-        self.decoder = self.adjust_max_pos_embeds(self.decoder, audio_max_tokens+text_max_tokens+2+self.use_clap_embeds) # extra token for CLAP
+        # extra token for CLAP, two for offsent in bart, two for bos and eos, and the rest because why not
+        self.decoder = self.adjust_max_pos_embeds(self.decoder, audio_max_tokens+text_max_tokens+20+self.use_clap_embeds) 
+        
 
         # dropout kayer 
         self.audio_features_dropout = nn.Dropout(p=config['model']['audio_features_dropout_p'])
@@ -875,7 +876,7 @@ class AutoCap(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         audio = batch['waveform'].squeeze(1)
         text = batch['gt_audio_caption'] # list of captions
-        audio = audio.to(self.device, non_blocking=True)
+        audio = audio.to(self.device)
 
         # prepare meta
         if 'meta_keys' in self.config['model'].keys():
@@ -999,11 +1000,15 @@ class AutoCap(pl.LightningModule):
         
     
     def on_validation_epoch_end(self):
+        
+        # place a barrier to ensure that all ranks reach the gather operation
+        torch.distributed.barrier()
         gathered = [None] * torch.distributed.get_world_size()
         torch.distributed.all_gather_object(gathered, self.val_outputs)
-        if not self.trainer.is_global_zero:
-            return 
-
+        torch.distributed.barrier()
+        
+        metrics_log = {}
+        # all ranks should excute the blocks to avoid deadlock 
         self.gathered_output_dict = []
         for idx in range(len(self.val_loaders_labels)):
             val_loader_out = {}
@@ -1015,7 +1020,7 @@ class AutoCap(pl.LightningModule):
             
             self.gathered_output_dict.append(val_loader_out)
 
-
+        
         val_logger = logger.bind(indent=1)
         for split, dataloader_outputs in zip(self.val_loaders_labels, self.gathered_output_dict):
             val_logger.info(f"[INFO] evaluating metrics for split: {split}")
@@ -1051,12 +1056,12 @@ class AutoCap(pl.LightningModule):
                     f'Spider score using beam search (beam size:{beam_size}): {spider:7.4f}')
                 
                 metrics_log = {f"{split}/spider_beam_{beam_size}" : spider,
-                             f"{split}/cider_beam_{beam_size}":cider,
-                              f"{split}/spice_beam_{beam_size}":spice,
-                               f"{split}/bleu_1_beam_{beam_size}":bleu_1,
+                            f"{split}/cider_beam_{beam_size}":cider,
+                            f"{split}/spice_beam_{beam_size}":spice,
+                            f"{split}/bleu_1_beam_{beam_size}":bleu_1,
                                 f"{split}/bleu_4_beam_{beam_size}":bleu_4,
-                                 f"{split}/rouge_l_beam_{beam_size}":rouge_l,
-                                  f"{split}/meteor_beam_{beam_size}":meteor }
+                                f"{split}/rouge_l_beam_{beam_size}":rouge_l,
+                                f"{split}/meteor_beam_{beam_size}":meteor }
                 if 'bert_score' in metrics:
                     bert_score = metrics.pop('bert_score')
                     metrics_log[f"{split}/bertscore_beam_{beam_size}"] = bert_score

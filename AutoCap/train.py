@@ -49,7 +49,7 @@ def main():
         config["optim_args"]["lr"] = args.lr
 
     if args.num_workers is not None: 
-        config['data_args']['num_workers']
+        config['data_args']['num_workers'] = args.num_workers
     
     # set up model
     devices = torch.cuda.device_count()
@@ -90,6 +90,7 @@ def main():
                                                                 return_test=False,
                                                                 cache_dir=None)
     
+    
     # print training settings
     printer = PrettyPrinter()
     main_logger.info('Training setting:\n'
@@ -112,7 +113,7 @@ def main():
         main_logger.info(f'Size of {val_k} validation set: {len(val_loader.dataset)}, size of batches: {len(val_loader)}')
 
     
-    # update the model with data types, combine test and val loaders # TODO: delete the test 
+    
     print("val_loaders", len(val_loaders), val_loaders.keys())
     model.val_loaders_labels = list(val_loaders.keys())
     val_loaders = list(val_loaders.values())
@@ -120,7 +121,7 @@ def main():
 
 
     # ckpt
-    validation_every_n_epochs = config["step"]["validation_every_n_epochs"]
+    validation_every_n_epochs = config["step"].get("validation_every_n_epochs", None)
     save_checkpoint_every_n_epochs = config["logging"]["save_checkpoint_every_n_epochs"]
     
     checkpoint_callback = S3ModelCheckpoint(
@@ -146,7 +147,7 @@ def main():
         limit_val_batches=config['step'].get('limit_val_batches', None),
         limit_train_batches=config['step'].get('limit_train_batches', None),
         check_val_every_n_epoch=validation_every_n_epochs,
-        strategy=DDPStrategy(find_unused_parameters=True),
+        strategy=DDPStrategy(find_unused_parameters=False),
         callbacks=[checkpoint_callback],
         gradient_clip_val=config["model"].get("clip_grad", None),
         profiler=config['training'].get('profiler', None),

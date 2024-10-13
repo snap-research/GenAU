@@ -61,7 +61,7 @@ def build_dataset_json_from_list(list_path):
             wav = ""
         data.append(
             {
-                "wav": wav,
+                "fname": wav,
                 "caption": caption,
             }
         )
@@ -83,7 +83,7 @@ def read_json(dataset_json_file):
 def copy_test_subset_data(metadata, testset_copy_target_path):
     # metadata = read_json(testset_metadata)
     os.makedirs(testset_copy_target_path, exist_ok=True)
-    if len(os.listdir(testset_copy_target_path)) == len(metadata):
+    if len(os.listdir(testset_copy_target_path)) >= len(metadata) - 1:
         return
     else:
         # delete files in folder testset_copy_target_path

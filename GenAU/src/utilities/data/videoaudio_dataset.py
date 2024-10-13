@@ -17,6 +17,9 @@ import re
 from src.tools.io import load_file, write_json, load_json
 from src.tools.torch_utils import spectral_normalize_torch, random_uniform
 from src.tools.training_utils import build_dataset_json_from_list
+import gc
+import librosa
+import threading
 
 class VideoAudioDataset(Dataset):
     def __init__(
@@ -33,6 +36,7 @@ class VideoAudioDataset(Dataset):
         dataset_json=None,
         sample_single_caption=True,
         augment_p=0.0,
+        limit_data_percentage = None,
         cache_dir=None
     ):
         """
@@ -48,13 +52,19 @@ class VideoAudioDataset(Dataset):
         self.load_audio = load_audio
         self.keep_audio_files = keep_audio_files
         self.sample_single_caption = sample_single_caption
+        self.limit_data_percentage = config['data'].get('limit_data_percentage', False) 
         self.trim_wav = False
         self.waveform_only = waveform_only
         self.augment_p = augment_p
         self.add_ons = [eval(x) for x in add_ons]
-        self.cache_dir = cache_dir
         self.consistent_start_time = config['data'].get('consistent_start_time', False)
+        
+        self.cache_dir = config['data'].get('cache_dir', None)
+        if self.cache_dir is not None:
+            os.makedirs(self.cache_dir, exist_ok=True)
+        
         print("[INFO] Add-ons:", self.add_ons)
+        self.obtained_samples = 0
 
         # transforms
         if video_transform is None:
@@ -80,6 +90,20 @@ class VideoAudioDataset(Dataset):
                 % (split, self.config["data"].keys())
             )
             self.retrieve_paths()
+            
+        
+        if split=='train' and self.limit_data_percentage:
+            print(f"[INFO] limiting data to only {self.limit_data_percentage} of the total data {len(self.data)}")
+            num_datapoints = int(len(self.data) * self.limit_data_percentage)
+            
+            # fix the seed to make sure we select the same data.
+            np.random.seed(42)
+            selected_idx = np.random.randint(0, len(self.data), size=num_datapoints)
+            
+            # select 
+            self.video_json_paths = np.asarray(self.video_json_paths)[selected_idx]
+            self.data = np.asarray(self.data)[selected_idx]
+            self.datasets_of_datapoints = np.asarray(self.datasets_of_datapoints)[selected_idx]
 
         self.build_dsp()
         
@@ -108,71 +132,130 @@ class VideoAudioDataset(Dataset):
                 return data[key]
         return default_value  # Or return a default value if none of the keys are found
     
-    def __getitem__(self, index, augment=True):
-        (
-            index,
-            fname,
-            video_frames,
-            waveform,
-            stft,
-            log_mel_spec,
-            _,  # the one-hot representation of the audio class
-            (datum, mix_datum),
-            random_start,
-        ) = self.feature_extraction(index)
-        
-        if '.json' in self.data[index]:
-            dataset_name = self.datasets_of_datapoints[index]
-            absolute_file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
-        else:
-            dataset_name = absolute_file_path = ""
-        
+    
+    def default_sample(self):
         data = {
-            "dataset_name": dataset_name,
-            "json_path": absolute_file_path,
-            "fname": fname,  # list
-            "waveform": "" if (not self.load_audio) else waveform.float(),
-            # tensor, [batchsize, t-steps, f-bins]
-            "stft": "" if (stft is None) else stft.float(),
-            # tensor, [batchsize, t-steps, mel-bins]
-            "log_mel_spec": "" if (log_mel_spec is None) else log_mel_spec.float(),
-            "duration": self.duration,
-            "sampling_rate": self.sampling_rate,
-            "random_start_sample_in_original_audio_file": random_start if random_start is not None else 0,
-            "labels": ', '.join(datum.get('labels', [])),
+                "dataset_name": "UNK",
+                "json_path": "UNK",
+                "fname": "UNK",  # list
+                "waveform": "" if (not self.load_audio) else torch.zeros(1, int(self.sampling_rate * self.duration)),
+                # "waveform": torch.zeros(1, int(self.sampling_rate * self.duration)),
+                # tensor, [batchsize, t-steps, f-bins]
+                "stft": "" if self.waveform_only else torch.zeros(int(self.duration * 100), 512),
+                # tensor, [batchsize, t-steps, mel-bins]
+                "log_mel_spec": "" if self.waveform_only else torch.zeros(int(self.duration * 100), 64),
+                "duration": self.duration,
+                "sampling_rate": self.sampling_rate,
+                "random_start_sample_in_original_audio_file": -1,
+                "labels": "UNK",
 
-            # # video 
-            "frames": video_frames if self.load_video else "",
+                # # video 
+                "frames": "",
+                
+                # additional meta data
+                "title": "UNK",
+                "url": "UNK",
+                "description": "UNK",
+                "original_captions": "UNK",
+                "automatic_captions": "UNK",
+                "gt_audio_caption": "UNK" if self.sample_single_caption else ["UNK"] * 5,
+                "video_caption": "UNK",
+                "videollama_caption": "UNK",
+                "text": "UNK" if self.sample_single_caption else ["UNK"] * 5
+            }
             
-            # additional meta data
-            "title": self.filter_text(datum.get('title', '')),
-            "url": self.filter_text(datum.get('url', '')),
-            "description": self.filter_text(self.get_sample_description(datum)),
-            "original_captions": self.filter_text(datum.get('original_captions', '')),
-            "automatic_captions": self.filter_text(datum.get('automatic_captions', '')),
-            "gt_audio_caption": self.get_sample_caption(datum, index=index),
-            "panda_caption": datum.get('panda70m_caption_0000', '').replace("<unk>", "").strip(),
-            "videollama_caption": datum.get('videollama_caption_0000', ''),
-        }
-        
-        # select one caption if multiple exists
-        if isinstance(data['gt_audio_caption'], list) and len(data['gt_audio_caption']) > 0 and self.sample_single_caption:
-            idx = np.random.randint(len(data['gt_audio_caption']))
-            data['gt_audio_caption'] = data['gt_audio_caption'][idx]
-
-        
-        for add_on in self.add_ons:
-            data.update(add_on(self.config, data, self.data[index]))
-        
-        # augment data
-        if augment and np.random.rand() < self.augment_p:
-            data = self.pair_augmentation(data)
-        
-        data['text'] = data['gt_audio_caption']
-        if not data['fname']:
-            data['fname'] = data['text']
-        
         return data
+        
+    def __getitem__(self, index, augment=True):
+        
+        retries = 0
+        max_retries = 1
+        
+        while retries < max_retries:
+            try:
+                if '.json' in self.data[index]:
+                    dataset_name = self.datasets_of_datapoints[index]
+                    absolute_file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
+                    if not os.path.exists(absolute_file_path):
+                        print(f"file {absolute_file_path} does not exists. Retying..")
+                        index = random.randint(0, len(self.data) - 1)
+                        retries += 1
+                        continue
+                else:
+                    dataset_name = absolute_file_path = ""
+                    
+                (
+                    index,
+                    fname,
+                    video_frames,
+                    waveform,
+                    stft,
+                    log_mel_spec,
+                    _,  # the one-hot representation of the audio class
+                    (datum, mix_datum),
+                    random_start,
+                ) = self.feature_extraction(index)
+                
+                data = {
+                    "dataset_name": dataset_name,
+                    "json_path": absolute_file_path,
+                    "fname": fname,  # list
+                    "waveform": "" if (not self.load_audio) else waveform.float(),
+                    # tensor, [batchsize, t-steps, f-bins]
+                    "stft": "" if (stft is None) else stft.float(),
+                    # tensor, [batchsize, t-steps, mel-bins]
+                    "log_mel_spec": "" if (log_mel_spec is None) else log_mel_spec.float(),
+                    "duration": self.duration,
+                    "sampling_rate": self.sampling_rate,
+                    "random_start_sample_in_original_audio_file": -1 if random_start is None else random_start,
+                    "labels": ', '.join(datum.get('labels', [])),
+
+                    # # video 
+                    "frames": video_frames if self.load_video else "",
+                    
+                    # additional meta data
+                    "title": self.filter_text(datum.get('title', '')),
+                    "url": self.filter_text(datum.get('url', '')),
+                    "description": self.filter_text(self.get_sample_description(datum)),
+                    "original_captions": self.filter_text(datum.get('original_captions', '')),
+                    "automatic_captions": self.filter_text(datum.get('automatic_captions', '')),
+                    "gt_audio_caption": self.get_sample_caption(datum, index=index),
+                    "video_caption": datum.get('panda70m_caption_0000', '').replace("<unk>", "").strip(),
+                    "videollama_caption": datum.get('videollama_caption_0000', ''),
+                }
+                
+                # select one caption if multiple exists
+                if isinstance(data['gt_audio_caption'], list) and len(data['gt_audio_caption']) > 0 and self.sample_single_caption:
+                    idx = np.random.randint(len(data['gt_audio_caption']))
+                    data['gt_audio_caption'] = data['gt_audio_caption'][idx]
+
+                
+                for add_on in self.add_ons:
+                    data.update(add_on(self.config, data, self.data[index]))
+                
+                # augment data
+                if augment and np.random.rand() < self.augment_p:
+                    data = self.pair_augmentation(data)
+                
+                data['text'] = data['gt_audio_caption']
+                
+                self.obtained_samples += 1
+                
+                if self.obtained_samples % 20 == 0:
+                    gc.collect()
+                return data
+            except Exception as e:
+                if '.json' in self.data[index]:
+                    dataset_name = self.datasets_of_datapoints[index]
+                    file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
+                else:
+                    file_path = ""
+                    
+                index = random.randint(0, len(self.data) - 1)
+                retries += 1
+                print("[ERROR, videoaudio_dataset] error while loading", file_path,  e)
+                continue
+        return self.default_sample()
 
     def text_to_filename(self, text):
         return text.replace(" ", "_").replace("'", "_").replace('"', "_")
@@ -198,134 +281,124 @@ class VideoAudioDataset(Dataset):
     def replace_extension(self, path, new_ext):
         return f"{'/'.join(path.split('.')[:-1])}.{new_ext}"
     
+    
     def feature_extraction(self, index):
-        if index > len(self.data) - 1:
-            print(
-                "The index of the dataloader is out of range: %s/%s"
-                % (index, len(self.data))
-            )
-            index = random.randint(0, len(self.data) - 1)
-
         # Read wave file and extract feature
-        while True:
-            try:
-                if isinstance(self.data[index], str) and '.json' in self.data[index]:
-                    dataset_name = self.datasets_of_datapoints[index]
-                    file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
-                    datum = load_json(file_path)
-                else:
-                    datum = self.data[index]
+        if isinstance(self.data[index], str) and '.json' in self.data[index]:
+            dataset_name = self.datasets_of_datapoints[index]
+            file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
+            datum = load_json(file_path)
+        else:
+            datum = self.data[index]
 
-                if 'path' in datum and datum['path']:
-                    datum['path'] = self._relative_path_to_absolute_path([datum['path']], dataset_name)[0]
+        if 'path' in datum and datum['path']:
+            datum['path'] = self._relative_path_to_absolute_path([datum['path']], dataset_name)[0]
 
-                if 'wav' in datum and datum['wav']:
-                    datum['wav'] = self._relative_path_to_absolute_path([datum['wav']], dataset_name)[0]
+        if 'wav' in datum and datum['wav']:
+            datum['wav'] = self._relative_path_to_absolute_path([datum['wav']], dataset_name)[0]
 
-                
-                random_start = None
-                log_mel_spec, stft, waveform, frames = None, None, None, None
-                audio_file = None
-
-                if self.load_audio and not ('wav' in datum.keys() and os.path.exists(datum['wav'])):
-                    # assume that a .wav file exists in the same location as the .json file
-                    wav_path = self.replace_extension(file_path, 'wav')
-                    flac_path = self.replace_extension(file_path, 'flac')
-                    if os.path.exists(wav_path):
-                        datum['wav'] = wav_path
-                    elif os.path.exists(flac_path):
-                        datum['wav'] = flac_path
-                    elif 'wav' in datum:
-                        del datum['wav']
-
-                # cache wav file: useful when there exists a local memory the is faster to do read operations on it
-                if self.load_audio and 'wav' in datum and self.cache_dir is not None:
-                    target_audio_file_path = f"{self.cache_dir}{datum['wav']}"
-                    if not os.path.exists(target_audio_file_path):
-                        os.makedirs(os.path.dirname(target_audio_file_path), exist_ok=True)
-                        shutil.copy2(datum['wav'] , target_audio_file_path)
-                    
-                    # update
-                    datum['wav'] = target_audio_file_path
-                
-                save_random_start = False 
-                random_start = None
-                if self.consistent_start_time: # always sample from the same start time
-                    if 'random_start_t' in datum:
-                        random_start = datum.get('random_start_t', None)
-                        save_random_start = False
-                    else:
-                        save_random_start = True
-                
-                # load audio
-                if self.load_audio:
-                    if 'wav' in datum: 
-                        (
-                            log_mel_spec,
-                            stft,
-                            waveform,
-                            random_start,
-                        ) = self.read_audio_file(datum["wav"], random_start=random_start)
-                        waveform = torch.FloatTensor(waveform)
-                    
-                    else:
-                        (
-                            frames,
-                            log_mel_spec,
-                            stft,
-                            waveform,
-                            random_start,
-                            audio_file
-                        ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=True)
-                        waveform = torch.FloatTensor(waveform)
-
-                    # load video
-                    if self.load_video and 'path' in datum:
-                        (frames, _, _, _, _, _ ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=self.load_audio and waveform is None)
-                
-                elif self.load_video and 'path' in datum:
-                    (   
-                        frames,
-                        log_mel_spec,
-                        stft,
-                        waveform,
-                        random_start,
-                        audio_file
-                    ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=True)
-                    waveform = torch.FloatTensor(waveform)
-                
-                if audio_file is not None:
-                    # update json to include path to audio. Only effective if keep_audio_file is enabled
-                    updated_json = load_json(file_path)
-                    updated_json['wav'] = self._absolute_path_to_relative_path([audio_file], dataset_name)[0]
-                    datum["wav"] = updated_json['wav']
-                    updated_json['random_start_t'] = random_start
-                    write_json(updated_json, file_path)
-
-                elif save_random_start and random_start is not None:
-                    # update json to include the randomly sampled start time for future experiments
-                    updated_json = load_json(file_path)
-                    updated_json['random_start_t'] = random_start
-                    write_json(updated_json, file_path)
-
-                mix_datum = None
-                if self.load_video:
-                    assert frames.shape == (3, self.target_frame_cnt, self.frame_width, self.frame_height)
-                break
         
-            except Exception as e:
-                if '.json' in self.data[index]:
-                    dataset_name = self.datasets_of_datapoints[index]
-                    file_path = self._relative_path_to_absolute_path([self.data[index]], dataset_name)[0]
-                else:
-                    file_path = ""
-                    
-                index = (index + 1) % len(self.data)
-                print("[ERROR, videoaudio_dataset] error while loading", file_path,  e)
-                continue
+        random_start = None
+        log_mel_spec, stft, waveform, frames = None, None, None, None
+        audio_file = None
+
+        if self.load_audio and not ('wav' in datum.keys() and os.path.exists(datum['wav'])):
+            # assume that a .wav file exists in the same location as the .json file
+            wav_path = self.replace_extension(file_path, 'wav')
+            flac_path = self.replace_extension(file_path, 'flac')
+            if os.path.exists(wav_path):
+                datum['wav'] = wav_path
+            elif os.path.exists(flac_path):
+                datum['wav'] = flac_path
+            elif 'wav' in datum:
+                del datum['wav']
+
+        # cache wav file: useful when there exists a local memory the is faster to do read operations on it
+        if self.load_audio and 'wav' in datum and self.cache_dir is not None:
+            target_audio_file_path = f"{self.cache_dir}{datum['wav']}"
+            if not os.path.exists(target_audio_file_path):
+                os.makedirs(os.path.dirname(target_audio_file_path), exist_ok=True)
+                shutil.copy2(datum['wav'] , target_audio_file_path)
+            
+            # update
+            datum['wav'] = target_audio_file_path
+        
+        save_random_start = False 
+        random_start = None
+        if self.consistent_start_time: # always sample from the same start time
+            if 'random_start_t' in datum:
+                random_start = datum.get('random_start_t', None)
+                save_random_start = False
+            else:
+                save_random_start = True
+        
+        # load audio
+        if self.load_audio:
+            if 'wav' in datum: 
+                (
+                    log_mel_spec,
+                    stft,
+                    waveform,
+                    random_start,
+                ) = self.read_audio_file(datum["wav"], random_start=random_start)
+                
+                
+                waveform = torch.FloatTensor(waveform)
+                
+                
+                
+            
+            else:
+                (
+                    frames,
+                    log_mel_spec,
+                    stft,
+                    waveform,
+                    random_start,
+                    audio_file
+                ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=True)
+                waveform = torch.FloatTensor(waveform)
+
+            # load video
+            if self.load_video and 'path' in datum:
+                (frames, _, _, _, _, _ ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=self.load_audio and waveform is None)
+        
+        elif self.load_video and 'path' in datum:
+            (   
+                frames,
+                log_mel_spec,
+                stft,
+                waveform,
+                random_start,
+                audio_file
+            ) = self.read_video_file(datum["path"], random_start=random_start, load_audio=True)
+            waveform = torch.FloatTensor(waveform)
+        
+        if audio_file is not None:
+            # update json to include path to audio. Only effective if keep_audio_file is enabled
+            updated_json = load_json(file_path)
+            updated_json['wav'] = self._absolute_path_to_relative_path([audio_file], dataset_name)[0]
+            datum["wav"] = updated_json['wav']
+            updated_json['random_start_t'] = random_start
+            # write_json(updated_json, file_path)
+
+        elif save_random_start and random_start is not None:
+            # update json to include the randomly sampled start time for future experiments
+            updated_json = load_json(file_path)
+            updated_json['random_start_t'] = random_start
+            write_json(updated_json, file_path)
+
+        mix_datum = None
+        if self.load_video:
+            assert frames.shape == (3, self.target_frame_cnt, self.frame_width, self.frame_height)
+        
 
         # The filename of the wav file
-        fname = datum["path"] if 'path' in datum and self.load_video else datum["wav"] 
+        fname = datum["path"] if 'path' in datum and self.load_video else datum.get('wav', '')
+        
+        if not fname:
+            fname = datum['fname']
+            
         
         return (
             index,
@@ -338,7 +411,7 @@ class VideoAudioDataset(Dataset):
             (datum, mix_datum),
             random_start,
         )
-
+        
     def combine_captions(self, caption1, caption2, remove_duplicates=False, background=False):
         """
         Useful function to combine two caption when doing mixup augmentation
@@ -602,9 +675,58 @@ class VideoAudioDataset(Dataset):
         return waveform
 
 
+    def load_audio_with_timeout(self, file_path, timeout):
+        """
+        Load an audio file with a specified timeout using threading.
+
+        :param file_path: Path to the audio file.
+        :param timeout: Maximum time (in seconds) to allow for loading the file.
+        :return: (waveform, sample_rate) if successful, None if timeout occurs.
+        """
+        class AudioLoader(threading.Thread):
+            def __init__(self, file_path):
+                super().__init__()
+                self.file_path = file_path
+                self.result = None
+
+            def run(self):
+                try:
+                    waveform, sample_rate = torchaudio.load(self.file_path)
+                    self.result = (waveform, sample_rate)
+                except Exception as e:
+                    print(f"Failed to load audio: {e}")
+                    self.result = None
+
+        # Start the thread
+        audio_loader = AudioLoader(file_path)
+        audio_loader.start()
+
+        # Wait for the thread to complete or timeout
+        audio_loader.join(timeout=timeout)
+        if audio_loader.is_alive():
+            print(f"Timeout while loading {file_path}")
+            return None, None  # Timeout case
+
+        return audio_loader.result
+
+
     def read_wav_file(self, filename, random_start=None):
+        
         # waveform, sr = librosa.load(filename, sr=None, mono=True) # 4 times slower
-        waveform, sr = torchaudio.load(filename)
+        # waveform = torch.from_numpy(waveform)
+        # print("waveform shape", waveform.shape)
+        waveform, sr = self.load_audio_with_timeout(filename, timeout=10)
+        if waveform is None:
+            print("[INFO] timeout when loading the audio")
+            # # # TODO Important, dummy audio
+            waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
+            sr = 16000
+        
+        # waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
+        # sr = 16000
+        # waveform, sr = torchaudio.load(filename)
+        # # # TODO Important, dummy audio
+        # waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
 
         waveform, random_start = self.random_segment_wav(
             waveform, target_length=int(sr * self.duration), random_start=random_start
@@ -885,13 +1007,13 @@ def custom_collate_fn(batch):
     
     # for test
     # for k in batch[0].keys():
-    #         try:
-    #             default_collate([{k:item[k]} for item in batch])
-    #             print("done")
-    #         except:
-    #             print("collect error in key", k)
-    #             print("files", [b['fname'] for b in batch])
-    #             inp = [{k:item[k]} for item in batch]
+    #     try:
+    #         default_collate([{k:item[k]} for item in batch])
+    #     except Exception as e:
+    #         print("collect error in key", k)
+    #         print("files", [b['fname'] for b in batch])
+    #         print("shape", [item[k].shape for item in batch])
+    #         print("error", e)
         
     collated_batch = default_collate(batch)
 

@@ -130,7 +130,7 @@ class WaveDataset(torch.utils.data.Dataset):
         sr=16000,
         limit_num=None,
     ):
-        self.datalist = [os.path.join(datadir, x) for x in os.listdir(datadir)]
+        self.datalist = [os.path.join(datadir, x) for x in os.listdir(datadir) if x.endswith('.wav')]
         self.datalist = sorted(self.datalist)
         if limit_num is not None:
             self.datalist = self.datalist[:limit_num]
