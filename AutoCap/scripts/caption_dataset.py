@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-# coding: utf-8
-# @Author  : Xinhao Mei @CVSSP, University of Surrey
-# @E-mail  : x.mei@surrey.ac.uk
-
 import __init__
 import os
 import argparse
@@ -84,7 +79,7 @@ def main():
     setup_seed(config['training']["seed"])
     seed_everything(config['training']["seed"])
 
-    config["inference_exp_name"] = f"inference_{os.path.basename(args.config)[:-5]}" # remove .yaml
+    config["inference_exp_name"] = f"inference_{os.path.basename(args.config)[:-5]}" 
     config['beam_size'] = args.beam_size
     config['caption_key'] = args.caption_store_key
 

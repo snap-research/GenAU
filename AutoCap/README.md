@@ -3,7 +3,7 @@
 # AutoCap inference, training and evaluation
 - [Inference](#inference)
     * [Audio to text script](#audio-to-text)
-    * [Gradio demo](#gradio-demo)
+    <!-- * [Gradio demo](#gradio-demo) -->
     * [Caption a list of audio files](#caption-list-of-audio-files)
     * [Caption your custom dataset](#caption-a-dataset)
 - [Training](#training)
@@ -24,14 +24,14 @@ python scripts/audio_to_text.py --wav_path <path-to-wav-file>
 # Example inference
 python scripts/audio_to_text.py --wav_path samples/ood_samples/loudwhistle-91003.wav
 ```
-- This will automatically download `TODO` model and run the inference with the default parameters. You may change these parameters or provide your cutome model config file and checkpoint path.
+- This will automatically download `autocap-full` model and run the inference with the default parameters. You may change these parameters or provide your cutome model config file and checkpoint path.
 - For more accurate captioning, provide meta data using `--title`, `description`, and `--video_caption` arguments.
 
-## Gradio Demo
+<!-- ## Gradio Demo
 A local Gradio demo is also available by running
 ```shell
 python app_audio2text.py
-```
+``` -->
 
 ## Caption list of audio files
 - Prepare all target audio files in a single folder
@@ -54,7 +54,7 @@ python scripts/inference_folder.py --folder_path samples/ood_samples --meta_data
 ## Caption your custom dataset
 
 If you want to caption a large dataset, we provide a script that works with multigpus for faster inference.
-- Prepare your custom dataset by following the instruction in the dataset prepeartion README (TODO) and run
+- Prepare your custom dataset by following the instruction in the [dataset preperation README](../dataset_preperation/README.md) and run
 
 ```shell
 python scripts/caption_dataset.py \
@@ -64,8 +64,15 @@ python scripts/caption_dataset.py \
             --end_idx 1000000 \
             --dataset_keys "dataset_1" "dataset_2" ...
 
+# Example
+python scripts/caption_dataset.py \
+        --caption_store_key autocap_caption \
+        --beam_size 2 \
+        --start_idx 0 \
+        --end_idx 100 \
+        --dataset_keys “wavcaps_soundbible”
 ```
-- Provide your dataset keys as registered in the dataset preperation (TODO)
+- Provide your dataset keys as registered in the [dataset preperation](../dataset_preperation/README.md) process
 - Captions will be generated and stores in each file json file with the specified caption_ store_key
 - `start_idx` and `end_idx` arugments can be used to resume or distribute captioning experiments
 - Add your `caption_store_key` under `keys_synonyms:gt_audio_caption` in the target yaml config file for it to be selected when the ground truth caption is not available in your audio captioning or audio generation experiments.
@@ -73,7 +80,7 @@ python scripts/caption_dataset.py \
 
 # Training
 ### Dataset
-Please refer to the dataset README (TODO) for instructions on downloading our dataset or preparing your own dataset.
+Please refer to the [dataset preperation README](../dataset_preperation/README.md) for instructions on downloading our dataset or preparing your own dataset.
 
 ### Stage 1 (pretraining)
 - Specify your model parameters in a config yaml file. A sample yaml file is given under `settings/pretraining.yaml`
@@ -105,7 +112,16 @@ python evaluate.py -c <path-to-config> -ckpt <path-to-checkpoint>
 # Cite this work
 If you found this useful, please consider citing our work
 
-```TODO
+```
+@misc{hajiali2024tamingdatatransformersaudio,
+      title={Taming Data and Transformers for Audio Generation}, 
+      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Sergey Tulyakov and Vicente Ordonez},
+      year={2024},
+      eprint={2406.19388},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD},
+      url={https://arxiv.org/abs/2406.19388}, 
+}
 ```
 
 # Acknowledgements

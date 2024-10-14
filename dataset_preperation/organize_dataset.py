@@ -86,7 +86,7 @@ if __name__ == "__main__":
     
     parser.add_argument("--overwrite", 
                         default=False,
-                        action="store_true"
+                        action="store_true",
                         help="Overwrite dataset metadata")
     
     args = parser.parse_args()

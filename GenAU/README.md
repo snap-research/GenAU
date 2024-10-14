@@ -103,7 +103,7 @@ python train/1d_vae.py -c settings/simple_runs/1d_vae.yaml
 ## Evaluation
 - We follow [audioldm](https://github.com/haoheliu/AudioLDM-training-finetuning) to perform our evaulations. 
 - By default, the models will be evaluated periodically during training as specified in the config file. For each evaulation, a folder with the generated audio will be saved under `run_logs/train' at the same levels the specified config file. 
-- The code idenfities the test dataset in an already existing folder according to number of samples. If you would like to test on a new test dataset, register it in `scripts/generate_and_eval`
+- The code idenfities the test dataset in an already existing folder according to that number of samples. If you would like to test on a new test dataset, register it in `scripts/generate_and_eval` or provide `--evaluation_dataset` name.
 
 ```shell
 
@@ -111,14 +111,23 @@ python train/1d_vae.py -c settings/simple_runs/1d_vae.yaml
 python scripts/evaluate.py --log_path <path-to-the-experiment-folder>
 
 # Geneate test audios from a pre-trained checkpoint and run evaulation
-python scripts/generate_and_eval.py -c <path-to-config> -ckpt <path-to-pretrained-ckpt>
+python scripts/generate_and_eval.py -c <path-to-config> -ckpt <path-to-pretrained-ckpt> --generate_and_eval audiocaps
 ```
 The evaluation result will be saved in a json file at the same level of the generated audio folder.
 
 # Cite this work
 If you found this useful, please consider citing our work
 
-```TODO
+```
+@misc{hajiali2024tamingdatatransformersaudio,
+      title={Taming Data and Transformers for Audio Generation}, 
+      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Sergey Tulyakov and Vicente Ordonez},
+      year={2024},
+      eprint={2406.19388},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD},
+      url={https://arxiv.org/abs/2406.19388}, 
+}
 ```
 
 # Acknowledgements

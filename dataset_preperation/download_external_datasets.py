@@ -75,7 +75,7 @@ def download_and_organize_wavcaps(dataset_root, subset_key, autocap_captions_fil
         snapshot_download(repo_id="cvssp/WavCaps", local_dir=dataset_dir, repo_type="dataset", allow_patterns=['Zip_files/SoundBible/*', 'json_files/*'])
         os.system(f"unzip {os.path.join(dataset_dir, 'Zip_files/SoundBible/SoundBible.zip')} -d {os.path.join(dataset_dir, 'wavcaps_soundbible')}")
         base_path = os.path.join(dataset_dir, "wavcaps_soundbible", "mnt/fast/nobackup/scratch4weeks/xm00178/WavCaps/data/waveforms/SoundBible_flac")
-        central_json_path = os.path.join(dataset_dir, "json_files/SoundBibl0e/sb_final.json")
+        central_json_path = os.path.join(dataset_dir, "json_files/SoundBible/sb_final.json")
         update_wavcaps_json_files(base_path, central_json_path, autocap_captions=autocap_captions['Soundbible'])
     
     # bbc
@@ -137,13 +137,7 @@ parser.add_argument("--save_root",
 args = parser.parse_args()
 
 for dataset_key in args.dataset_names:
-    if dataset_key == 'clotho':
-        download_and_organize_clotho(args.save_root)
-    
-    elif dataset_key == 'audiocaps':
-        download_and_organize_audiocaps(args.save_root)
-    
-    elif dataset_key.startswith('wavcaps'):
+    if dataset_key.startswith('wavcaps'):
         download_and_organize_wavcaps(args.save_root, dataset_key)
     
     else:

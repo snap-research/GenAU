@@ -57,7 +57,7 @@ def locate_validation_output(path):
     return folders
 
 
-def evaluate_exp_performance(exp_name):
+def evaluate_exp_performance(exp_name, evaluation_dataset=None):
     abs_path_exp = os.path.join(latent_diffusion_model_log_path, exp_name)
     config_yaml_path = locate_yaml_file(abs_path_exp)
 
@@ -68,6 +68,8 @@ def evaluate_exp_performance(exp_name):
     folders_todo = locate_validation_output(abs_path_exp)
 
     for folder in folders_todo:
+        if evaluation_dataset is not None:
+            test_dataset = evaluation_dataset
         if len(os.listdir(folder)) == 964:
             test_dataset = "audiocaps"
         elif len(os.listdir(folder)) > 5000:
@@ -82,7 +84,10 @@ def evaluate_exp_performance(exp_name):
         evaluator.main(folder, test_audio_data_folder)
 
 @torch.no_grad()
-def generate_test_audio(configs, config_yaml_path, exp_group_name, exp_name, use_wav_cond=False, strategy='wo_ema', batch_size=244, n_candidates_per_samples=1, ckpt=None):
+def generate_test_audio(configs, config_yaml_path, exp_group_name,
+                        exp_name, use_wav_cond=False, strategy='wo_ema',
+                        batch_size=244, n_candidates_per_samples=1, ckpt=None,
+                        evaluation_dataset=None):
     if "seed" in configs.keys():
         seed_everything(configs["seed"])
     else:
@@ -186,6 +191,8 @@ def generate_test_audio(configs, config_yaml_path, exp_group_name, exp_name, use
     
     
     # copy test data if it does not exists
+    if evaluation_dataset is not None:
+        assert evaluation_dataset==val_dataset.dataset_name, f"[ERROR, generate_and_eval.py] the given evaluation dataset {evaluation_dataset} and the specified dataset_name of the test dataset {val_dataset.dataset_name} do not match."
     test_data_subset_folder = os.path.join(
         os.path.dirname(configs['logging']["log_directory"]),
         "testset_data",
@@ -195,10 +202,10 @@ def generate_test_audio(configs, config_yaml_path, exp_group_name, exp_name, use
     copy_test_subset_data(val_dataset, test_data_subset_folder)
     
 
-def eval(exps):
+def eval(exps, evaluation_dataset=None):
     for exp in exps:
         try:
-            evaluate_exp_performance(exp)
+            evaluate_exp_performance(exp, evaluation_dataset=evaluation_dataset)
         except Exception as e:
             print(exp, e)
 
@@ -214,6 +221,13 @@ if __name__ == "__main__":
         type=str,
         required=True,
         help="path to config .yaml file",
+    )
+    parser.add_argument(
+        "--evaluation_dataset",
+        type=str,
+        default=None,
+        required=False,
+        help="target dataset to run the evaluation on",
     )
 
     parser.add_argument(
@@ -260,7 +274,10 @@ if __name__ == "__main__":
     configs = configuration.get_config()
 
     # generate audio
-    generate_test_audio(configs, config_yaml_path, exp_group_name, exp_name, strategy=args.strategy, batch_size=args.batch_size, n_candidates_per_samples=args.n_candidates_per_samples, ckpt=args.ckpt)
+    generate_test_audio(configs, config_yaml_path, exp_group_name, exp_name,
+                        strategy=args.strategy, batch_size=args.batch_size,
+                        n_candidates_per_samples=args.n_candidates_per_samples, ckpt=args.ckpt,
+                        evaluation_dataset=args.evaluation_dataset)
     
     test_audio_path = os.path.join(
         os.path.dirname(configs['logging']["log_directory"]),
@@ -271,4 +288,4 @@ if __name__ == "__main__":
     # copy config path
     shutil.copy(config_yaml_path, os.path.join(configs['logging']["log_directory"], exp_group_name, exp_name))
     
-    eval([exp_name])
+    eval([exp_name], evaluation_dataset=args.evaluation_dataset)

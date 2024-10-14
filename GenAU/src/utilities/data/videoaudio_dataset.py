@@ -711,10 +711,7 @@ class VideoAudioDataset(Dataset):
 
 
     def read_wav_file(self, filename, random_start=None):
-        
         # waveform, sr = librosa.load(filename, sr=None, mono=True) # 4 times slower
-        # waveform = torch.from_numpy(waveform)
-        # print("waveform shape", waveform.shape)
         waveform, sr = self.load_audio_with_timeout(filename, timeout=10)
         if waveform is None:
             print("[INFO] timeout when loading the audio")
@@ -722,12 +719,6 @@ class VideoAudioDataset(Dataset):
             waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
             sr = 16000
         
-        # waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
-        # sr = 16000
-        # waveform, sr = torchaudio.load(filename)
-        # # # TODO Important, dummy audio
-        # waveform = torch.zeros(1, int(self.sampling_rate * self.duration))
-
         waveform, random_start = self.random_segment_wav(
             waveform, target_length=int(sr * self.duration), random_start=random_start
         )

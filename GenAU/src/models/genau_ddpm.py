@@ -2268,7 +2268,7 @@ class GenAu(DDPM):
                 mel = self.decode_first_stage(samples)
 
                 if self.log_melspectrogran:
-                    mel_grid = make_grid(mel, nrows=2) # TODO: decide on the number of rows
+                    mel_grid = make_grid(mel, nrows=2) 
                     self.log_spectrograms(mel[:4].exp(), "val/mel_spectrogram", self.global_step)
                     self.logger.experiment.log({"val/mel_spectrogram": [wandb.Image(mel_grid.permute(1, 2, 0).detach().cpu().numpy(), caption="Spectrograms")]}, step=self.global_step, commit=False)
                 
