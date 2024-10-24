@@ -16,18 +16,19 @@ We introduce an efficient pipeline for collecting ambient audio. It starts by an
 For initializing your environment, please refer to the [general README](../README.md).
 
 ## Autocap Dataset Download
-- We currently provide the following datasets:
+<!-- - We currently provide the following datasets:
     * autocap_audioset_vggsounds: containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech.
-    * AutoReCap-XL: containing around **57M** audio-text pairs, derived from Youtube videos. This dataset contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset.
+    * AutoReCap-XL: containing around **57M** audio-text pairs, derived from Youtube videos. This dataset contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset. -->
 
-**More datasets will be coming later!**
+**datasets will be coming later!**
 
 ```shell
 python download.py --save_dir <path-to-save-dir> --dataset_name <dataset-subset>
 
-# Example
-python download.py --save_dir data/datasets/autocap --dataset_name autocap_audioset_vggsounds --audio_only
 ```
+<!-- # Example -->
+<!-- python download.py --save_dir data/datasets/autocap --dataset_name autocap_audioset_vggsounds --audio_only -->
+
 By default, the script will download videos along with their metadata.
 
 We provide the following helpful arguments:
