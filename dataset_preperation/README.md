@@ -18,11 +18,9 @@ For initializing your environment, please refer to the [general README](../READM
 ## Autocap Dataset Download
 - We currently provide the following datasets:
     * autocap_audioset_vggsounds: containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech.
-    * AutoReCap-XL-Raw: containing **57M** audio-text pairs, derived from TODO
-    * AutoReCap-XL: containing **57M** audio-text pairs, derived from TODO
-    * AutoReCap-XL-Raw: containing **57M** audio-text pairs, derived from TODO
+    * AutoReCap-XL: containing around **57M** audio-text pairs, derived from Youtube videos. This dataset contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset.
 
-**More datasets will be coming soon!**
+**More datasets will be coming later!**
 
 ```shell
 python download.py --save_dir <path-to-save-dir> --dataset_name <dataset-subset>

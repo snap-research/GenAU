@@ -7,7 +7,7 @@ This is the official GitHub repository of the paper Taming Data and Transformers
 
 **[Taming Data and Transformers for Audio Generation](https://snap-research.github.io/GenAU)**
 </br>
-[Moayed Haji-Ali](https://tsaishien-chen.github.io/),
+[Moayed Haji-Ali](https://moayedha.com/),
 [Willi Menapace](https://www.willimenapace.com/),
 [Aliaksandr Siarohin](https://aliaksandrsiarohin.github.io/aliaksandr-siarohin-website/),
 [Guha Balakrishnan](https://www.guhabalakrishnan.com),
@@ -16,7 +16,8 @@ This is the official GitHub repository of the paper Taming Data and Transformers
 </br>
 *Arxiv 2024*
 
-[![Project Page](https://img.shields.io/badge/Project-Page-green.svg)](https://snap-research.github.io/GenAU) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/taming-data-and-transformers-for-audio/audio-captioning-on-audiocaps)](https://paperswithcode.com/sota/audio-captioning-on-audiocaps?p=taming-data-and-transformers-for-audio) 
+[![Project Page](https://img.shields.io/badge/Project-Page-green.svg)](https://snap-research.github.io/GenAU) [![Arxiv](https://img.shields.io/badge/arxiv-2406.19388-b31b1b)](https://arxiv.org/abs/2406.19388) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/taming-data-and-transformers-for-audio-1/audio-captioning-on-audiocaps)](https://paperswithcode.com/sota/audio-captioning-on-audiocaps?p=taming-data-and-transformers-for-audio-1)[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/taming-data-and-transformers-for-audio-1/audio-generation-on-audiocaps)](https://paperswithcode.com/sota/audio-generation-on-audiocaps?p=taming-data-and-transformers-for-audio-1)
+
 
 
 # Introduction
@@ -26,13 +27,30 @@ This is the official GitHub repository of the paper Taming Data and Transformers
 <img src="assets/framework.jpg" width="1000" />
 </div>
 </br>
-Generating ambient sounds and effects is a challenging problem due to data scarcity and often insufficient caption quality, making it difficult to employ large-scale generative models for the task. In this work, we tackle the problem by introducing two new models. First, we propose AutoCap, a high-quality and efficient automatic audio captioning model. We show that by leveraging metadata available with the audio modality, we can substantially improve the quality of captions. AutoCap reaches a CIDEr score of 83.2, marking a 3.2% improvement from the best available captioning model at four times faster inference speed. We then use AutoCap to caption clips from existing datasets, obtaining 761, 000 audio clips with high-quality captions, forming the largest available audio-text dataset. Second, we propose GenAu, a scalable transformer-based audio generation architecture that we scale up to 1.25B parameters and train with our new dataset. When compared to state-of-the-art audio generators, GenAu obtains significant improvements of 15.7% in FAD score, 22.7% in IS, and 13.5% in CLAP score, indicating significantly improved quality of generated audio compared to previous works. This shows that the quality of data is often as important as its quantity. Besides, since AutoCap is fully automatic, new audio samples can be added to the training dataset, unlocking the training of even larger generative models for audio synthesis. For more details, please visit our <a href='https://snap-research.github.io/GenAU'>project webpage</a>.
+Generating ambient sounds is a challenging task due to data scarcity and often
+insufficient caption quality, making it difficult to employ large-scale generative
+models for the task. In this work, we tackle this problem by introducing two
+new models. First, we propose AutoCap , a high-quality and efficient automatic
+audio captioning model. By using a compact audio representation and leveraging
+audio metadata, AutoCap substantially enhances caption quality, reaching a CIDEr
+score of 83.2, marking a 3.2% improvement from the best available captioning
+model at four times faster inference speed. Second, we propose GenAu, a scalable
+transformer-based audio generation architecture that we scale up to 1.25B parameters. Using AutoCap to generate caption clips from existing audio datasets, we
+demonstrate the benefits of data scaling with synthetic captions as well as model
+size scaling. When compared to state-of-the-art audio generators trained at similar
+size and data scale, GenAu obtains significant improvements of 4.7% in FAD
+score, 22.7% in IS, and 13.5% in CLAP score, indicating significantly improved
+quality of generated audio compared to previous works. Moreover, we propose an
+efficient and scalable pipeline for collecting audio datasets, enabling us to compile
+57M ambient audio clips, forming AutoReCap-XL, the largest available audio-text
+dataset, at 90 times the scale of existing ones. For more details, please visit our <a href='https://snap-research.github.io/GenAU'>project webpage</a>.
 </div> 
 <br>
 
 
 # Updates
-- **2024.06.28**: Paper and code released!
+- **2024.10.24**: Code released!
+- **2024.06.28**: Paper released!
 
 # TODOs
 - [ ] Add GenAU Gradio demo

@@ -2,7 +2,8 @@ import os
 import wget
 
 save_dir = 'data/json_files'
-dataset_urls = {"autocap_audioset_vggsounds":'https://huggingface.co/datasets/mali6/autocap/resolve/main/autocap_audioset_vggsounds.json'}
+dataset_urls = {"autocap_audioset_vggsounds":'https://huggingface.co/datasets/mali6/autocap/resolve/main/autocap_audioset_vggsounds.json', 
+                "AutoReCap-XL": 'https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-videos_segments_filtered.json'}
 
 
 def get_dataset_json_file(dataset_name, dataset_json_file_path=None, download=True):
