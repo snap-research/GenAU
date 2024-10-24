@@ -1,12 +1,26 @@
 
-# AutoCap Dataset Preparation
+# AutoReCap Dataset
+
+# Introduction 
+We introduce an efficient pipeline for collecting ambient audio. It starts by analyzing automatic transcriptions of online videos to identify non-speech parts. Our captioning model, AutoCap, then generates captions and filters out segments with music or speech-related keywords. By using time-aligned transcriptions, we reduce the filtering rate and streamline the process by avoiding the need to download or process the audio files.
+<br/>
+
+<div align="center">
+<img src="../assets/dataset.png" width="1200" />
+</div>
+
+<br/>
+
 
 ## Environment Initialization
 For initializing your environment, please refer to the [general README](../README.md).
 
 ## Autocap Dataset Download
 - We currently provide the following datasets:
-    * autocap_audioset_vggsounds: containing **444,837** audio-text pairs.
+    * autocap_audioset_vggsounds: containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech.
+    * AutoReCap-XL-Raw: containing **57M** audio-text pairs, derived from TODO
+    * AutoReCap-XL: containing **57M** audio-text pairs, derived from TODO
+    * AutoReCap-XL-Raw: containing **57M** audio-text pairs, derived from TODO
 
 **More datasets will be coming soon!**
 
@@ -60,11 +74,11 @@ You need to arrange your audio files in one folder using the following structure
 - Organizing your dataset following the instructions in [Dataset Organization](#dataset-organization).
 
 ## Download External Dataset
-We provide a script for downloading audiocaps, wavcaps, and clotho datasets. Run the following scripts to download and organize each of these datasets:
+We provide a script for downloading wavcaps datasets. Run the following scripts to download and organize each of these datasets:
 
 ```shell
 python download_external_datasets --save_root <path-to-save-root> \
- --dataset_nanmes "dataset_key_1" "dataset_key_2" ...
+ --dataset_names "dataset_key_1" "dataset_key_2" ...
 
 # Organize each downloaded dataset
 python organize_dataset.py --save_dir <path-to-downloaded-dataset> \

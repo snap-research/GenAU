@@ -1,4 +1,6 @@
-[![arXiv](ARXIV ICON)](ARXIV LINK)
+
+[![Project Page](https://img.shields.io/badge/Project-Page-green.svg)](https://snap-research.github.io/GenAU) [![Arxiv](https://img.shields.io/badge/arxiv-2406.19388-b31b1b)](https://arxiv.org/abs/2406.19388) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/taming-data-and-transformers-for-audio-1/audio-captioning-on-audiocaps)](https://paperswithcode.com/sota/audio-captioning-on-audiocaps?p=taming-data-and-transformers-for-audio-1)[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/taming-data-and-transformers-for-audio-1/audio-generation-on-audiocaps)](https://paperswithcode.com/sota/audio-generation-on-audiocaps?p=taming-data-and-transformers-for-audio-1)
+
 
 # AutoCap inference, training and evaluation
 - [Inference](#inference)

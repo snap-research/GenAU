@@ -136,6 +136,7 @@ def read_video_segments_info(local_input_video_segments,
         for idx, json_str in enumerate(tqdm(f, desc="parsing json input")): 
             if idx > start_idx:
                 try:
+                    json_str = json_str.strip()
                     if json_str.endswith('\n'):
                         json_str = json_str[:-1]
                     if json_str.endswith(','):
