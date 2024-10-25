@@ -25,6 +25,33 @@
 	<title>Taming Data and Transformers for Audio Generation</title>
 
 	<style>
+
+		.license-container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #f9f9f9;
+			margin-top:5%;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .license-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .license-text {
+            font-size: 14px;
+            text-align: justify;
+            color: #666;
+        }
+        .license-copyright {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 20px;
+        }
 		/* Hiding the default video controls */
 		#myVideo {
 			outline: none;
@@ -120,8 +147,8 @@
 			  <div id="nav-links" class="nav-links">
 				<div class="nav-link"><a href="assets/paper/taming_data_transformers.pdf">Paper</a></div>
 				<div class="nav-link"><a href="https://github.com/snap-research/GenAU">Code</a></div>
+				<div class="nav-link"><a href="dataset.html">Dataset</a></div>
 				<div class="nav-link"><a href="#">Demo</a></div>
-				<!-- <div class="nav-link"><a href="#samples">Samples</a></div> -->
 				<div class="nav-link"><a href="comparisons.html">Comparisons</a></div>
 			  </div>
 			</div>
@@ -129,16 +156,17 @@
 
 
 		<div class="resources", style="padding-top: 2%;">
+
 			<div class="resource-item">
-			  <a  class="paper-btn resource-text" href="assets/paper/taming_data_transformers.pdf">
+			  <a  class="paper-btn resource-text" href="https://arxiv.org/abs/2406.19388">
 			  <!-- <img src="./assets/icons/arxiv-logo.png" alt="Paper" class="resource-icon"> -->
-			  Paper 
+			  Research Paper 
 			  </a>
 			</div>
 			<div class="resource-item">
 			  <a  class="paper-btn  resource-text" href="https://github.com/snap-research/GenAU">
 			  <!-- <img src="./assets/icons/github-mark.png" alt="Code" class="resource-icon"> -->
-			  Code
+			  Github
 			  </a>
 			</div>
 			
@@ -146,19 +174,6 @@
 				<a  class="paper-btn resource-text" href="#">Demo (Coming soon!)</a>
 			  </div>
 			
-			  <!-- <div class="resource-item  resource-text">
-				<a  class="paper-btn" href="./samples.html">View more samples</a>
-			  </div> -->
-
-			  
-			<!-- <div class="resource-item  resource-text">
-				<a  class="paper-btn" href="./samples.html">Ours Samples</a>
-			  </div>
-			
-			<div class="resource-item  resource-text">
-				<a  class="paper-btn" href=".">Comparisons</a>
-			  </div> -->
-  
 		  </div>
 
 	
@@ -167,6 +182,7 @@
 	<!-- Abstract. -->
 
 	<div class="container pt-5" id="samples">
+		<h2  class="title" >GenAU</h2>
 		<div class="content has-text-justified">
 			<div class="generator-samples">
 				<!-- <h2>Audio Generatior with GenAU</h2> -->
@@ -313,6 +329,7 @@
 		
 
 		<div class="generator-samples" style="padding-top: 40px;">
+			<h2  class="title" >AutoCap</h2>
 			<div class="notification-box">
 				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> <!-- Ensure you have an appropriate icon image -->
 				<span>Click anywhere on the page, then hover over (or click) the waveforms to listen to audio and examine the captions generated through our audio captioner <b style="color: #141fee;">AutoCap </b>.</span>
@@ -398,28 +415,140 @@
 			</div>
 		</div>
 
+		<div class="generator-samples" style="padding-top: 40px;">
+			<h2  class="title" >AutoReCap</h2>
+			<div class="notification-box">
+				<img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> 
+				<span>Click anywhere on the page, then hover over (or click) the video to listen to examine samples from our proposed dataset <b style="color: #141fee;">AutoReCap </b>.</span>
+			</div>
+	
+			<div class="video-grid target-nav">
+
+		<!-- main page samples -->
+		<div class="video-item">
+			
+			<video id="video1" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/1cb_boOo__E_split_00013.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A series of gunshots firing followed by a man screaming and a woman screaming</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video2" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/434r-CN10Bk_split_00001.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">Water is splashing and birds are chirping</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video3" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/Dov4daxEgss_split_00001.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A door is being opened and closed</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video4" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/GffLIqA5E7w_split_00009.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A crowd of people applauding and cheering</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video5" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/HFldvbYiP8o_split_00016.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">Someone is rubbing a surface</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video6" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/HzXrxa7PzEw_split_00000.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A motor vehicle engine is running and vibrating, and rhythmic clacking is present</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video7" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/K6Q8NFUIgDQ_split_00012.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">Someone is chewing</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video8" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/_OkW3OCCg40_split_00004.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">Metal is being moved on a surface</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video9" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/bGpvLjDAQzs_split_00007.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A helicopter engine is running</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video10" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/cUvW1kRTr_Q_split_00005.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A small motor is running</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video11" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/fIGTNRdLnK8_split_00006.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A hammer is being used on a surface</div>
+		</div>
+		
+		<div class="video-item">
+			<video id="video12" class="video-player" autoplay loop muted>
+				<source src="data/autorecap/iqqna_cZMkU_split_00001.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<div class="video-caption">A power tool is being used</div>
+		</div>
+	</div>
+	
 		<div class="abstract-method-section">
 			<div>
 				<h2 class="title">Abstract</h2>
 			</div>
 
 			<p class="lead">
+				
+				Generating ambient sounds is a challenging task due to data scarcity and often
+insufficient caption quality, making it difficult to employ large-scale generative
+models for the task. In this work, we tackle this problem by introducing two
+new models. First, we propose AutoCap , a high-quality and efficient automatic
+audio captioning model. By using a compact audio representation and leveraging
+audio metadata, AutoCap substantially enhances caption quality, reaching a CIDEr
+score of 83.2, marking a 3.2% improvement from the best available captioning
+model at four times faster inference speed. Second, we propose GenAu, a scalable
+transformer-based audio generation architecture that we scale up to 1.25B parameters. Using AutoCap to generate caption clips from existing audio datasets, we
+demonstrate the benefits of data scaling with synthetic captions as well as model
+size scaling. When compared to state-of-the-art audio generators trained at similar
+size and data scale, GenAu obtains significant improvements of 4.7% in FAD
+score, 22.7% in IS, and 13.5% in CLAP score, indicating significantly improved
+quality of generated audio compared to previous works. Moreover, we propose an
+efficient and scalable pipeline for collecting audio datasets, enabling us to compile
+57M ambient audio clips, forming AutoReCap-XL, the largest available audio-text
+dataset, at 90 times the scale of existing ones. Our code, model checkpoints, and
+dataset are publicly available
 
-				Generating ambient sounds and effects is a challenging problem due to data scarcity
-				and often insufficient caption quality, making it difficult to employ large-scale generative models for the task. In this work, we tackle the problem by introducing two
-				new models. First, we propose AutoCap, a high-quality and efficient automatic
-				audio captioning model. We show that by leveraging metadata available with the
-				audio modality, we can substantially improve the quality of captions. AutoCap
-				reaches CIDEr score of 83.2, marking a 3.2% improvement from the best available
-				captioning model at four times faster inference speed. We then use AutoCap to caption clips from existing datasets, obtaining 761, 000 audio clips with high-quality
-				captions, forming the largest available audio-text dataset. Second, we propose
-				GenAu, a scalable transformer-based audio generation architecture that we scale
-				up to 1.25B parameters and train with our new dataset. When compared to stateof-the-art audio generators, GenAu obtains significant improvements of 15.7%
-				in FAD score, 22.7% in IS, and 13.5% in CLAP score, indicating significantly
-				improved quality of generated audio compared to previous works. This shows that
-				the quality of data is often as important as its quantity. Besides, since AutoCap is
-				fully automatic, new audio samples can be added to the training dataset, unlocking
-				the training of even larger generative models for audio synthesis.
 			</p>
 
 		</div>
@@ -481,6 +610,9 @@
 
 			</div>
 
+			
+	</div>
+
 
 		</div>
 
@@ -488,24 +620,68 @@
 	<h2  class="title">Improvements</h2>
 	<img src="assets/figures/improvements.png">
 </div>
+
+
+<div class="improvements">
+	<h2  class="title">AutoReCap Collection Pipeline</h2>
+	<img src="assets/figures/dataset.png">
+	<p>
+		<strong>AutoReCap:</strong> We propose an efficient and scalable pipeline for collecting audio datasets, enabling us to compile 57M ambient audio clips, forming AutoReCap-XL, the largest available audio-text dataset, at 90 times the scale of existing ones. Our data data collection approach
+		leverages existing automatic video transcription to identify segments with ambient sounds. We then use our proposed captioning method AutoCap to caption the identified segments and exclude speech and music audio clips based on keyword search.
+		<br> <br>
+		<p>Please refer to the <a href="dataset.html" target="_blank">Dataset page</a> for more samples and <a href="https://github.com/snap-research/GenAU/tree/main/dataset_preperation" target="_blank">GitHub page</a> for instructions on downloading the dataset!</p>
+	</p>
+</div>
 <div class="paper">
 	<p><h2 class="title">Paper</h2></p>
           <table border="0">
             <tbody>
               <tr>
                 <td><a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer"><img src="./assets/icons/paper_cover.jpg" alt=""></a></td>
-                <td><p><b>Taming Data and Transformers for Audio Generation (514 KB)
+                <td><p><b>Taming Data and Transformers for Audio Generation (2.1 MB)
                 </b><br>
 				<p class="paper-authors"> Moayed Haji-Ali,  Willi Menapace,  Aliaksandr Siarohin,  Guha Balakrishnan,  Sergey Tulyakov, and Vicente Ordonez <br />
 				</p>
-				<br>
-                  <p><em>Preprint</em> </p>
-                   [<a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer">paper</a>]</p>
+				<br />
+				<div class="bibtex" style="width: 80%; text-align: left;">
+					<p style="color:blue;">
+						<b>Bibtex: </b>@misc{hajiali2024genau, <br />
+						title={Taming Data and Transformers for Audio Generation},  <br />
+						author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Sergey Tulyakov and Vicente Ordonez},  <br />
+						year={2024},  
+						eprint={2406.19388},  <br />
+						archivePrefix={arXiv}, 
+						primaryClass={cs.SD},  <br />
+						url={https://arxiv.org/abs/2406.19388},
+					}
+					</p>
+					<br>
+				</div>
+				</div>
+                  <!-- <p><em>Preprint</em> </p> -->
+                   <!-- [<a href="./assets/paper/taming_data_transformers.pdf" target="_blank" rel="noopener noreferrer">paper</a>]</p> -->
                 </td>
               </tr>
             </tbody>
           </table>
 </div>
+
+<div class="license-container">
+	<div class="license-title">License Agreement</div>
+	<div class="license-text">
+		These sample code, data, and model checkpoints are made available by Snap Inc. for non-commercial, research purposes only. Non-commercial means not primarily intended for or directed towards commercial advantage or monetary compensation. Research purposes mean solely for study, instruction, or non-commercial research, testing or validation.
+		No commercial license, whether implied or otherwise, is granted in or to this code, unless you have entered into a separate agreement with Snap Inc. for such rights.
+		These sample code, data, and model checkpoints are provided as-is, without warranty of any kind, express or implied, including any warranties of merchantability, title, fitness for a particular purpose, non-infringement, or that the code is free of defects, errors, or viruses. In no event will Snap Inc. be liable for any damages or losses of any kind arising from this sample code or your use thereof.
+		Any redistribution of this sample code, including in binary form, must retain or reproduce the above copyright notice, conditions, and disclaimer.
+	</div>
+	<div class="license-copyright">
+		&copy; 2024 Snap Inc. All rights reserved.
+	</div>
+</div>
+
+
+
+ 
 <!-- <p class="section">&nbsp;</p> -->
 <!-- <p class="section" id="bibtex"><b>Citation</b></p>
 <p>If you find this paper useful in your research, please consider citing our work:</p>

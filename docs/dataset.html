@@ -74,57 +74,47 @@
 		<div id="fixed-nav">
 			<!-- Left-aligned content -->
 			<div class="left-content">
-				<div class="nav-link" style="padding-right:0%">
-					<a href="./index.html">
-						<img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
-						GenAU
-					</a>
-				</div>
+			  <div class="nav-link" style="padding-right:0%">
+				<a href="./">
+				  <img src="assets/icons/sound-waves.png" alt="Waveform Icon" style="height: 60px; padding-right:0;"> <!-- Adjust the src and style as needed -->
+				  GenAU
+				</a>
+			  </div>
 			</div>
 		  
 			<!-- Right-aligned content -->
 			<div class="right-content">
-				<div id="menu-button" class="nav-link" style="cursor: pointer;">&#9776;</div> <!-- Menu icon -->
-				<div id="nav-links" class="nav-links">
-				  <div class="nav-link"><a href="assets/paper/taming_data_transformers.pdf">Paper</a></div>
-				  <div class="nav-link"><a href="https://github.com/snap-research/GenAU">Code</a></div>
-				  <div class="nav-link"><a href="#">Demo</a></div>
-				  <!-- <div class="nav-link"><a href="#samples">Samples</a></div> -->
-				  <div class="nav-link"><a href="comparisons.html">Comparisons</a></div>
-				</div>
+			  <div id="menu-button" class="nav-link" style="cursor: pointer;">&#9776;</div> <!-- Menu icon -->
+			  <div id="nav-links" class="nav-links">
+				<div class="nav-link"><a href="assets/paper/taming_data_transformers.pdf">Paper</a></div>
+				<div class="nav-link"><a href="https://github.com/snap-research/GenAU">Code</a></div>
+				<div class="nav-link"><a href="dataset.html">Dataset</a></div>
+				<div class="nav-link"><a href="#">Demo</a></div>
+				<div class="nav-link"><a href="comparisons.html">Comparisons</a></div>
 			  </div>
 			</div>
-		</div>
+		  </div>
 
-		
 
 		<div class="resources", style="padding-top: 2%;">
-			<div class="resource-item">
-			  <a  class="paper-btn resource-text" href="assets/paper/taming_data_transformers.pdf">
-			  <!-- <img src="./assets/icons/arxiv-logo.png" alt="Paper" class="resource-icon"> -->
-			  Paper 
-			  </a>
-			</div>
-			<div class="resource-item">
-			  <a  class="paper-btn  resource-text" href="#">
-			  <!-- <img src="./assets/icons/github-mark.png" alt="Code" class="resource-icon"> -->
-			  Code (Coming soon!)
-			  </a>
-			</div>
-			
-			<div class="resource-item  resource-text">
-				<a  class="paper-btn" href="#">Demo (Coming soon!)</a>
-			  </div>
 
-			  
-			<!-- <div class="resource-item  resource-text">
-				<a  class="paper-btn" href="./samples.html">Ours Samples</a>
+			<div class="resource-item">
+			  <a  class="paper-btn resource-text" href="https://arxiv.org/abs/2406.19388">
+			  <!-- <img src="./assets/icons/arxiv-logo.png" alt="Paper" class="resource-icon"> -->
+			  Research Paper 
+			  </a>
+			</div>
+			<div class="resource-item">
+			  <a  class="paper-btn  resource-text" href="https://github.com/snap-research/GenAU">
+			  <!-- <img src="./assets/icons/github-mark.png" alt="Code" class="resource-icon"> -->
+			  Github
+			  </a>
+			</div>
+			
+			<div class="resource-item ">
+				<a  class="paper-btn resource-text" href="#">Demo (Coming soon!)</a>
 			  </div>
 			
-			<div class="resource-item  resource-text">
-				<a  class="paper-btn" href=".">Comparisons</a>
-			  </div> -->
-  
 		  </div>
 
 	
@@ -132,6 +122,360 @@
 	</section>
 
 	
+	<div class="generator-samples" style="padding-top: 40px;">
+        <div class="notification-box">
+            <img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> 
+            <span>Click anywhere on the page, then hover over (or click) the video to listen to examine samples from our proposed dataset <b style="color: #141fee;">AutoReCap </b>.</span>
+        </div>
+
+        <div class="video-grid target-nav">
+
+			<div class="video-item">
+				<video id="video1" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/-AOCvnivOSc_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A loud bang</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video2" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/3U1wNRpo-PQ_split_00012.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Clicking and rustling</div>
+			</div>
+			
+			<!-- <div class="video-item">
+				<video id="video3" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/F4xjO9V9ZK8_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Birds are chirping and a horse is trotting</div>
+			</div> -->
+			
+			<div class="video-item">
+				<video id="video4" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/NcdPavKm_MQ_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A crowd of people chanting</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video5" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/gv4w7pqouYU_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A car engine revs and tires squeal as a crowd cheers</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video6" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/0A6piRp1dAM_split_00002.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A crowd of people chanting and cheering</div>
+			</div>
+			
+			<!-- <div class="video-item">
+				<video id="video7" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/4kZpQfRyy8k_split_00007.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Spraying and birds chirping</div>
+			</div>
+			 -->
+			<div class="video-item">
+				<video id="video8" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/FmZHMPVeE8s_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Some objects are being opened and closed</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video9" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/OhDDJbSJE_w_split_00002.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A man yells followed by a loud bang and a man yelling</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video10" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/j4De_YVXI9Y_split_00030.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Fireworks are going off</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video11" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/0IyST_QgDaI_split_00005.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Rain falls onto a hard surface</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video12" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/4qtqo7TB0sY_split_00001.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A person breathes heavily</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video13" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/5wAP3pCJ5V0_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Paper is being crumpled</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video14" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/Gokvgvm1SIg_split_00001.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A dog barks</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video15" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/Gz0W-UzPlXI_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A gun is fired and a man yells</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video16" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/Ynp-3jxSqTE_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A motorcycle engine is running</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video17" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/qaUm1YasQ1w_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A violin is playing a note</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video18" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/2KXavR3z_zQ_split_00009.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A motorcycle engine revving</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video19" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/AQ_LsD-E_3c_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A beep followed by a beep</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video20" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/In3gxWXKXHY_split_00010.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A vehicle engine is idling and then revving up</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video21" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/Z4vyabLzttw_split_00001.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A power tool drilling</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video22" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/wzNt6jKCRMY_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A gun is fired several times</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video23" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/2Mr9hK8uxx8_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Some objects are crumpled</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video24" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/ATmyC3cJdqg_split_00007.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Multiple dogs howling</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video25" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/KtaKXtSSwS0_split_00013.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Waves crash against a shoreline</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video26" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/Zy1krAhICKs_split_00008.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Traffic passes by in the distance</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video27" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/2YlfTMg6TMo_split_00002.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A large motor vehicle engine idles and then accelerates</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video28" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/BGMCOXH4jCc_split_00004.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Birds chirp in the distance, followed by a small motor running</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video29" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/LPwL1GQBjbA_split_00003.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A power tool motor is running</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video30" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/d8tQnjuuEd8_split_00011.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Fireworks are going off</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video31" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/2gN9bRcHzEM_split_00001.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A crowd of people are screaming and cheering, and the wind is blowing</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video32" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/EXOWe8hkwCM_split_00000.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Some objects are moved around</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video33" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/NCTkOQWkFnU_split_00004.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">Food sizzles in a pan</div>
+			</div>
+			
+			<div class="video-item">
+				<video id="video34" class="video-player" autoplay loop muted>
+					<source src="data/autorecap/fCiO_kbDBzE_split_00006.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<div class="video-caption">A man yells and a motor vehicle passes by</div>
+			</div>
+			
+			
+
+			
+			
+        </div>
+    </div>
+
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const videoItems = document.querySelectorAll('.video-item');  // Get all video item elements
+			let userInteracted = false;
+		  
+			// Function to detect mobile devices
+			function isMobileDevice() {
+			  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+			}
+		  
+			// Detect user interaction
+			document.body.addEventListener('click', function() {
+			  userInteracted = true;  // Set to true on any click on the page
+			});
+		  
+			// Function to handle hover and interaction
+			function handleVideoHover(item, video, caption) {
+			  item.addEventListener('mouseenter', function() {
+				if (userInteracted) {  // Only apply effects if the user has interacted with the page
+				  if (video.muted) {
+					video.muted = false;
+					video.currentTime = 0;  // Reset video to the beginning
+				  }
+				  caption.style.opacity = '1';
+				}
+			  });
+		  
+			  item.addEventListener('mouseleave', function() {
+				if (!video.muted) {
+				  video.muted = true;
+				}
+				caption.style.opacity = '0.5';
+			  });
+			}
+		  
+			// Apply hover functionality only if not on mobile
+			if (!isMobileDevice()) {
+			  videoItems.forEach(function(item) {
+				const video = item.querySelector('.video-player');
+				const caption = item.querySelector('.video-caption');
+				handleVideoHover(item, video, caption);
+			  });
+			} else {
+			  // For mobile, ensure videos are muted and paused
+			  videoItems.forEach(function(item) {
+				const video = item.querySelector('.video-player');
+				if (video) {
+				  video.muted = true;
+				  video.pause(); // Ensure video is paused
+				  video.setAttribute('controls', false); // Disable controls to prevent user interaction
+				  video.removeAttribute('autoplay'); // Ensure autoplay is disabled
+				}
+			  });
+			}
+		  });		  
+		  
+		document.getElementById('menu-button').addEventListener('click', function() {
+			const navLinks = document.getElementById('nav-links');
+			if (navLinks.style.display === 'flex') {
+			  navLinks.style.display = 'none';
+			} else {
+			  navLinks.style.display = 'flex';
+			}
+		  });
+		  
+	</script>
 	
 	
 </body>

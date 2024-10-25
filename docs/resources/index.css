@@ -312,12 +312,14 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden;
+  /* position: relative */
 }
 
 .video-item video {
   width: 100%;
   display: block;
 }
+
 
 .video-caption {
   text-align: center;
@@ -331,8 +333,12 @@ body {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   opacity: 0.7;
   transition: opacity 0.3s ease;
-}
 
+  /* Set min-height to fit approximately 3 lines */
+  /* min-height: calc(1.2em * 6); 
+  display: flex;
+  align-items: center; */
+}
 .video-item:hover .video-caption {
   opacity: 1;
 }
