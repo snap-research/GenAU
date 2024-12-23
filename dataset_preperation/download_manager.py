@@ -2,8 +2,11 @@ import os
 import wget
 
 save_dir = 'data/json_files'
-dataset_urls = {}
-
+dataset_urls = {"AutoReCapXL":'https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_01.json',
+                "AutoReCapXL-MQ": 'https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_04.json',
+                "AutoReCapXL-MQ-L": 'https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_04_longer_than_5s.json',
+                "AutoReCapXL-HQ": 'https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_05.json'}
+                
 
 def get_dataset_json_file(dataset_name, dataset_json_file_path=None, download=True):
     if dataset_json_file_path is None:

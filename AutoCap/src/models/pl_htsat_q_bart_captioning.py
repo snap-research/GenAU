@@ -550,6 +550,7 @@ class AutoCap(pl.LightningModule):
 
     def forward_encoder(self, audios):
         outputs = self.encoder(audios)
+        print("HTSAT embedding", outputs.last_hidden_state.shape)
         outputs = self.enc_to_dec_proj(outputs.last_hidden_state)
 
         # dropout 
@@ -737,6 +738,7 @@ class AutoCap(pl.LightningModule):
                  ):
 
         encoder_outputs = self.forward_encoder(samples)
+        print("audio_embeds", encoder_outputs.shape)
         attn_mask = torch.ones(encoder_outputs.size()[:-1], dtype=torch.long, device=encoder_outputs.device)
 
         if self.use_audio_qformer:
@@ -1034,49 +1036,54 @@ class AutoCap(pl.LightningModule):
                 
                 if len(captions_pred) == 0 or len(captions_gt) == 0:
                     continue
-                metrics = evaluate_metrics(captions_pred, captions_gt, nb_reference_captions=5, bert_model=self.bert_model, exclude_metrics=self.exclude_metrics)
-
                 
-                def get_score(metrics, key):
-                    if key in metrics:
-                        return float(metrics[key]['score'])
-                    else:
-                        return 0
+                try:
+                    metrics = evaluate_metrics(captions_pred, captions_gt, nb_reference_captions=5, bert_model=self.bert_model, exclude_metrics=self.exclude_metrics)
 
-                spider = get_score(metrics, 'spider')
-                cider = get_score(metrics, 'cider')
-                spice = get_score(metrics, 'spice')
-                bleu_1 = get_score(metrics, 'bleu_1')
-                bleu_4 = get_score(metrics, 'bleu_4')
-                rouge_l = get_score(metrics, 'rouge_l')
-                meteor = get_score(metrics, 'meteor')
+                    
+                    def get_score(metrics, key):
+                        if key in metrics:
+                            return float(metrics[key]['score'])
+                        else:
+                            return 0
 
-                val_logger.info(f'Cider: {cider:7.4f}')
-                val_logger.info(
-                    f'Spider score using beam search (beam size:{beam_size}): {spider:7.4f}')
-                
-                metrics_log = {f"{split}/spider_beam_{beam_size}" : spider,
-                            f"{split}/cider_beam_{beam_size}":cider,
-                            f"{split}/spice_beam_{beam_size}":spice,
-                            f"{split}/bleu_1_beam_{beam_size}":bleu_1,
-                                f"{split}/bleu_4_beam_{beam_size}":bleu_4,
-                                f"{split}/rouge_l_beam_{beam_size}":rouge_l,
-                                f"{split}/meteor_beam_{beam_size}":meteor }
-                if 'bert_score' in metrics:
-                    bert_score = metrics.pop('bert_score')
-                    metrics_log[f"{split}/bertscore_beam_{beam_size}"] = bert_score
-                    val_logger.info(f"Bert score {bert_score}")
+                    spider = get_score(metrics, 'spider')
+                    cider = get_score(metrics, 'cider')
+                    spice = get_score(metrics, 'spice')
+                    bleu_1 = get_score(metrics, 'bleu_1')
+                    bleu_4 = get_score(metrics, 'bleu_4')
+                    rouge_l = get_score(metrics, 'rouge_l')
+                    meteor = get_score(metrics, 'meteor')
 
-                self.log_dict(metrics_log,
-                            prog_bar=True,
-                            logger=True,
-                            on_step=False,
-                            on_epoch=True,
-                            sync_dist=True)
+                    val_logger.info(f'Cider: {cider:7.4f}')
+                    val_logger.info(
+                        f'Spider score using beam search (beam size:{beam_size}): {spider:7.4f}')
+                    
+                    metrics_log = {f"{split}/spider_beam_{beam_size}" : spider,
+                                f"{split}/cider_beam_{beam_size}":cider,
+                                f"{split}/spice_beam_{beam_size}":spice,
+                                f"{split}/bleu_1_beam_{beam_size}":bleu_1,
+                                    f"{split}/bleu_4_beam_{beam_size}":bleu_4,
+                                    f"{split}/rouge_l_beam_{beam_size}":rouge_l,
+                                    f"{split}/meteor_beam_{beam_size}":meteor }
+                    if 'bert_score' in metrics:
+                        bert_score = metrics.pop('bert_score')
+                        metrics_log[f"{split}/bertscore_beam_{beam_size}"] = bert_score
+                        val_logger.info(f"Bert score {bert_score}")
 
-                for metric, values in metrics.items():
-                    val_logger.info(f'beam search (size {beam_size}): {metric:<7s}: {values["score"]:7.4f}')
-        
+                    self.log_dict(metrics_log,
+                                prog_bar=True,
+                                logger=True,
+                                on_step=False,
+                                on_epoch=True,
+                                sync_dist=True)
+
+                    for metric, values in metrics.items():
+                        val_logger.info(f'beam search (size {beam_size}): {metric:<7s}: {values["score"]:7.4f}')
+                except Exception as e:
+                    print("Error while calculating the metrics.")
+                    metrics_log = {}
+                    
         self.log("time/val_epoch", time.time() - self.val_start_time, on_step=False, on_epoch=True, logger=True)
         return metrics_log
 

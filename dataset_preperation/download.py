@@ -129,8 +129,11 @@ def update_interval_dict(dict_1, dict_2):
         
 def read_video_segments_info(local_input_video_segments, 
                              start_idx=0,
-                             end_idx=int(1e9)):
+                             end_idx=int(1e9),
+                             min_audio_len=0.0,
+                            clap_threshold=0.0):
     all_video_segments = {}
+    total_number_of_clips = 0
     with open(local_input_video_segments, 'r') as f:
         last_idx = 0
         for idx, json_str in enumerate(tqdm(f, desc="parsing json input")): 
@@ -141,8 +144,21 @@ def read_video_segments_info(local_input_video_segments,
                         json_str = json_str[:-1]
                     if json_str.endswith(','):
                         json_str = json_str[:-1]
-                    json_object = json.loads(json_str)
-                    update_interval_dict(all_video_segments, json_object)
+                        
+                    data = json.loads(json_str)
+                    video_ids = list(data.keys())
+                    if len(video_ids) == 0:
+                        continue
+                    video_id = video_ids[0]
+
+                    intervals = data[video_id].get("intervals", [])
+                    len_intervals_filtered = [clip for clip in intervals if float(clip['end']) - float(clip['start'])>= min_audio_len]
+                    clap_len_intervals_filtered = [clip for clip in len_intervals_filtered if  clip.get("CLAP_SIM", -9999) is not None and clip.get("CLAP_SIM", -9999) >= clap_threshold]
+                    total_number_of_clips += len(clap_len_intervals_filtered)
+                    video_data = {}
+                    video_data[video_id] = {}
+                    video_data[video_id]['intervals'] = clap_len_intervals_filtered
+                    update_interval_dict(all_video_segments, video_data)
                 except Exception as e:
                     print("[ERROR] Couldn't parse json string:", json_str)
                     continue
@@ -151,6 +167,7 @@ def read_video_segments_info(local_input_video_segments,
             if last_idx >= end_idx:
                 break
     
+    print(f"Found {total_number_of_clips} audio clips.")
     return all_video_segments
 
 def download_audioset_split(json_file,
@@ -163,14 +180,18 @@ def download_audioset_split(json_file,
                             end_idx=int(1e9),
                             num_processes=os.cpu_count(),
                             resume=True,
-                            files_per_folder=5000
+                            files_per_folder=5000,
+                            clap_threshold=0.4,
+                            min_audio_len=4,
                             ):
     
     os.makedirs(save_dir, exist_ok=True)
         
     all_video_segments = read_video_segments_info(json_file,
                                                   start_idx=start_idx,
-                                                  end_idx=end_idx)
+                                                  end_idx=end_idx,
+                                                  min_audio_len=min_audio_len,
+                                                  clap_threshold=clap_threshold)
     
     download_audio_split = partial(download_yt_video,
                                    save_dir=save_dir,
@@ -207,6 +228,18 @@ if __name__ == "__main__":
                         type=str,
                         required=True,
                         help=f"Provided the dataset names. Available datasets are {dataset_urls.keys()}")
+    
+    parser.add_argument("--clap_threshold", 
+                        type=float,
+                        required=False,
+                        default=0.4,
+                        help=f"Provided the clap similarity threshold to filter the dataset, default: 0.4")
+    
+    parser.add_argument("--min_audio_len", 
+                        type=float,
+                        required=False,
+                        default=4,
+                        help=f"Provided the minimum audio clip length to filter the dataset, default: 4s")
     
     parser.add_argument("--input_file", 
                         type=str,
@@ -269,5 +302,7 @@ if __name__ == "__main__":
                             proxy_port=args.proxy,
                             start_idx=args.start_idx,
                             end_idx=args.end_idx,
+                            clap_threshold=args.clap_threshold,
+                            min_audio_len=args.min_audio_len,
                             resume=not args.redownload,
                             files_per_folder=args.files_per_folder)

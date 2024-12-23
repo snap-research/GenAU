@@ -836,13 +836,21 @@ class HTSAT_Swin_Transformer(nn.Module):
         x = x.reshape(B, C, F // c_freq_bin, c_freq_bin, T)
         x = x.permute(0, 1, 3, 2, 4).contiguous().reshape(B, C, c_freq_bin, -1)
 
+        latent_output_64_reshaped = x.reshape(B, C, -1)
+        latent_output_64_reshaped = latent_output_64_reshaped.permute(0, 2, 1).contiguous()
+        
         fine_grained_latent_output = torch.mean(x, dim=2)
+        pooled_represetnation = fine_grained_latent_output
         fine_grained_latent_output = interpolate(fine_grained_latent_output.permute(0, 2, 1).contiguous(),
                                                  8 * self.patch_stride[1])
-
+        
+        fine_grained_latent_output_256 = interpolate(pooled_represetnation.permute(0, 2, 1).contiguous(),
+                                                 2 * self.patch_stride[1])
+        fine_grained_latent_output_32 = pooled_represetnation.permute(0, 2, 1).contiguous()
         # get latent_output
         latent_output = self.avgpool(torch.flatten(x, 2))
         latent_output = torch.flatten(latent_output, 1)
+        
 
         # display the attention map, if needed
         # if self.config.htsat_attn_heatmap:
@@ -886,6 +894,10 @@ class HTSAT_Swin_Transformer(nn.Module):
             'framewise_output': fpx,  # already sigmoided
             'clipwise_output': torch.sigmoid(x),
             'fine_grained_embedding': fine_grained_latent_output,
+            "fine_grained_latent_output_32":fine_grained_latent_output_32,
+            "fine_grained_latent_output_256":fine_grained_latent_output_256,
+            "latent_output_64_reshaped":latent_output_64_reshaped,
+            "latent_output": latent_output,
             'embedding': latent_output
         }
 
@@ -915,7 +927,6 @@ class HTSAT_Swin_Transformer(nn.Module):
             x = nn.functional.interpolate(x, (x.shape[2], target_F), mode="bicubic", align_corners=True)
         x = x.permute(0, 1, 3, 2).contiguous()
         x = x.reshape(x.shape[0], x.shape[1], x.shape[2], self.freq_ratio, x.shape[3] // self.freq_ratio)
-        # print(x.shape)
         x = x.permute(0, 1, 3, 2, 4).contiguous()
         x = x.reshape(x.shape[0], x.shape[1], x.shape[2] * x.shape[3], x.shape[4])
         return x
@@ -936,7 +947,7 @@ class HTSAT_Swin_Transformer(nn.Module):
         x = x.repeat(repeats=(1, 1, 4, 1))
         return x
 
-    def forward(self, input: torch.Tensor, infer_mode=False):  # out_feat_keys: List[str] = None):
+    def forward(self, input: torch.Tensor, infer_mode=False, representation='fine_grained_embedding'):  # out_feat_keys: List[str] = None):
         # x = self.spectrogram_extractor(x)  # (batch_size, 1, time_steps, freq_bins)
         # x = self.logmel_extractor(x)  # (batch_size, 1, time_steps, mel_bins)
 
@@ -951,7 +962,7 @@ class HTSAT_Swin_Transformer(nn.Module):
         x = self.reshape_wav2img(x)
         output_dict = self.forward_features(x)
         # x = self.head(x)
-        return output_dict["fine_grained_embedding"]
+        return output_dict[representation]
 
 
 if __name__ == '__main__':

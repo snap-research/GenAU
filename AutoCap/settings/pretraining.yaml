@@ -149,7 +149,7 @@ audio_encoder_args:
 text_decoder_args:
   model_tag: "audio_qformer"
   name: "facebook/bart-base"
-  pretrained: false
+  pretrained: True
   freeze: True
   freeze_embed_layer: True
   bert_args:

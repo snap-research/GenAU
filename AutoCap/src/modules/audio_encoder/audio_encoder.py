@@ -21,6 +21,7 @@ class AudioEncoderModel(PreTrainedModel):
     def __init__(self, config):
         super(AudioEncoderModel, self).__init__(config)
 
+        self.representation = config.representation
         if config.model_arch == "cnn":
             if config.model_name == 'ResNet38':
                 self.audio_enc = ResNet38(config)
@@ -79,7 +80,8 @@ class AudioEncoderModel(PreTrainedModel):
                 output_hidden_states=False,
                 return_dict=True
                 ):
-        audio_embeds = self.audio_enc(input_ids)
+        print("Using audio representation:", self.representation)
+        audio_embeds = self.audio_enc(input_ids, representation=self.representation)
         if not return_dict:
             return (audio_embeds, )
         return BaseModelOutput(audio_embeds, None, None)

@@ -22,6 +22,7 @@ class AudioEncoderConfig(PretrainedConfig):
                  freeze: bool = False,
                  spec_augment: bool = True,
                  audio_args: dict = None,
+                 representation = 'fine_grained_embedding',
                  **kwargs):
         super(AudioEncoderConfig, self).__init__(**kwargs)
         if model_arch not in ["cnn", "transformer"]:
@@ -36,5 +37,7 @@ class AudioEncoderConfig(PretrainedConfig):
         self.hidden_size = 1024 if model_arch == "cnn" else 768
         self.spec_augment = spec_augment
         self.audio_args = audio_args
+        self.representation = representation
+        print("config rep", self.representation )
         self.num_labels = 0
         

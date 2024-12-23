@@ -16,18 +16,28 @@ We introduce an efficient pipeline for collecting ambient audio. It starts by an
 For initializing your environment, please refer to the [general README](../README.md).
 
 ## Autocap Dataset Download
-<!-- - We currently provide the following datasets:
-    * autocap_audioset_vggsounds: containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech.
-    * AutoReCap-XL: containing around **57M** audio-text pairs, derived from Youtube videos. This dataset contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset. -->
-
-**datasets will be coming later!**
+- We currently provide the following datasets:
+    <!-- * **autocap_audioset_vggsounds:** containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech. -->
+    * **AutoReCapXL:** containing more than **47M** audio-text pairs, filtered to have LAION CLAP similaity above 0.1
+    * **AutoReCapXL-MQ:** containing more than **20.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.4
+    * **AutoReCapXL-MQ-L:** containing more than **20.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.4 and audio clips longer than 5 seconds.
+    * **AutoReCapXL-HQ:** containing more than **10.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.5.
+    
+AutoReCap datasets are derived from Youtube videos. The datasets contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset. These datasets can be filtered based on specified CLAP similarity thresholds and minimum audio clip lengths as described below.
 
 ```shell
 python download.py --save_dir <path-to-save-dir> --dataset_name <dataset-subset>
 
+# Example
+python download.py --save_dir data/datasets/autocap --dataset_name AutoReCapXL-HQ --audio_only 
+
+# Example of filtering according to clap similarity and audio clip length
+python download.py --save_dir data/datasets/autocap --dataset_name AutoReCapXL --clap_threshold 0.4 --min_audio_len 5 --audio_only 
+
+# Example of downloading only a subset of the datasets
+python download.py --save_dir data/datasets/autocap --dataset_name AutoReCapXL-HQ --start_idx 0 --end_idx 100000 --audio_only 
 ```
-<!-- # Example -->
-<!-- python download.py --save_dir data/datasets/autocap --dataset_name autocap_audioset_vggsounds --audio_only -->
+
 
 By default, the script will download videos along with their metadata.
 
