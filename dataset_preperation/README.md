@@ -20,7 +20,7 @@ For initializing your environment, please refer to the [general README](../READM
     <!-- * **autocap_audioset_vggsounds:** containing roughly **445K** audio-text pairs, derived from VGGSounds and a subset of AudioSet. This dataset was not filtered to remove music and speech. -->
     * **AutoReCapXL:** containing more than **47M** audio-text pairs, filtered to have LAION CLAP similaity above 0.1
     * **AutoReCapXL-MQ:** containing more than **20.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.4
-    * **AutoReCapXL-MQ-L:** containing more than **20.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.4 and audio clips longer than 5 seconds.
+    * **AutoReCapXL-MQ-L:** containing more than **14.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.4 and audio clips longer than 5 seconds.
     * **AutoReCapXL-HQ:** containing more than **10.7M** audio-text pairs, filtered to have LAION CLAP similaity above 0.5.
     
 AutoReCap datasets are derived from Youtube videos. The datasets contain mainly ambinet audio clips and few speech and music clips. Please refer to the paper for more details on this dataset. These datasets can be filtered based on specified CLAP similarity thresholds and minimum audio clip lengths as described below.
