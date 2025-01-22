@@ -30,6 +30,71 @@
 			outline: none;
 		}
 	</style>
+
+	<style>
+        .download_section {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+		.data-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+			width: 1100px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .dataset-paper-btn {
+			width: 300px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #4c4f49;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .dataset-paper-btn:hover {
+			color: #fff;
+            background-color: #41443f;
+        }
+        .resource-text {
+            text-align: center;
+        }
+        .code-btn {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1em;
+            font-weight: bold;
+            background-color: #007acc;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+		.data-row p {
+			margin-left: 40px;
+			font-size: 1.2em;
+			color: #333;
+			text-align: left;
+			line-height: 1.4;
+		}
+
+        .code-btn:hover {
+            background-color: #005f9e;
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -121,8 +186,46 @@
 	
 	</section>
 
-	
+	<div class="container pt-5" id="samples">
+	<h1 class="title">Download AutoReCap Dataset</h1>
+	<div class="download_section" style="align-items: center;">
+		
+		<div class="button-container">
+			<div class="data-row">
+				<a class="dataset-paper-btn resource-text" href="https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_01.json">AutoReCapXL</a>
+				<p>47M audio-text pairs with variable length and minimum 0.1 CLAP similarity</p>
+			</div>
+			
+			<div class="data-row">
+				<a class="dataset-paper-btn resource-text" href="https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_04.json">AutoReCapXL-MQ</a>
+				<p>20.7M audio-text pairs with variable length and minumum 0.4 CLAP similarity</p>
+			</div>
+			
+			<div class="data-row">
+				<a class="dataset-paper-btn resource-text" href="https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_04_longer_than_5s.json">AutoReCapXL-MQ-L</a>
+				<p>14.7M audio-text pairs with minimum 5 seconds clips and 0.4 CLAP similarity</p>
+			</div>
+			
+			<div class="data-row">
+				<a class="dataset-paper-btn resource-text" href="https://huggingface.co/datasets/mali6/autocap/resolve/main/processed_snap-hdvila100m-w-clap-videos_segments_filtered_above_05.json">AutoReCapXL-HQ</a>
+				<p>10.7M audio-text pairs with variable length and minimum 0.5 CLAP similarity</p>
+			</div>
+		</div>
+		<a class="code-btn" href="https://github.com/snap-research/GenAU/tree/main/dataset_preperation">Code for Downloading Dataset</a>
+	</div>
+	<div class="improvements">
+		<h2  class="title">AutoReCap Collection Pipeline</h2>
+		<img src="assets/figures/dataset.png">
+		<p>
+			<strong>AutoReCap:</strong> We propose an efficient and scalable pipeline for collecting audio datasets, enabling us to compile 57M ambient audio clips, forming AutoReCap-XL, the largest available audio-text dataset, at 90 times the scale of existing ones. Our data data collection approach
+			leverages existing automatic video transcription to identify segments with ambient sounds. We then use our proposed captioning method AutoCap to caption the identified segments and exclude speech and music audio clips based on keyword search.
+			<br> <br>
+			<p>Please refer to the <a href="https://github.com/snap-research/GenAU/tree/main/dataset_preperation" target="_blank">GitHub page</a> for instructions on downloading the dataset!</p>
+		</p>
+	</div>
+
 	<div class="generator-samples" style="padding-top: 40px;">
+		<h2 class="title">Dataset Samples</h2>
         <div class="notification-box">
             <img src="assets/icons/exclamation-mark-blue.png" alt="!" style="vertical-align: middle; width: 24px; height: 24px;"> 
             <span>Click anywhere on the page, then hover over (or click) the video to listen to examine samples from our proposed dataset <b style="color: #141fee;">AutoReCap </b>.</span>
@@ -161,7 +264,7 @@
 				</video>
 				<div class="video-caption">A crowd of people chanting</div>
 			</div>
-			
+<!-- 			
 			<div class="video-item">
 				<video id="video5" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/gv4w7pqouYU_split_00000.mp4" type="video/mp4">
@@ -169,7 +272,7 @@
 				</video>
 				<div class="video-caption">A car engine revs and tires squeal as a crowd cheers</div>
 			</div>
-			
+			 -->
 			<div class="video-item">
 				<video id="video6" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/0A6piRp1dAM_split_00002.mp4" type="video/mp4">
@@ -186,22 +289,22 @@
 				<div class="video-caption">Spraying and birds chirping</div>
 			</div>
 			 -->
-			<div class="video-item">
+			<!-- <div class="video-item">
 				<video id="video8" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/FmZHMPVeE8s_split_00003.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 				<div class="video-caption">Some objects are being opened and closed</div>
 			</div>
-			
-			<div class="video-item">
+			 -->
+			<!-- <div class="video-item">
 				<video id="video9" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/OhDDJbSJE_w_split_00002.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 				<div class="video-caption">A man yells followed by a loud bang and a man yelling</div>
 			</div>
-			
+			 -->
 			<div class="video-item">
 				<video id="video10" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/j4De_YVXI9Y_split_00030.mp4" type="video/mp4">
@@ -258,13 +361,13 @@
 				<div class="video-caption">A motorcycle engine is running</div>
 			</div>
 			
-			<div class="video-item">
+			<!-- <div class="video-item">
 				<video id="video17" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/qaUm1YasQ1w_split_00003.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 				<div class="video-caption">A violin is playing a note</div>
-			</div>
+			</div> -->
 			
 			<div class="video-item">
 				<video id="video18" class="video-player" autoplay loop muted>
@@ -298,14 +401,14 @@
 				<div class="video-caption">A power tool drilling</div>
 			</div>
 			
-			<div class="video-item">
+			<!-- <div class="video-item">
 				<video id="video22" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/wzNt6jKCRMY_split_00003.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
 				<div class="video-caption">A gun is fired several times</div>
 			</div>
-			
+			 -->
 			<div class="video-item">
 				<video id="video23" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/2Mr9hK8uxx8_split_00000.mp4" type="video/mp4">
@@ -378,7 +481,7 @@
 				<div class="video-caption">A crowd of people are screaming and cheering, and the wind is blowing</div>
 			</div>
 			
-			<div class="video-item">
+			<!-- <div class="video-item">
 				<video id="video32" class="video-player" autoplay loop muted>
 					<source src="data/autorecap/EXOWe8hkwCM_split_00000.mp4" type="video/mp4">
 					Your browser does not support the video tag.
@@ -401,13 +504,14 @@
 				</video>
 				<div class="video-caption">A man yells and a motor vehicle passes by</div>
 			</div>
-			
+			 -->
 			
 
 			
 			
         </div>
     </div>
+</div>
 
 
 	<script>
