@@ -3,7 +3,12 @@
  Taming Data and Transformers for Audio Generation
 </h1>
 
+### 🚀 Check Out Our Latest Work! 🎥🔊  
+**[Video-to-Audio and Audio-to-Video Generation](https://snap-research.github.io/AVLink/)**  
+Discover how we bridge the gap between video and audio generative models! 
+
 This is the official GitHub repository of the paper Taming Data and Transformers for Audio Generation.
+
 
 **[Taming Data and Transformers for Audio Generation](https://snap-research.github.io/GenAU)**
 </br>
