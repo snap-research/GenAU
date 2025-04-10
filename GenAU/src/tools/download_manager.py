@@ -5,7 +5,7 @@ from pathlib import Path
 save_dir = "pretrained_models"
 
 checkpoint_paths = {"HTSAT": "pretrained_models/audio_encoder/HTSAT.ckpt",
-                    "music_speech_audioset_epoch_15_esc_89.98": "pretrained_models/clap/music_speech_audioset_epoch_15_esc_89.98.pt.pt",
+                    "music_speech_audioset_epoch_15_esc_89.98": "pretrained_models/clap/music_speech_audioset_epoch_15_esc_89.98.pt",
                     "clap_htsat_tiny": "pretrained_models/clap/clap_htsat_tiny.pt",
                     "hifigan_16k_64bins": "pretrained_models/vocoder/hifigan_16k_64bins.ckpt",
                     "hifigan_16k_64bins_config": "pretrained_models/vocoder/hifigan_16k_64bins.json",
@@ -13,7 +13,9 @@ checkpoint_paths = {"HTSAT": "pretrained_models/audio_encoder/HTSAT.ckpt",
                     "genau-full-l": "pretrained_models/genau/genau-full-l.ckpt",
                     "genau-full-l_config": "pretrained_models/genau/genau-full-l.yaml",
                     "genau-full-s": "pretrained_models/genau/genau-full-s.ckpt",
-                    "genau-full-s_config": "pretrained_models/genau/genau-full-s.yaml"} 
+                    "genau-full-s_config": "pretrained_models/genau/genau-full-s.yaml",
+                    "genau-l-full-hq-data": "pretrained_models/genau/genau-l-full-hq-data.ckpt",
+                    "genau-l-full-hq-data_config": "pretrained_models/genau/genau-l-full-hq-data.yaml"} 
 
 
 checkpoint_urls = {"HTSAT":'https://drive.usercontent.google.com/download?id=11XiCDsW3nYJ6uM87pvP3wI3pDAGhsBC1&export=download&confirm=t&uuid=986f3e02-6fc4-4419-ab91-ffb4017b2aba',
@@ -26,7 +28,9 @@ checkpoint_urls = {"HTSAT":'https://drive.usercontent.google.com/download?id=11X
                     "genau-full-l": "https://huggingface.co/mali6/autocap/resolve/main/genau-full-l.ckpt",
                     "genau-full-l_config": "https://huggingface.co/mali6/autocap/resolve/main/genau-full-l.yaml",
                     "genau-full-s": "https://huggingface.co/mali6/autocap/resolve/main/genau-full-s.ckpt",
-                    "genau-full-s_config": "https://huggingface.co/mali6/autocap/resolve/main/genau-full-s.yaml",}
+                    "genau-full-s_config": "https://huggingface.co/mali6/autocap/resolve/main/genau-full-s.yaml",
+                    "genau-l-full-hq-data": "https://huggingface.co/mali6/autocap/resolve/main/genau-l-full-hq-data.ckpt",
+                    "genau-l-full-hq-data_config": "https://huggingface.co/mali6/autocap/resolve/main/genau-l-full-hq-data.yaml"}
 
 
 def get_checkpoint_path(model_name, local_ckpt_path=None, download=True):

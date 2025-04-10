@@ -14,7 +14,9 @@ from src.tools.download_manager import get_checkpoint_path
 @torch.no_grad()
 def infer(prompt, configs, exp_group_name, exp_name, seed=0, n_cand=1, cfg_weight=3.5, ddim_steps=200):
     seed_everything(seed)
-
+    use_ema = False 
+    if 'force_use_ema' in configs:
+        use_ema = configs['force_use_ema']
     if "precision" in configs['training'].keys():
         torch.set_float32_matmul_precision(
             configs['training']["precision"]
@@ -45,7 +47,7 @@ def infer(prompt, configs, exp_group_name, exp_name, seed=0, n_cand=1, cfg_weigh
         ddim_steps=ddim_steps,
         unconditional_guidance_scale=cfg_weight,
         n_gen=n_cand,
-        use_ema=False)
+        use_ema=use_ema)
     
     print("[INFO] saved audio sample at:", saved_wav_path)
 
@@ -63,7 +65,7 @@ if __name__ == "__main__":
         "-m",
         "--model",
         type=str,
-        default='genau-full-l',
+        default='genau-l-full-hq-data',
         required=False,
         help="path to config .yaml file",
     )
@@ -91,13 +93,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--n_cand",
         type=int,
-        default=3,
+        default=1,
         help="number of candidates for clap reranking"
     )
     parser.add_argument(
         "--ddim_steps",
         type=int,
-        default=200,
+        default=100,
         help="number of ddim steps for sampling"
     )
     parser.add_argument(

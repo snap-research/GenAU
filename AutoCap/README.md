@@ -29,11 +29,12 @@ python scripts/audio_to_text.py --wav_path samples/ood_samples/loudwhistle-91003
 - This will automatically download `autocap-full` model and run the inference with the default parameters. You may change these parameters or provide your cutome model config file and checkpoint path.
 - For more accurate captioning, provide meta data using `--title`, `description`, and `--video_caption` arguments.
 
-<!-- ## Gradio Demo
-A local Gradio demo is also available by running
+
+## Gradio Demo
+Run a local interactive demo with Gradio:
 ```shell
-python app_audio2text.py
-``` -->
+python scripts/gradio_demo.py
+```
 
 ## Caption list of audio files
 - Prepare all target audio files in a single folder

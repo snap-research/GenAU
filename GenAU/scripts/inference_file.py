@@ -97,7 +97,7 @@ if __name__ == "__main__":
         "-m",
         "--model",
         type=str,
-        default='genau-full-l',
+        default='genau-l-full-hq-data',
         required=False,
         help="Model name",
     )
@@ -151,7 +151,7 @@ if __name__ == "__main__":
         "--strategy",
         type=str,
         required=False,
-        default='wo_ema',
+        default='ema',
         help="The strategy of combining weights from different checkpoint: wo_ema, avg_ckpt, or ema",
     )
 

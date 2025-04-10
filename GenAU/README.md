@@ -36,15 +36,18 @@ To quickly generate an audio based on an input text prompt, run
 python scripts/text_to_audio.py --prompt "Horses growl and clop hooves." --model "genau-full-l"
 ```
 - This will automatically downloads and uses the model `genau-full-l` with default settings. You may change these parameters or provide your custome model config file and checkpoint path.
-- Available models include `genau-full-l` (1.25B parameters) and `genau-full-s` (493M parameters)
+- Available models:
+    - `genau-l-full-hq-data` (1.25B parameters) trained with AutoRecap-XL filtered with CLAP score of 0.4 (20.7M samples)
+    - `genau-full-l` (1.25B parameters) trained with AutoRecap (760k samples)
+    - `genau-full-s` (493M parameters) trained with AutoRecap (760k samples)
 - These models are trained to generate ambient sounds and is incapable of generating speech or music.
 - Outputs will be saved by default at `samples/model_output` using the provided prompt as the file name.
 
-<!-- ## Gradio Demo
+## Gradio Demo
 Run a local interactive demo with Gradio:
 ```shell
-python app_text2audio.py
-``` -->
+python scripts/gradio_demo.py
+```
 
 ## Inference a list of prompts
 Optionally, you may prepare a `.txt` file with your target prompts and run
