@@ -16,7 +16,6 @@ This is the official GitHub repository of the paper Taming Data and Transformers
 [Willi Menapace](https://www.willimenapace.com/),
 [Aliaksandr Siarohin](https://aliaksandrsiarohin.github.io/aliaksandr-siarohin-website/),
 [Guha Balakrishnan](https://www.guhabalakrishnan.com),
-[Sergey Tulyakov](http://www.stulyakov.com/)
 [Vicente Ordonez](https://vislang.ai/),
 </br>
 *Arxiv 2024*
@@ -90,7 +89,7 @@ If you find this paper useful in your research, please consider citing our work:
 ```
 @misc{hajiali2024tamingdatatransformersaudio,
       title={Taming Data and Transformers for Audio Generation}, 
-      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Sergey Tulyakov and Vicente Ordonez},
+      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Vicente Ordonez},
       year={2024},
       eprint={2406.19388},
       archivePrefix={arXiv},

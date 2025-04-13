@@ -118,7 +118,7 @@ If you found this useful, please consider citing our work
 ```
 @misc{hajiali2024tamingdatatransformersaudio,
       title={Taming Data and Transformers for Audio Generation}, 
-      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Sergey Tulyakov and Vicente Ordonez},
+      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Vicente Ordonez},
       year={2024},
       eprint={2406.19388},
       archivePrefix={arXiv},
