@@ -95,3 +95,16 @@ python organize_dataset.py --save_dir <path-to-downloaded-dataset> \
 ```
 - Available datasets are: **wavcaps_soundbible, wavcaps_bbc, wavcaps_audioset, wavcaps_freesound**
 - **Audiocaps and Cloths**: Please refer to the [Audiocaps](https://github.com/cdjkim/audiocaps) and [Clotho](https://zenodo.org/records/3490684) official repositories for instructions on downloading these dataset. We are unable to distribute a copy of the dataset due to copyrights.
+
+
+# Cite this work
+If you found this useful, please consider citing our work
+
+```
+@article{haji2024taming,
+  title={Taming data and transformers for audio generation},
+  author={Haji-Ali, Moayed and Menapace, Willi and Siarohin, Aliaksandr and Balakrishnan, Guha and Ordonez, Vicente},
+  journal={arXiv preprint arXiv:2406.19388},
+  year={2024}
+}
+```

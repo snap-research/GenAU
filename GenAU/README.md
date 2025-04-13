@@ -123,14 +123,11 @@ The evaluation result will be saved in a json file at the same level of the gene
 If you found this useful, please consider citing our work
 
 ```
-@misc{hajiali2024tamingdatatransformersaudio,
-      title={Taming Data and Transformers for Audio Generation}, 
-      author={Moayed Haji-Ali and Willi Menapace and Aliaksandr Siarohin and Guha Balakrishnan and Vicente Ordonez},
-      year={2024},
-      eprint={2406.19388},
-      archivePrefix={arXiv},
-      primaryClass={cs.SD},
-      url={https://arxiv.org/abs/2406.19388}, 
+@article{haji2024taming,
+  title={Taming data and transformers for audio generation},
+  author={Haji-Ali, Moayed and Menapace, Willi and Siarohin, Aliaksandr and Balakrishnan, Guha and Ordonez, Vicente},
+  journal={arXiv preprint arXiv:2406.19388},
+  year={2024}
 }
 ```
 
